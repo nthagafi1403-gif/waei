@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>وَعْي | افهم نفسك أكثر</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;
+ background:#f4f1e9;
+ color:#173e34
+}
+header{
+ background:#fff;
+ text-align:center;
+ padding:25px 15px;
+ border-bottom:1px solid #eee
+}
+.logo{font-size:42px;font-weight:900}
+.subtitle{color:#758079;margin-top:5px}
+main{max-width:850px;margin:auto;padding:20px}
+
+.hero{
+ background:#fff;
+ border-radius:25px;
+ padding:28px;
+ margin-bottom:20px
+}
+.hero h1{margin:0 0 10px;font-size:32px}
+.muted{color:#69766f;line-height:1.8}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+ gap:15px
+}
+.card{
+ background:#fff;
+ border-radius:20px;
+ padding:20px;
+ box-shadow:0 8px 25px #0000000a
+}
+.card h2{font-size:20px;margin-top:0}
+
+button{
+ border:0;
+ border-radius:14px;
+ padding:14px;
+ font-size:16px;
+ cursor:pointer
+}
+.start{
+ width:100%;
+ background:#276b56;
+ color:#fff;
+ font-weight:700
+}
+.option{
+ display:block;
+ width:100%;
+ background:#edf4f1;
+ color:#173e34;
+ margin:8px 0
+}
+.hidden{display:none}
+.progress{
+ height:9px;
+ background:#e5e8e5;
+ border-radius:10px;
+ overflow:hidden;
+ margin:18px 0
+}
+.bar{
+ height:100%;
+ background:#34745f;
+ width:0
+}
+.result{
+ font-size:28px;
+ font-weight:800
+}
+.notice{
+ background:#fff;
+ padding:20px;
+ border-radius:20px;
+ margin-top:20px;
+ font-size:14px;
+ line-height:1.8
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <div class="logo">وَعْي</div>
+ <div class="subtitle">افهم نفسك أكثر</div>
+</header>
+
+<main>
+
+<section id="home">
+
+<div class="hero">
+<h1>رحلة لفهم نفسك تبدأ بخطوة</h1>
+<p class="muted">
+اختبارات تثقيفية مبسطة تساعدك على استكشاف بعض جوانب
+الشخصية والمشاعر والسلوك والعلاقات.
+</p>
+</div>
+
+<div class="grid" id="tests"></div>
+
+<div class="notice">
+<strong>تنبيه مهم</strong><br>
+منصة وَعْي منصة تثقيفية. الاختبارات الموجودة هنا ليست تشخيصًا
+نفسيًا أو طبيًا، ولا تغني عن التقييم لدى ممارس صحي مرخص.
+</div>
+
+</section>
+
+<section id="quiz" class="card hidden">
+<h2 id="testTitle"></h2>
+<div id="counter"></div>
+
+<div class="progress">
+<div class="bar" id="bar"></div>
+</div>
+
+<h2 id="question"></h2>
+
+<div id="answers">
+<button class="option" onclick="answer(0)">لا / نادرًا</button>
+<button class="option" onclick="answer(1)">أحيانًا</button>
+<button class="option" onclick="answer(2)">غالبًا</button>
+<button class="option" onclick="answer(3)">بشكل كبير</button>
+</div>
+</section>
+
+<section id="result" class="card hidden">
+
+<div class="result">نتيجتك التثقيفية</div>
+
+<h2 id="resultTitle"></h2>
+
+<p id="resultText" class="muted"></p>
+
+<button class="start" onclick="goHome()">
+العودة للاختبارات
+</button>
+
+</section>
+
+</main>
+
+<script>
+
+const tests=[
+
+{
+title:"اختبار أنماط الشخصية",
+questions:[
+"أستمتع بالتعرف على أشخاص جدد.",
+"أفضل أحيانًا قضاء وقت هادئ بمفردي.",
+"أحب التخطيط لأعمالي مسبقًا.",
+"أفكر جيدًا قبل اتخاذ القرارات المهمة.",
+"أحاول فهم مشاعر الآخرين.",
+"أستمتع بتجربة أشياء جديدة.",
+"أحرص على إنهاء ما أبدأه.",
+"أتكيف عندما تتغير خططي.",
+"أستطيع التعبير عن رأيي بوضوح.",
+"أراجع تجاربي وأتعلم منها."
+]
+},
+
+{
+title:"اختبار القلق والتوتر",
+questions:[
+"أشعر بالتوتر أو عدم الارتياح.",
+"يصعب علي إيقاف التفكير في الأمور التي تقلقني.",
+"أجد صعوبة في الاسترخاء.",
+"أفكر كثيرًا فيما قد يحدث مستقبلًا.",
+"أصبح سريع الانفعال عندما أكون تحت الضغط.",
+"يؤثر التفكير على تركيزي.",
+"أشعر بشد جسدي عندما أتوتر.",
+"يؤثر القلق أو التفكير على نومي.",
+"أتجنب بعض المواقف بسبب التوتر.",
+"يؤثر التوتر على حياتي اليومية."
+]
+},
+
+{
+title:"اختبار الذكاء العاطفي",
+questions:[
+"أستطيع تحديد الشعور الذي أمر به.",
+"أعرف عادة سبب تغير مزاجي.",
+"ألاحظ تأثير مشاعري على قراراتي.",
+"أستطيع تهدئة نفسي عند الغضب.",
+"أستطيع التحكم في رد فعلي أثناء الخلاف.",
+"ألاحظ عندما يكون شخص قريب مني منزعجًا.",
+"أحاول فهم مشاعر الآخرين.",
+"أستطيع الاستماع للآخر عندما يتحدث عن مشاعره.",
+"أستطيع التعبير عن مشاعري بوضوح.",
+"أستفيد من تجاربي العاطفية."
+]
+},
+
+{
+title:"اختبار أسلوب التعلق في العلاقات",
+questions:[
+"أشعر بالراحة في العلاقات القريبة.",
+"أستطيع التعبير عن احتياجاتي العاطفية.",
+"أقلق أحيانًا من فقدان الشخص الذي أحبه.",
+"أتضايق عندما يتأخر شخص قريب في الرد.",
+"أحتاج أحيانًا إلى تأكيد اهتمام الطرف الآخر.",
+"أفضل أحيانًا التعامل مع مشكلاتي وحدي.",
+"قد أبتعد عندما تصبح العلاقة شديدة القرب.",
+"أستطيع مناقشة الخلاف بهدوء.",
+"أجد صعوبة أحيانًا في الشعور بالأمان في العلاقات.",
+"أستطيع الحفاظ على استقلاليتي داخل العلاقة."
+]
+},
+
+{
+title:"اختبار مؤشرات سلوك الطفل وانفعالاته",
+questions:[
+"يتشتت الطفل بسهولة.",
+"يجد صعوبة في الاستمرار في مهمة مناسبة لعمره.",
+"يتصرف أحيانًا قبل التفكير.",
+"يجد صعوبة في انتظار دوره.",
+"يغضب بشدة في بعض المواقف.",
+"يجد صعوبة في تهدئة نفسه.",
+"تظهر عليه مخاوف متكررة.",
+"يتجنب بعض المواقف بسبب الخوف.",
+"يجد صعوبة في التعامل مع الأطفال الآخرين.",
+"تؤثر بعض سلوكياته أو انفعالاته على حياته اليومية."
+]
+}
+
+];
+
+let currentTest=0;
+let currentQuestion=0;
+let score=0;
+
+const list=document.getElementById("tests");
+
+tests.forEach((test,index)=>{
+
+let card=document.createElement("div");
+card.className="card";
+
+card.innerHTML=
+"<h2>"+test.title+"</h2>"+
+"<p class='muted'>اختبار تثقيفي مبسط.</p>"+
+"<button class='start' onclick='startTest("+index+")'>ابدأ الاختبار</button>";
+
+list.appendChild(card);
+
+});
+
+function startTest(index){
+
+currentTest=index;
+currentQuestion=0;
+score=0;
+
+document.getElementById("home").classList.add("hidden");
+document.getElementById("result").classList.add("hidden");
+document.getElementById("quiz").classList.remove("hidden");
+
+showQuestion();
+
+}
+
+function showQuestion(){
+
+let test=tests[currentTest];
+
+document.getElementById("testTitle").innerText=test.title;
+
+document.getElementById("counter").innerText=
+"السؤال "+(currentQuestion+1)+" من "+test.questions.length;
+
+document.getElementById("question").innerText=
+test.questions[currentQuestion];
+
+document.getElementById("bar").style.width=
+((currentQuestion/test.questions.length)*100)+"%";
+
+}
+
+function answer(value){
+
+score+=value;
+currentQuestion++;
+
+if(currentQuestion < tests[currentTest].questions.length){
+
+showQuestion();
+
+}else{
+
+showResult();
+
+}
+
+}
+
+function showResult(){
+
+document.getElementById("quiz").classList.add("hidden");
+document.getElementById("result").classList.remove("hidden");
+
+let max=tests[currentTest].questions.length*3;
+let percent=Math.round((score/max)*100);
+
+document.getElementById("resultTitle").innerText=
+"المؤشر الوصفي: "+percent+"%";
+
+let text="";
+
+if(percent < 35){
+
+text="ظهرت مؤشرات قليلة وفق إجاباتك.";
+
+}else if(percent < 65){
+
+text="ظهرت بعض المؤشرات التي قد تستحق الملاحظة وفهمها بصورة أكبر.";
+
+}else{
+
+text="ظهرت عدة مؤشرات في إجاباتك. إذا كانت مستمرة أو تؤثر على حياتك اليومية، فقد يكون من المناسب مناقشتها مع ممارس صحي مرخص.";
+
+}
+
+document.getElementById("resultText").innerText=text;
+
+}
+
+function goHome(){
+
+document.getElementById("result").classList.add("hidden");
+document.getElementById("home").classList.remove("hidden");
+
+}
+
+</script>
+
+</body>
+</html>
