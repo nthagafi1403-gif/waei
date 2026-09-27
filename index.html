@@ -3,146 +3,278 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#276b56">
+
 <title>وَعْي | افهم نفسك أكثر</title>
 
 <style>
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
+
 body{
- margin:0;
- font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;
- background:#f4f1e9;
- color:#173e34
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;
+  background:#f4f1e9;
+  color:#173e34;
 }
+
 header{
- background:#fff;
- text-align:center;
- padding:25px 15px;
- border-bottom:1px solid #eee
+  background:#fff;
+  text-align:center;
+  padding:22px 15px;
+  border-bottom:1px solid #eee;
 }
-.logo{font-size:42px;font-weight:900}
-.subtitle{color:#758079;margin-top:5px}
-main{max-width:850px;margin:auto;padding:20px}
-.hero,.card,.notice{
- background:#fff;
- border-radius:22px;
- padding:22px;
- margin-bottom:18px
+
+.logo{
+  font-size:40px;
+  font-weight:900;
 }
-.hero h1{margin:0 0 10px;font-size:30px}
-.muted{color:#69766f;line-height:1.9}
+
+.muted{
+  color:#69766f;
+  line-height:1.9;
+}
+
+main{
+  max-width:850px;
+  margin:auto;
+  padding:20px 16px;
+}
+
+.hero,
+.card,
+.notice,
+.page{
+  background:#fff;
+  border-radius:22px;
+  padding:22px;
+  margin-bottom:18px;
+  box-shadow:0 8px 25px #00000008;
+}
+
 .grid{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
- gap:15px
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:15px;
 }
-.card{box-shadow:0 8px 25px #0000000a}
-.card h2{font-size:20px;margin-top:0}
+
 button{
- border:0;
- border-radius:14px;
- padding:14px;
- font-size:16px;
- cursor:pointer
+  border:0;
+  border-radius:14px;
+  padding:14px;
+  font-size:16px;
+  min-height:48px;
+  cursor:pointer;
+  font-family:inherit;
 }
+
 .start{
- width:100%;
- background:#276b56;
- color:#fff;
- font-weight:700
+  width:100%;
+  background:#276b56;
+  color:#fff;
+  font-weight:700;
 }
+
+.secondary{
+  width:100%;
+  background:#edf4f1;
+  color:#173e34;
+  font-weight:700;
+}
+
 .option{
- display:block;
- width:100%;
- background:#edf4f1;
- color:#173e34;
- margin:9px 0
+  display:block;
+  width:100%;
+  background:#edf4f1;
+  color:#173e34;
+  margin:9px 0;
+  text-align:right;
 }
-.option:hover{background:#dcebe5}
-.hidden{display:none}
+
+.option.selected{
+  outline:2px solid #276b56;
+  background:#dcebe5;
+}
+
+.hidden{
+  display:none !important;
+}
+
 .progress{
- height:9px;
- background:#e5e8e5;
- border-radius:10px;
- overflow:hidden;
- margin:18px 0
+  height:9px;
+  background:#e5e8e5;
+  border-radius:10px;
+  overflow:hidden;
+  margin:18px 0;
 }
+
 .bar{
- height:100%;
- background:#34745f;
- width:0;
- transition:.3s
+  height:100%;
+  background:#34745f;
+  width:0;
 }
+
 .result{
- font-size:27px;
- font-weight:800;
- margin-bottom:15px
+  font-size:27px;
+  font-weight:800;
 }
-.resultBox{
- background:#edf4f1;
- padding:15px;
- border-radius:15px;
- margin:10px 0;
- line-height:1.8
-}
+
 .scoreRow{
- margin:14px 0
+  margin:15px 0;
 }
+
 .scoreLine{
- display:flex;
- justify-content:space-between;
- margin-bottom:6px
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
 }
+
 .miniBar{
- height:8px;
- background:#dce4e0;
- border-radius:10px;
- overflow:hidden
+  height:9px;
+  background:#e5e8e5;
+  border-radius:10px;
+  overflow:hidden;
+  margin-top:7px;
 }
+
 .miniFill{
- height:100%;
- background:#34745f
+  height:100%;
+  background:#34745f;
 }
-.notice{
- font-size:14px;
- line-height:1.8
+
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:20px;
 }
-#counter{color:#758079}
+
+/* أزرار التنقل داخل الاختبار */
+.quizNav{
+  display:flex !important;
+  visibility:visible !important;
+  gap:10px;
+  margin-top:24px;
+  width:100%;
+}
+
+.quizNav button{
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  flex:1;
+  min-height:52px;
+}
+
+.quizNav button:disabled{
+  opacity:.45 !important;
+}
+
+nav{
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-top:12px;
+}
+
+nav button{
+  padding:8px 12px;
+  min-height:38px;
+  background:#edf4f1;
+  color:#173e34;
+}
+
+footer{
+  text-align:center;
+  color:#758079;
+  font-size:13px;
+  line-height:1.8;
+  padding:10px 20px 30px;
+}
+
+@media(max-width:520px){
+  .actions{
+    grid-template-columns:1fr;
+  }
+
+  .quizNav{
+    display:flex !important;
+    flex-direction:column;
+  }
+
+  .quizNav button{
+    width:100%;
+    flex:none;
+  }
+}
 </style>
 </head>
 
 <body>
 
 <header>
-<div class="logo">وَعْي</div>
-<div class="subtitle">افهم نفسك أكثر</div>
+
+<div class="logo">
+وَعْي
+</div>
+
+<div class="muted">
+افهم نفسك أكثر
+</div>
+
+<nav>
+<button onclick="goHome()">الاختبارات</button>
+<button onclick="showPage('about')">عن وَعْي</button>
+<button onclick="showPage('privacy')">الخصوصية</button>
+</nav>
+
 </header>
 
+
 <main>
+
+<!-- الصفحة الرئيسية -->
 
 <section id="home">
 
 <div class="hero">
-<h1>رحلة لفهم نفسك تبدأ بخطوة</h1>
+
+<h1>
+رحلة لفهم نفسك تبدأ بخطوة
+</h1>
+
 <p class="muted">
-اختبارات تثقيفية مبسطة تساعدك على استكشاف بعض جوانب
-الشخصية والمشاعر والسلوك والعلاقات.
+اختبارات تثقيفية مبسطة تساعدك على استكشاف بعض جوانب الشخصية والمشاعر والسلوك والعلاقات.
 </p>
+
 </div>
 
 <div class="grid" id="tests"></div>
 
 <div class="notice">
-<strong>تنبيه مهم</strong><br>
-منصة وَعْي منصة تثقيفية. هذه الاختبارات ليست تشخيصًا نفسيًا
-أو طبيًا، ولا تغني عن التقييم لدى ممارس صحي مرخص.
+
+<strong>
+تنبيه مهم
+</strong>
+
+<br>
+
+الاختبارات في وَعْي تثقيفية وليست تشخيصًا نفسيًا أو طبيًا، ولا تغني عن التقييم لدى مختص مؤهل.
+
 </div>
 
 </section>
 
+
+<!-- صفحة الاختبار -->
+
 <section id="quiz" class="card hidden">
 
 <h2 id="testTitle"></h2>
-<div id="counter"></div>
+
+<div id="counter" class="muted"></div>
 
 <div class="progress">
 <div class="bar" id="bar"></div>
@@ -152,17 +284,112 @@ button{
 
 <div id="answers"></div>
 
+
+<!-- الأزرار المهمة -->
+
+<div class="quizNav">
+
+<button
+id="prevButton"
+type="button"
+class="secondary"
+onclick="previousQuestion()">
+← السؤال السابق
+</button>
+
+<button
+type="button"
+class="secondary"
+onclick="goHome()">
+الخروج للاختبارات
+</button>
+
+</div>
+
+
+<p class="muted" style="font-size:13px;">
+يُحفظ تقدم الاختبار محليًا على جهازك لتستطيع المتابعة إذا أغلقت الصفحة.
+</p>
+
 </section>
+
+
+<!-- النتيجة -->
 
 <section id="result" class="card hidden">
 
-<div class="result">نتيجتك التثقيفية</div>
+<div class="result">
+نتيجتك التثقيفية
+</div>
 
 <h2 id="resultTitle"></h2>
 
 <div id="details"></div>
 
 <p id="resultText" class="muted"></p>
+
+
+<div class="actions">
+
+<button class="start" onclick="restartTest()">
+إعادة الاختبار
+</button>
+
+<button class="start" onclick="shareResult()">
+مشاركة النتيجة
+</button>
+
+<button class="secondary" onclick="copyResult()">
+نسخ النتيجة
+</button>
+
+<button class="secondary" onclick="goHome()">
+العودة للاختبارات
+</button>
+
+</div>
+
+</section>
+
+
+<!-- عن وعي -->
+
+<section id="about" class="page hidden">
+
+<h2>
+عن وَعْي
+</h2>
+
+<p class="muted">
+وَعْي منصة تثقيفية مبسطة تساعد المستخدم على التأمل في بعض جوانب شخصيته ومشاعره وسلوكه وعلاقاته.
+</p>
+
+<p class="muted">
+النتائج وصفية وتثقيفية وليست تشخيصًا نفسيًا، ولا ينبغي استخدامها بدل التقييم لدى مختص مؤهل.
+</p>
+
+<button class="start" onclick="goHome()">
+العودة للاختبارات
+</button>
+
+</section>
+
+
+<!-- الخصوصية -->
+
+<section id="privacy" class="page hidden">
+
+<h2>
+الخصوصية
+</h2>
+
+<p class="muted">
+تعمل الاختبارات داخل متصفحك. لا يحتوي الموقع في نسخته الحالية على خادم يستقبل إجابات الاختبارات.
+</p>
+
+<p class="muted">
+قد يتم حفظ تقدم الاختبار محليًا على جهازك باستخدام تخزين المتصفح حتى تستطيع المتابعة لاحقًا.
+</p>
 
 <button class="start" onclick="goHome()">
 العودة للاختبارات
@@ -172,251 +399,609 @@ button{
 
 </main>
 
+
+<footer>
+
+وَعْي | افهم نفسك أكثر
+
+<br>
+
+محتوى تثقيفي غير مخصص للتشخيص النفسي أو الطبي.
+
+</footer>
+
+
 <script>
 
-const tests=[
+const tests = [
 
-/* 1 — أنماط الشخصية */
+/* ==============================
+   1 - أنماط الشخصية
+============================== */
+
 {
 type:"personality",
+
 title:"اختبار أنماط الشخصية",
-description:"استكشف النمط الأكثر بروزًا في إجاباتك.",
-answers:["لا تنطبق عليّ","تنطبق قليلًا","تنطبق غالبًا","تنطبق جدًا"],
+
+description:"استكشف الميول الأكثر بروزًا في إجاباتك.",
+
+answers:[
+"لا تنطبق عليّ",
+"تنطبق قليلًا",
+"تنطبق غالبًا",
+"تنطبق جدًا"
+],
+
 questions:[
+
 ["يهمني أن يلاحظ الآخرون إنجازاتي وقدراتي.","الميل النرجسي"],
+
 ["أشعر بالانزعاج عندما لا أحصل على التقدير الذي أتوقعه.","الميل النرجسي"],
+
 ["أحب أن أشعر بأنني مميز مقارنة بالآخرين.","الميل النرجسي"],
 
+
 ["أهتم كثيرًا بالتفاصيل والترتيب والدقة.","الميل الوسواسي"],
+
 ["يصعب علي ترك العمل قبل أن يصبح بالشكل الذي أراه مثاليًا.","الميل الوسواسي"],
+
 ["أفضل تنفيذ الأمور بطريقة محددة ومنظمة.","الميل الوسواسي"],
 
+
 ["أحتاج إلى رأي شخص أثق به قبل اتخاذ بعض القرارات المهمة.","الميل الاعتمادي"],
+
 ["أشعر بعدم الارتياح عندما أضطر لمواجهة الأمور وحدي.","الميل الاعتمادي"],
+
 ["يصعب علي مخالفة شخص أعتمد عليه حتى عندما لا أوافقه.","الميل الاعتمادي"],
 
+
 ["أتجنب بعض المواقف الاجتماعية خوفًا من النقد أو الرفض.","الميل التجنبي"],
+
 ["أتردد في التقرب من الآخرين حتى أتأكد من تقبلهم لي.","الميل التجنبي"],
+
 ["أتأثر كثيرًا بالانتقاد أو التقييم السلبي.","الميل التجنبي"],
 
+
 ["أفضل غالبًا الأنشطة الفردية على الاختلاط بالآخرين.","الميل الانعزالي"],
+
 ["لا أشعر بحاجة كبيرة إلى تكوين علاقات اجتماعية كثيرة.","الميل الانعزالي"],
+
 ["أشعر بالراحة عندما أقضي وقتًا طويلًا بمفردي.","الميل الانعزالي"]
+
 ]
+
 },
 
-/* 2 — القلق والتوتر */
+
+/* ==============================
+   2 - القلق والتوتر
+============================== */
+
 {
+
 type:"general",
+
 title:"اختبار القلق والتوتر",
+
 description:"مؤشر تثقيفي لبعض مشاعر القلق والتوتر.",
-answers:["أبدًا","أحيانًا","غالبًا","بشكل كبير"],
+
+answers:[
+"أبدًا",
+"أحيانًا",
+"غالبًا",
+"بشكل كبير"
+],
+
 questions:[
+
 "أشعر بالتوتر أو عدم الارتياح.",
+
 "يصعب علي إيقاف التفكير في الأمور التي تقلقني.",
+
 "أجد صعوبة في الاسترخاء.",
+
 "أفكر كثيرًا فيما قد يحدث مستقبلًا.",
+
 "أصبح سريع الانفعال عندما أكون تحت الضغط.",
+
 "يؤثر التفكير الزائد على تركيزي.",
+
 "أشعر بشد أو توتر جسدي عندما أقلق.",
+
 "يؤثر القلق أو التفكير على نومي.",
+
 "أتجنب بعض المواقف بسبب التوتر.",
+
 "يؤثر التوتر على نشاطي أو حياتي اليومية."
+
 ]
+
 },
 
-/* 3 — أسلوب التعلق */
+
+/* ==============================
+   3 - التعلق
+============================== */
+
 {
+
 type:"attachment",
+
 title:"اختبار أسلوب التعلق في العلاقات",
-description:"استكشف الأسلوب الأكثر بروزًا في علاقاتك القريبة.",
-answers:["لا تنطبق عليّ","تنطبق قليلًا","تنطبق غالبًا","تنطبق جدًا"],
+
+description:"استكشف أسلوب التعلق الأكثر بروزًا في علاقاتك.",
+
+answers:[
+"لا تنطبق عليّ",
+"تنطبق قليلًا",
+"تنطبق غالبًا",
+"تنطبق جدًا"
+],
+
 questions:[
+
 ["أشعر بالراحة في العلاقات القريبة.","آمن"],
+
 ["أستطيع التعبير عن احتياجاتي للطرف الآخر بوضوح.","آمن"],
+
 ["أستطيع مناقشة الخلاف دون خوف شديد من انتهاء العلاقة.","آمن"],
+
 ["أستطيع الحفاظ على استقلاليتي مع وجود علاقة قريبة.","آمن"],
 
+
 ["أقلق كثيرًا من فقدان الشخص الذي أحبه.","قلق"],
+
 ["أتضايق بشدة عندما يتأخر شخص قريب مني في الرد.","قلق"],
+
 ["أحتاج إلى تأكيد متكرر بأن الطرف الآخر يهتم بي.","قلق"],
+
 ["أفكر كثيرًا في احتمال ابتعاد الطرف الآخر عني.","قلق"],
 
+
 ["أفضل الاحتفاظ بمشكلاتي ومشاعري لنفسي.","تجنبي"],
+
 ["أشعر بعدم الارتياح عندما يعتمد عليّ شخص عاطفيًا بشكل كبير.","تجنبي"],
+
 ["قد أبتعد عندما تصبح العلاقة شديدة القرب.","تجنبي"],
+
 ["أفضل الاعتماد على نفسي بدل طلب الدعم العاطفي.","تجنبي"]
+
 ]
+
 },
 
-/* 4 — الطفل */
+
+/* ==============================
+   4 - الطفل
+============================== */
+
 {
+
 type:"child",
+
 title:"اختبار مؤشرات سلوك الطفل وانفعالاته",
+
 description:"مؤشر تثقيفي لولي الأمر حول بعض سلوكيات الطفل.",
-answers:["لا / نادرًا","أحيانًا","غالبًا","بشكل كبير"],
+
+answers:[
+"لا / نادرًا",
+"أحيانًا",
+"غالبًا",
+"بشكل كبير"
+],
+
 questions:[
+
 ["يتشتت الطفل بسهولة.","الانتباه والاندفاع"],
+
 ["يجد صعوبة في الاستمرار في مهمة مناسبة لعمره.","الانتباه والاندفاع"],
+
 ["يتصرف أحيانًا قبل التفكير.","الانتباه والاندفاع"],
 
+
 ["يغضب بشدة في بعض المواقف.","تنظيم الانفعالات"],
+
 ["يجد صعوبة في تهدئة نفسه بعد الغضب.","تنظيم الانفعالات"],
+
 ["تتغير انفعالاته بسرعة في بعض المواقف.","تنظيم الانفعالات"],
 
+
 ["تظهر عليه مخاوف متكررة.","القلق والمخاوف"],
+
 ["يتجنب بعض المواقف بسبب الخوف.","القلق والمخاوف"],
+
 ["يطلب الطمأنة بشكل متكرر عند القلق.","القلق والمخاوف"],
 
+
 ["يجد صعوبة في التعامل مع الأطفال الآخرين.","التفاعل الاجتماعي"],
+
 ["يواجه صعوبة في تكوين أو الحفاظ على صداقات مناسبة لعمره.","التفاعل الاجتماعي"],
+
 ["تظهر مشكلات متكررة أثناء اللعب أو التفاعل مع الآخرين.","التفاعل الاجتماعي"]
+
 ]
+
 },
 
-/* 5 — الذكاء العاطفي */
+
+/* ==============================
+   5 - الذكاء العاطفي
+============================== */
+
 {
+
 type:"eq",
+
 title:"اختبار الذكاء العاطفي",
+
 description:"20 سؤالًا لاستكشاف أربعة جوانب من الذكاء العاطفي.",
-answers:["لا تنطبق عليّ","تنطبق قليلًا","تنطبق غالبًا","تنطبق جدًا"],
+
+answers:[
+"لا تنطبق عليّ",
+"تنطبق قليلًا",
+"تنطبق غالبًا",
+"تنطبق جدًا"
+],
+
 questions:[
 
 ["أستطيع تحديد الشعور الذي أمر به بدقة.","الوعي بالمشاعر"],
+
 ["أعرف عادة سبب تغير مزاجي.","الوعي بالمشاعر"],
+
 ["ألاحظ تأثير مشاعري على قراراتي.","الوعي بالمشاعر"],
+
 ["أستطيع التمييز بين مشاعر متشابهة مثل القلق والغضب.","الوعي بالمشاعر"],
+
 ["ألاحظ تغير حالتي العاطفية أثناء اليوم.","الوعي بالمشاعر"],
 
+
 ["أستطيع تهدئة نفسي عندما أغضب.","تنظيم المشاعر"],
+
 ["أفكر قبل أن أرد عندما أكون منزعجًا.","تنظيم المشاعر"],
+
 ["أستطيع السيطرة على رد فعلي أثناء الخلاف.","تنظيم المشاعر"],
+
 ["أستطيع العودة إلى هدوئي بعد موقف مزعج.","تنظيم المشاعر"],
+
 ["لا أسمح لمشاعر لحظية بأن تتحكم في جميع قراراتي.","تنظيم المشاعر"],
 
+
 ["ألاحظ عندما يكون الشخص أمامي منزعجًا حتى لو لم يخبرني.","فهم مشاعر الآخرين"],
+
 ["أحاول فهم سبب شعور الآخرين بطريقة معينة.","فهم مشاعر الآخرين"],
+
 ["ألاحظ نبرة الصوت ولغة الجسد أثناء الحديث.","فهم مشاعر الآخرين"],
+
 ["أستطيع فهم وجهة نظر الآخر حتى عندما أختلف معه.","فهم مشاعر الآخرين"],
+
 ["أعرف متى يحتاج الشخص إلى الاستماع أكثر من النصيحة.","فهم مشاعر الآخرين"],
 
+
 ["أستطيع التعبير عن مشاعري بوضوح واحترام.","إدارة العلاقات"],
+
 ["أستطيع مناقشة الخلاف دون الإساءة للطرف الآخر.","إدارة العلاقات"],
+
 ["أعرف متى يجب أن أعتذر أو أصلح سوء تفاهم.","إدارة العلاقات"],
+
 ["أستطيع وضع حدود واضحة في علاقاتي.","إدارة العلاقات"],
+
 ["أحاول الوصول إلى حلول مناسبة للطرفين أثناء الخلاف.","إدارة العلاقات"]
+
 ]
+
 }
 
 ];
 
-let currentTest=0;
-let currentQuestion=0;
-let score=0;
-let categoryScores={};
 
-const list=document.getElementById("tests");
+/* ==============================
+   المتغيرات
+============================== */
 
-tests.forEach((test,index)=>{
+let currentTest = 0;
 
-let card=document.createElement("div");
-card.className="card";
+let currentQuestion = 0;
 
-card.innerHTML=
-"<h2>"+test.title+"</h2>"+
-"<p class='muted'>"+test.description+"</p>"+
-"<button class='start' onclick='startTest("+index+")'>ابدأ الاختبار</button>";
+let userAnswers = [];
 
-list.appendChild(card);
+let lastResultText = "";
+
+const sections = [
+"home",
+"quiz",
+"result",
+"about",
+"privacy"
+];
+
+
+/* ==============================
+   إنشاء بطاقات الاختبارات
+============================== */
+
+const testsContainer =
+document.getElementById("tests");
+
+tests.forEach(function(test,index){
+
+const card =
+document.createElement("div");
+
+card.className = "card";
+
+card.innerHTML =
+
+"<h2>" +
+test.title +
+"</h2>" +
+
+"<p class='muted'>" +
+test.description +
+"</p>" +
+
+"<button class='start' onclick='startTest(" +
+index +
+")'>" +
+"ابدأ الاختبار" +
+"</button>";
+
+testsContainer.appendChild(card);
 
 });
+
+
+/* ==============================
+   الصفحات
+============================== */
+
+function showPage(id){
+
+sections.forEach(function(section){
+
+document
+.getElementById(section)
+.classList
+.add("hidden");
+
+});
+
+document
+.getElementById(id)
+.classList
+.remove("hidden");
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+
+function goHome(){
+
+showPage("home");
+
+}
+
+
+/* ==============================
+   بدء الاختبار
+============================== */
 
 function startTest(index){
 
-currentTest=index;
-currentQuestion=0;
-score=0;
-categoryScores={};
+currentTest = index;
 
-document.getElementById("home").classList.add("hidden");
-document.getElementById("result").classList.add("hidden");
-document.getElementById("quiz").classList.remove("hidden");
+currentQuestion = 0;
 
-createAnswers();
+userAnswers =
+new Array(
+tests[index].questions.length
+).fill(null);
+
+
+/* استعادة التقدم */
+
+try{
+
+const saved =
+JSON.parse(
+localStorage.getItem(
+"waei_progress_" + index
+)
+);
+
+if(
+saved &&
+Array.isArray(saved.answers) &&
+saved.answers.length ===
+userAnswers.length
+){
+
+userAnswers =
+saved.answers;
+
+currentQuestion =
+Math.min(
+saved.current || 0,
+userAnswers.length - 1
+);
+
+}
+
+}catch(error){}
+
+
+showPage("quiz");
+
+createAnswerButtons();
+
 showQuestion();
 
 }
 
-function createAnswers(){
 
-const test=tests[currentTest];
-const box=document.getElementById("answers");
-box.innerHTML="";
+/* ==============================
+   إنشاء أزرار الإجابة
+============================== */
 
-test.answers.forEach((text,index)=>{
+function createAnswerButtons(){
 
-let b=document.createElement("button");
-b.className="option";
-b.innerText=text;
-b.onclick=function(){answer(index)};
-box.appendChild(b);
+const test =
+tests[currentTest];
+
+const box =
+document.getElementById("answers");
+
+box.innerHTML = "";
+
+
+test.answers.forEach(
+function(answerText,index){
+
+const button =
+document.createElement("button");
+
+button.className = "option";
+
+button.innerText =
+answerText;
+
+button.onclick =
+function(){
+
+answerQuestion(index);
+
+};
+
+box.appendChild(button);
 
 });
 
 }
 
-function getQuestionText(q){
 
-if(Array.isArray(q)) return q[0];
-return q;
-
-}
+/* ==============================
+   عرض السؤال
+============================== */
 
 function showQuestion(){
 
-const test=tests[currentTest];
+const test =
+tests[currentTest];
 
-document.getElementById("testTitle").innerText=test.title;
+const current =
+test.questions[currentQuestion];
 
-document.getElementById("counter").innerText=
-"السؤال "+(currentQuestion+1)+" من "+test.questions.length;
 
-document.getElementById("question").innerText=
-getQuestionText(test.questions[currentQuestion]);
+document.getElementById(
+"testTitle"
+).innerText =
+test.title;
 
-document.getElementById("bar").style.width=
-((currentQuestion/test.questions.length)*100)+"%";
 
-}
+document.getElementById(
+"counter"
+).innerText =
 
-function answer(value){
+"السؤال " +
+(currentQuestion + 1) +
+" من " +
+test.questions.length;
 
-const test=tests[currentTest];
-const q=test.questions[currentQuestion];
 
-if(test.type==="general"){
+document.getElementById(
+"question"
+).innerText =
 
-score+=value;
+Array.isArray(current)
+?
+current[0]
+:
+current;
+
+
+document.getElementById(
+"bar"
+).style.width =
+
+(
+(currentQuestion + 1) /
+test.questions.length *
+100
+) + "%";
+
+
+const previousButton =
+document.getElementById(
+"prevButton"
+);
+
+previousButton.disabled =
+currentQuestion === 0;
+
+
+/* إظهار الإجابة السابقة */
+
+const optionButtons =
+document.querySelectorAll(
+".option"
+);
+
+optionButtons.forEach(
+function(button,index){
+
+if(
+userAnswers[currentQuestion]
+=== index
+){
+
+button.classList.add(
+"selected"
+);
 
 }else{
 
-const category=q[1];
-
-if(categoryScores[category]===undefined){
-categoryScores[category]=0;
-}
-
-categoryScores[category]+=value;
+button.classList.remove(
+"selected"
+);
 
 }
+
+});
+
+}
+
+
+/* ==============================
+   الإجابة
+============================== */
+
+function answerQuestion(value){
+
+userAnswers[
+currentQuestion
+] = value;
+
+
+if(
+currentQuestion <
+tests[currentTest]
+.questions.length - 1
+){
 
 currentQuestion++;
 
-if(currentQuestion<test.questions.length){
+saveProgress();
 
 showQuestion();
 
 }else{
+
+clearProgress();
 
 showResult();
 
@@ -424,172 +1009,558 @@ showResult();
 
 }
 
-function percent(value,max){
 
-return Math.round((value/max)*100);
+/* ==============================
+   السؤال السابق
+============================== */
+
+function previousQuestion(){
+
+if(currentQuestion > 0){
+
+currentQuestion--;
+
+saveProgress();
+
+showQuestion();
 
 }
 
-function scoreBox(name,value){
+}
+
+
+/* ==============================
+   حفظ التقدم
+============================== */
+
+function saveProgress(){
+
+try{
+
+localStorage.setItem(
+
+"waei_progress_" +
+currentTest,
+
+JSON.stringify({
+
+current:
+currentQuestion,
+
+answers:
+userAnswers
+
+})
+
+);
+
+}catch(error){}
+
+}
+
+
+function clearProgress(){
+
+try{
+
+localStorage.removeItem(
+
+"waei_progress_" +
+currentTest
+
+);
+
+}catch(error){}
+
+}
+
+
+/* ==============================
+   النسب
+============================== */
+
+function percentage(
+value,
+maximum
+){
+
+return Math.round(
+value /
+maximum *
+100
+);
+
+}
+
+
+/* ==============================
+   شريط نتيجة
+============================== */
+
+function scoreBox(
+name,
+value
+){
 
 return `
+
 <div class="scoreRow">
+
 <div class="scoreLine">
-<strong>${name}</strong>
-<span>${value}%</span>
+
+<strong>
+${name}
+</strong>
+
+<span>
+${value}%
+</span>
+
 </div>
 
 <div class="miniBar">
-<div class="miniFill" style="width:${value}%"></div>
+
+<div
+class="miniFill"
+style="width:${value}%">
 </div>
+
 </div>
+
+</div>
+
 `;
 
 }
 
+
+/* ==============================
+   حساب الفئات
+============================== */
+
+function calculateCategories(test){
+
+const scores = {};
+
+
+test.questions.forEach(
+function(question,index){
+
+if(
+Array.isArray(question)
+){
+
+const category =
+question[1];
+
+if(
+scores[category] === undefined
+){
+
+scores[category] = 0;
+
+}
+
+scores[category] +=
+userAnswers[index] ?? 0;
+
+}
+
+});
+
+
+return scores;
+
+}
+
+
+/* ==============================
+   النتيجة
+============================== */
+
 function showResult(){
 
-const test=tests[currentTest];
+showPage("result");
 
-document.getElementById("quiz").classList.add("hidden");
-document.getElementById("result").classList.remove("hidden");
 
-const title=document.getElementById("resultTitle");
-const text=document.getElementById("resultText");
-const details=document.getElementById("details");
+const test =
+tests[currentTest];
 
-details.innerHTML="";
-text.innerText="";
+const title =
+document.getElementById(
+"resultTitle"
+);
 
-if(test.type==="general"){
+const details =
+document.getElementById(
+"details"
+);
 
-const max=test.questions.length*3;
-const p=percent(score,max);
+const text =
+document.getElementById(
+"resultText"
+);
 
-title.innerText="مؤشر القلق والتوتر: "+p+"%";
 
-if(p<34){
+details.innerHTML = "";
 
-text.innerText=
-"إجاباتك تشير إلى مؤشرات محدودة من القلق والتوتر ضمن هذا الاختبار التثقيفي.";
+text.innerText = "";
 
-}else if(p<67){
 
-text.innerText=
-"إجاباتك تشير إلى وجود بعض مؤشرات القلق والتوتر. قد يفيد الانتباه إلى المواقف التي تزيدها ومدى تأثيرها على حياتك.";
+/* القلق */
 
-}else{
+if(
+test.type === "general"
+){
 
-text.innerText=
-"إجاباتك تشير إلى ارتفاع عدد مؤشرات القلق والتوتر في هذا الاختبار. إذا كانت مستمرة أو تؤثر على نومك أو عملك أو حياتك اليومية، فقد يكون من المناسب مناقشتها مع مختص مرخص.";
+const total =
+userAnswers.reduce(
+function(sum,value){
+
+return sum +
+(value ?? 0);
+
+},
+0
+);
+
+
+const result =
+percentage(
+total,
+test.questions.length * 3
+);
+
+
+title.innerText =
+
+"مؤشر القلق والتوتر: " +
+result +
+"%";
+
+
+if(result < 34){
+
+text.innerText =
+
+"ظهرت مؤشرات محدودة من القلق والتوتر وفق إجاباتك في هذا الاختبار التثقيفي.";
 
 }
 
-return;
+else if(result < 67){
+
+text.innerText =
+
+"ظهرت بعض مؤشرات القلق والتوتر. راقب مدى استمرارها وتأثيرها على حياتك اليومية.";
 
 }
 
-if(test.type==="personality"){
+else{
 
-let arr=Object.entries(categoryScores)
-.sort((a,b)=>b[1]-a[1]);
+text.innerText =
 
-let top=arr[0];
+"ظهرت مؤشرات مرتفعة نسبيًا في هذا الاختبار التثقيفي. إذا كانت مستمرة أو تؤثر على حياتك اليومية، فقد يكون من المناسب مناقشتها مع مختص مرخص.";
 
-title.innerText="النمط الأبرز في إجاباتك: "+top[0];
+}
 
-arr.forEach(item=>{
+}
 
-let p=percent(item[1],9);
-details.innerHTML+=scoreBox(item[0],p);
+
+/* بقية الاختبارات */
+
+else{
+
+const scores =
+calculateCategories(test);
+
+
+const sorted =
+Object.entries(scores)
+.sort(
+function(a,b){
+
+return b[1] - a[1];
+
+}
+);
+
+
+/* الشخصية */
+
+if(
+test.type ===
+"personality"
+){
+
+title.innerText =
+
+"الميل الأبرز في إجاباتك: " +
+sorted[0][0];
+
+
+sorted.forEach(
+function(item){
+
+details.innerHTML +=
+
+scoreBox(
+item[0],
+percentage(
+item[1],
+9
+)
+);
 
 });
 
-text.innerText=
-"تعكس النتيجة ميولًا ظهرت في إجاباتك ولا تعني أنك تحمل اضطرابًا في الشخصية. تشخيص اضطرابات الشخصية يحتاج إلى تقييم سريري متخصص.";
 
-return;
+text.innerText =
+
+"الميل الثاني في إجاباتك هو «" +
+sorted[1][0] +
+"». هذه النتيجة تصف ميولًا ظهرت في إجاباتك ولا تعني أنك تحمل اضطرابًا في الشخصية. تشخيص اضطرابات الشخصية يحتاج إلى تقييم سريري متخصص.";
 
 }
 
-if(test.type==="attachment"){
 
-let arr=Object.entries(categoryScores)
-.sort((a,b)=>b[1]-a[1]);
+/* التعلق */
 
-title.innerText="أسلوب التعلق الأبرز: "+arr[0][0];
+if(
+test.type ===
+"attachment"
+){
 
-arr.forEach(item=>{
+title.innerText =
 
-let p=percent(item[1],12);
-details.innerHTML+=scoreBox(item[0],p);
+"أسلوب التعلق الأبرز: " +
+sorted[0][0];
+
+
+sorted.forEach(
+function(item){
+
+details.innerHTML +=
+
+scoreBox(
+item[0],
+percentage(
+item[1],
+12
+)
+);
 
 });
 
-text.innerText=
-"هذه النتيجة وصف تثقيفي لميولك في العلاقات وليست تصنيفًا ثابتًا أو تشخيصًا نفسيًا. قد تختلف طريقة ارتباط الشخص من علاقة إلى أخرى.";
 
-return;
+text.innerText =
+
+"هذه النتيجة تعكس الأسلوب الأكثر بروزًا في إجاباتك، وليست تصنيفًا ثابتًا أو تشخيصًا نفسيًا.";
 
 }
 
-if(test.type==="child"){
 
-title.innerText="مؤشرات سلوك الطفل وانفعالاته";
+/* الطفل */
 
-Object.entries(categoryScores).forEach(item=>{
+if(
+test.type ===
+"child"
+){
 
-let p=percent(item[1],9);
-details.innerHTML+=scoreBox(item[0],p);
+title.innerText =
+
+"مؤشرات سلوك الطفل وانفعالاته";
+
+
+sorted.forEach(
+function(item){
+
+details.innerHTML +=
+
+scoreBox(
+item[0],
+percentage(
+item[1],
+9
+)
+);
 
 });
 
-text.innerText=
-"هذه المؤشرات لا تشخّص أي اضطراب لدى الطفل. يجب تفسير السلوك وفق عمر الطفل ومدة ظهوره ووجوده في أكثر من بيئة ومدى تأثيره على حياته. عند وجود قلق واضح يُنصح بالتقييم لدى مختص مؤهل.";
 
-return;
+text.innerText =
+
+"ارتفاع أي مؤشر لا يعني وجود اضطراب. يجب مراعاة عمر الطفل، ومدة السلوك، وظهوره في أكثر من بيئة، ومدى تأثيره على حياته. التشخيص يحتاج إلى تقييم متخصص.";
 
 }
 
-if(test.type==="eq"){
 
-let total=0;
+/* الذكاء العاطفي */
 
-Object.values(categoryScores).forEach(v=>total+=v);
+if(
+test.type ===
+"eq"
+){
 
-let overall=percent(total,60);
+const total =
+Object.values(scores)
+.reduce(
+function(sum,value){
 
-title.innerText="مؤشر الذكاء العاطفي: "+overall+"%";
+return sum + value;
 
-Object.entries(categoryScores).forEach(item=>{
+},
+0
+);
 
-let p=percent(item[1],15);
-details.innerHTML+=scoreBox(item[0],p);
+
+const overall =
+percentage(
+total,
+60
+);
+
+
+title.innerText =
+
+"مؤشر الذكاء العاطفي: " +
+overall +
+"%";
+
+
+sorted.forEach(
+function(item){
+
+details.innerHTML +=
+
+scoreBox(
+item[0],
+percentage(
+item[1],
+15
+)
+);
 
 });
 
-let strongest=Object.entries(categoryScores)
-.sort((a,b)=>b[1]-a[1])[0][0];
 
-let weakest=Object.entries(categoryScores)
-.sort((a,b)=>a[1]-b[1])[0][0];
+text.innerText =
 
-text.innerText=
-"يظهر في إجاباتك أن الجانب الأكثر بروزًا هو «"+strongest+
-"»، بينما الجانب الأقل بروزًا هو «"+weakest+
-"». النتيجة مؤشر تثقيفي مبسط وليست مقياسًا نفسيًا مقننًا للذكاء العاطفي.";
+"الجانب الأكثر بروزًا هو «" +
+sorted[0][0] +
+"»، والجانب الأقل بروزًا هو «" +
+sorted[
+sorted.length - 1
+][0] +
+"». النتيجة مؤشر تثقيفي مبسط وليست مقياسًا نفسيًا مقننًا.";
+
+}
+
+}
+
+
+/* نص المشاركة */
+
+lastResultText =
+
+"نتيجتي في " +
+test.title +
+"\n" +
+
+title.innerText +
+"\n\n" +
+
+"جرّب اختبارات وَعْي:\n" +
+
+"https://nthagafi1403-gif.github.io/waei/";
+
+}
+
+
+/* ==============================
+   إعادة الاختبار
+============================== */
+
+function restartTest(){
+
+clearProgress();
+
+currentQuestion = 0;
+
+userAnswers =
+new Array(
+tests[currentTest]
+.questions.length
+).fill(null);
+
+showPage("quiz");
+
+createAnswerButtons();
+
+showQuestion();
+
+}
+
+
+/* ==============================
+   مشاركة النتيجة
+============================== */
+
+async function shareResult(){
+
+if(
+navigator.share
+){
+
+try{
+
+await navigator.share({
+
+title:
+"وَعْي",
+
+text:
+lastResultText
+
+});
+
+}catch(error){}
+
+}
+
+else{
+
+copyResult();
 
 }
 
 }
 
-function goHome(){
 
-document.getElementById("result").classList.add("hidden");
-document.getElementById("quiz").classList.add("hidden");
-document.getElementById("home").classList.remove("hidden");
+/* ==============================
+   نسخ النتيجة
+============================== */
 
-window.scrollTo({top:0,behavior:"smooth"});
+async function copyResult(){
+
+try{
+
+await navigator.clipboard.writeText(
+lastResultText
+);
+
+alert(
+"تم نسخ النتيجة."
+);
+
+}
+
+catch(error){
+
+alert(
+lastResultText
+);
+
+}
 
 }
 
