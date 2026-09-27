@@ -3,186 +3,616 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#276b56">
+<meta name="theme-color" content="#174d40">
+
 <title>وَعْي | افهم نفسك أكثر</title>
 
 <style>
-*{box-sizing:border-box}
+:root{
+  --green:#174d40;
+  --green2:#276b56;
+  --green3:#e8f1ed;
+  --gold:#b89558;
+  --gold2:#d9c291;
+  --cream:#f7f2e8;
+  --paper:#fffdf8;
+  --text:#173e34;
+  --muted:#6e766f;
+  --border:#e8dfcf;
+  --shadow:0 15px 40px rgba(36,55,46,.08);
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
 
 body{
-margin:0;
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;
-background:#f4f1e9;
-color:#173e34;
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Tahoma,Arial,sans-serif;
+  background:
+    radial-gradient(circle at 15% 10%,rgba(184,149,88,.09),transparent 25%),
+    radial-gradient(circle at 90% 30%,rgba(39,107,86,.08),transparent 25%),
+    var(--cream);
+  color:var(--text);
+  min-height:100vh;
+}
+
+/* زخرفة عامة */
+
+body:before,
+body:after{
+  content:"";
+  position:fixed;
+  width:220px;
+  height:220px;
+  border:1px solid rgba(184,149,88,.12);
+  transform:rotate(45deg);
+  pointer-events:none;
+  z-index:-1;
+}
+
+body:before{
+  top:-120px;
+  right:-100px;
+}
+
+body:after{
+  bottom:-130px;
+  left:-100px;
 }
 
 header{
-background:#fff;
-text-align:center;
-padding:22px 15px;
-border-bottom:1px solid #eee;
+  position:relative;
+  overflow:hidden;
+  background:rgba(255,253,248,.94);
+  backdrop-filter:blur(10px);
+  text-align:center;
+  padding:26px 15px 18px;
+  border-bottom:1px solid var(--border);
+}
+
+header:before,
+header:after{
+  content:"✦";
+  position:absolute;
+  font-size:70px;
+  color:rgba(184,149,88,.10);
+}
+
+header:before{
+  right:7%;
+  top:8px;
+}
+
+header:after{
+  left:7%;
+  top:8px;
+}
+
+.brandMark{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:76px;
+  height:76px;
+  border:1px solid var(--gold2);
+  border-radius:50%;
+  margin-bottom:8px;
+  position:relative;
+  background:linear-gradient(145deg,#fff,#faf4e8);
+  box-shadow:0 8px 25px rgba(184,149,88,.14);
+}
+
+.brandMark:before,
+.brandMark:after{
+  content:"";
+  position:absolute;
+  width:88px;
+  height:88px;
+  border:1px solid rgba(184,149,88,.20);
+  transform:rotate(45deg);
+  border-radius:16px;
 }
 
 .logo{
-font-size:40px;
-font-weight:900;
+  position:relative;
+  z-index:2;
+  font-size:28px;
+  font-weight:900;
+  color:var(--green);
+}
+
+.subtitle{
+  color:var(--gold);
+  font-weight:700;
+  letter-spacing:.3px;
 }
 
 .muted{
-color:#69766f;
-line-height:1.9;
-}
-
-main{
-max-width:850px;
-margin:auto;
-padding:20px 16px;
-}
-
-.hero,.card,.notice,.page{
-background:#fff;
-border-radius:22px;
-padding:22px;
-margin-bottom:18px;
-box-shadow:0 8px 25px #00000008;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:15px;
-}
-
-button{
-border:0;
-border-radius:14px;
-padding:14px;
-font-size:16px;
-min-height:48px;
-cursor:pointer;
-font-family:inherit;
-}
-
-.start{
-width:100%;
-background:#276b56;
-color:#fff;
-font-weight:700;
-}
-
-.secondary,.option{
-width:100%;
-background:#edf4f1;
-color:#173e34;
-font-weight:700;
-}
-
-.option{
-display:block;
-margin:9px 0;
-text-align:right;
-font-weight:500;
-}
-
-.option.selected{
-outline:2px solid #276b56;
-background:#dcebe5;
-}
-
-.hidden{
-display:none!important;
-}
-
-.progress,.miniBar{
-height:9px;
-background:#e5e8e5;
-border-radius:10px;
-overflow:hidden;
-margin:18px 0;
-}
-
-.bar,.miniFill{
-height:100%;
-background:#34745f;
-}
-
-.result{
-font-size:27px;
-font-weight:800;
-}
-
-.scoreRow{
-margin:15px 0;
-}
-
-.scoreLine{
-display:flex;
-justify-content:space-between;
-gap:10px;
-}
-
-.quizNav,.actions{
-display:flex!important;
-gap:10px;
-margin-top:22px;
-}
-
-.quizNav button,.actions button{
-flex:1;
-}
-
-.quizNav button:disabled{
-opacity:.45;
-}
-
-.report{
-background:#f7faf8;
-border:1px solid #e1ebe6;
-border-radius:16px;
-padding:16px;
-margin-top:15px;
-line-height:1.9;
-}
-
-.report h3{
-margin:0 0 7px;
+  color:var(--muted);
+  line-height:1.9;
 }
 
 nav{
-display:flex;
-gap:8px;
-justify-content:center;
-flex-wrap:wrap;
-margin-top:12px;
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  flex-wrap:wrap;
+  margin-top:15px;
 }
 
 nav button{
-padding:8px 12px;
-min-height:38px;
-background:#edf4f1;
-color:#173e34;
+  border:1px solid #dde8e3;
+  background:#f3f8f5;
+  color:var(--green);
+  min-height:38px;
+  padding:8px 13px;
+  font-weight:700;
+}
+
+main{
+  max-width:960px;
+  margin:auto;
+  padding:24px 16px;
+}
+
+.hero,
+.card,
+.notice,
+.page,
+.checkoutBox{
+  background:rgba(255,253,248,.97);
+  border:1px solid var(--border);
+  border-radius:26px;
+  padding:25px;
+  margin-bottom:19px;
+  box-shadow:var(--shadow);
+}
+
+.hero{
+  text-align:center;
+  padding:42px 25px;
+  position:relative;
+  overflow:hidden;
+}
+
+.hero:before{
+  content:"";
+  position:absolute;
+  width:180px;
+  height:180px;
+  border:1px solid rgba(184,149,88,.18);
+  right:-90px;
+  top:-90px;
+  transform:rotate(45deg);
+}
+
+.hero:after{
+  content:"";
+  position:absolute;
+  width:140px;
+  height:140px;
+  border:1px solid rgba(39,107,86,.12);
+  left:-70px;
+  bottom:-70px;
+  transform:rotate(45deg);
+}
+
+.hero h1{
+  margin:0 0 12px;
+  font-size:34px;
+  color:var(--green);
+}
+
+.heroTag{
+  display:inline-block;
+  border:1px solid var(--gold2);
+  color:#816632;
+  background:#fbf6eb;
+  border-radius:999px;
+  padding:7px 13px;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:18px;
+}
+
+.ornament{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  color:var(--gold);
+  margin:12px 0 20px;
+}
+
+.ornament:before,
+.ornament:after{
+  content:"";
+  width:55px;
+  height:1px;
+  background:linear-gradient(to left,transparent,var(--gold2));
+}
+
+.ornament:after{
+  background:linear-gradient(to right,transparent,var(--gold2));
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:17px;
+}
+
+.testCard{
+  position:relative;
+  overflow:hidden;
+  transition:.25s;
+}
+
+.testCard:hover{
+  transform:translateY(-3px);
+}
+
+.testCard:before{
+  content:"";
+  position:absolute;
+  top:0;
+  right:0;
+  width:75px;
+  height:75px;
+  background:linear-gradient(135deg,rgba(184,149,88,.16),transparent);
+  border-radius:0 0 0 100%;
+}
+
+.testIcon{
+  width:52px;
+  height:52px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:16px;
+  background:var(--green3);
+  font-size:25px;
+  margin-bottom:14px;
+}
+
+.priceLine{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  border-top:1px dashed var(--border);
+  margin-top:18px;
+  padding-top:14px;
+  font-size:13px;
+}
+
+.priceBadge{
+  background:#f7efe0;
+  border:1px solid #ead8b5;
+  color:#84672f;
+  border-radius:999px;
+  padding:7px 11px;
+  white-space:nowrap;
+  font-weight:800;
+}
+
+button{
+  border:0;
+  border-radius:15px;
+  padding:14px;
+  font-size:16px;
+  min-height:49px;
+  cursor:pointer;
+  font-family:inherit;
+  transition:.2s;
+}
+
+button:active{
+  transform:scale(.985);
+}
+
+.start{
+  width:100%;
+  background:linear-gradient(135deg,var(--green),var(--green2));
+  color:#fff;
+  font-weight:800;
+  box-shadow:0 8px 18px rgba(39,107,86,.17);
+}
+
+.start:hover{
+  filter:brightness(1.04);
+}
+
+.secondary,
+.option{
+  width:100%;
+  background:#edf4f1;
+  color:var(--text);
+  font-weight:700;
+}
+
+.option{
+  display:block;
+  margin:10px 0;
+  text-align:right;
+  font-weight:600;
+  border:1px solid transparent;
+}
+
+.option:hover{
+  border-color:#bbd2c9;
+}
+
+.option.selected{
+  outline:2px solid var(--green2);
+  background:#dcebe5;
+}
+
+.hidden{
+  display:none!important;
+}
+
+.sectionTitle{
+  text-align:center;
+  margin:38px 0 18px;
+}
+
+.sectionTitle h2{
+  margin-bottom:5px;
+}
+
+.howGrid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:13px;
+}
+
+.howItem{
+  text-align:center;
+  background:#fffdf8;
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:22px 14px;
+}
+
+.howNumber{
+  width:42px;
+  height:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:var(--green);
+  color:white;
+  border-radius:50%;
+  margin:0 auto 12px;
+  font-weight:900;
+}
+
+.notice{
+  border-right:4px solid var(--gold);
+}
+
+.progress,
+.miniBar{
+  height:10px;
+  background:#e5e8e5;
+  border-radius:10px;
+  overflow:hidden;
+  margin:18px 0;
+}
+
+.bar,
+.miniFill{
+  height:100%;
+  background:linear-gradient(90deg,var(--green2),#499179);
+  transition:.3s;
+}
+
+.quizTop{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.quizNumber{
+  display:inline-block;
+  background:#f5efe3;
+  color:#866a35;
+  padding:7px 12px;
+  border-radius:999px;
+  font-size:13px;
+  font-weight:800;
+}
+
+.quizNav,
+.actions{
+  display:flex;
+  gap:10px;
+  margin-top:22px;
+}
+
+.quizNav button,
+.actions button{
+  flex:1;
+}
+
+.quizNav button:disabled{
+  opacity:.45;
+  cursor:not-allowed;
+}
+
+.result{
+  font-size:28px;
+  font-weight:900;
+  color:var(--green);
+}
+
+.scoreRow{
+  margin:15px 0;
+}
+
+.scoreLine{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.report{
+  background:#f7faf8;
+  border:1px solid #e1ebe6;
+  border-radius:18px;
+  padding:17px;
+  margin-top:15px;
+  line-height:1.9;
+}
+
+.report h3{
+  margin:0 0 7px;
+}
+
+.paymentWrap{
+  text-align:center;
+  padding:8px 0;
+}
+
+.successIcon{
+  width:74px;
+  height:74px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#e7f3ee;
+  color:var(--green);
+  border:1px solid #c7ded5;
+  border-radius:50%;
+  font-size:34px;
+  margin:0 auto 15px;
+}
+
+.checkoutPrice{
+  background:linear-gradient(135deg,#fbf5e9,#fffdf8);
+  border:1px solid #eadab9;
+  border-radius:22px;
+  padding:20px;
+  margin:20px 0;
+}
+
+.checkoutPrice .price{
+  font-size:38px;
+  font-weight:900;
+  color:var(--green);
+}
+
+.checkoutPrice small{
+  color:var(--muted);
+}
+
+.payButton{
+  width:100%;
+  color:#fff;
+  background:linear-gradient(135deg,#af8a48,#ccb06d);
+  font-weight:900;
+  font-size:18px;
+  box-shadow:0 9px 20px rgba(184,149,88,.20);
+}
+
+.payButton:disabled{
+  opacity:.7;
+  cursor:not-allowed;
+}
+
+.paymentLogos{
+  margin-top:13px;
+  font-size:13px;
+  color:var(--muted);
+}
+
+.lockedPreview{
+  position:relative;
+  margin-top:18px;
+  padding:19px;
+  background:#f8faf9;
+  border:1px dashed #cfdad5;
+  border-radius:19px;
+  text-align:right;
+}
+
+.lockIcon{
+  font-size:25px;
+  margin-bottom:8px;
+}
+
+.faqItem{
+  border-bottom:1px solid var(--border);
+  padding:16px 0;
+}
+
+.faqItem:last-child{
+  border-bottom:0;
+}
+
+.faqItem strong{
+  display:block;
+  margin-bottom:6px;
+}
+
+.policyBox{
+  background:#f9f6ee;
+  border:1px solid var(--border);
+  border-radius:17px;
+  padding:16px;
+  margin-top:15px;
 }
 
 footer{
-text-align:center;
-color:#758079;
-font-size:13px;
-line-height:1.8;
-padding:10px 20px 30px;
+  text-align:center;
+  color:#758079;
+  font-size:13px;
+  line-height:1.9;
+  padding:15px 20px 35px;
 }
 
-@media(max-width:520px){
-
-.quizNav,.actions{
-flex-direction:column;
+footer .footerLogo{
+  color:var(--green);
+  font-weight:900;
+  font-size:18px;
 }
 
-.quizNav button,.actions button{
-width:100%;
-flex:none;
+@media(max-width:650px){
+
+  .hero{
+    padding:34px 18px;
+  }
+
+  .hero h1{
+    font-size:28px;
+  }
+
+  .howGrid{
+    grid-template-columns:1fr;
+  }
+
+  .quizNav,
+  .actions{
+    flex-direction:column;
+  }
+
+  .quizNav button,
+  .actions button{
+    width:100%;
+    flex:none;
+  }
+
+  header:before,
+  header:after{
+    display:none;
+  }
 }
 
-}
 </style>
 </head>
 
@@ -190,9 +620,11 @@ flex:none;
 
 <header>
 
-<div class="logo">وَعْي</div>
+<div class="brandMark">
+  <div class="logo">وَعْي</div>
+</div>
 
-<div class="muted">
+<div class="subtitle">
 افهم نفسك أكثر
 </div>
 
@@ -206,6 +638,10 @@ flex:none;
 عن وَعْي
 </button>
 
+<button onclick="showPage('faq')">
+الأسئلة الشائعة
+</button>
+
 <button onclick="showPage('privacy')">
 الخصوصية
 </button>
@@ -217,23 +653,118 @@ flex:none;
 
 <main>
 
+<!-- ====================================
+     الصفحة الرئيسية
+==================================== -->
+
 <section id="home">
 
 <div class="hero">
+
+<div class="heroTag">
+وعي ذاتي • محتوى تثقيفي • تقارير مبسطة
+</div>
 
 <h1>
 رحلة لفهم نفسك تبدأ بخطوة
 </h1>
 
+<div class="ornament">
+✦
+</div>
+
 <p class="muted">
 اختبارات تثقيفية مبسطة تساعدك على استكشاف بعض جوانب الشخصية والمشاعر والسلوك والعلاقات.
 </p>
 
+<p style="font-weight:800;color:#174d40;">
+أكمل الاختبار مجانًا، ثم يمكنك فتح تقريرك الكامل مقابل 5 ريال فقط.
+</p>
+
 </div>
+
+
+<div class="sectionTitle">
+
+<h2>
+اختر الاختبار
+</h2>
+
+<div class="muted">
+الإجابة على جميع الأسئلة مجانية
+</div>
+
+</div>
+
 
 <div class="grid" id="tests"></div>
 
-<div class="notice">
+
+<div class="sectionTitle">
+
+<h2>
+كيف يعمل وَعْي؟
+</h2>
+
+</div>
+
+
+<div class="howGrid">
+
+<div class="howItem">
+
+<div class="howNumber">
+1
+</div>
+
+<strong>
+اختر الاختبار
+</strong>
+
+<p class="muted">
+اختر الجانب الذي ترغب في استكشافه.
+</p>
+
+</div>
+
+
+<div class="howItem">
+
+<div class="howNumber">
+2
+</div>
+
+<strong>
+أجب على الأسئلة
+</strong>
+
+<p class="muted">
+أكمل جميع الأسئلة مجانًا وبهدوء.
+</p>
+
+</div>
+
+
+<div class="howItem">
+
+<div class="howNumber">
+3
+</div>
+
+<strong>
+افتح تقريرك
+</strong>
+
+<p class="muted">
+بعد الانتهاء يمكنك عرض التقرير الكامل مقابل 5 ريال.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="notice" style="margin-top:20px;">
 
 <b>
 تنبيه مهم
@@ -248,20 +779,27 @@ flex:none;
 </section>
 
 
+<!-- ====================================
+     صفحة الاختبار
+==================================== -->
+
 <section id="quiz" class="card hidden">
+
+<div class="quizTop">
+
+<div id="counter" class="quizNumber"></div>
 
 <h2 id="testTitle"></h2>
 
-<div id="counter" class="muted"></div>
+</div>
+
 
 <div class="progress">
 
-<div
-class="bar"
-id="bar">
-</div>
+<div class="bar" id="bar"></div>
 
 </div>
+
 
 <h2 id="question"></h2>
 
@@ -291,9 +829,7 @@ onclick="goHome()">
 </div>
 
 
-<p
-class="muted"
-style="font-size:13px">
+<p class="muted" style="font-size:13px;text-align:center;">
 
 يُحفظ تقدم الاختبار محليًا على جهازك.
 
@@ -302,14 +838,134 @@ style="font-size:13px">
 </section>
 
 
-<section
-id="result"
-class="card hidden">
+<!-- ====================================
+     صفحة ما قبل الدفع
+==================================== -->
+
+<section id="checkout" class="checkoutBox hidden">
+
+<div class="paymentWrap">
+
+<div class="successIcon">
+✓
+</div>
+
+<h1>
+أحسنت، أكملت الاختبار
+</h1>
+
+<p class="muted">
+تم تحليل إجاباتك وتقريرك التثقيفي جاهز.
+</p>
+
+
+<div class="ornament">
+✦
+</div>
+
+
+<div class="lockedPreview">
+
+<div class="lockIcon">
+🔒
+</div>
+
+<strong>
+تقريرك الكامل يتضمن:
+</strong>
+
+<p class="muted">
+النتيجة والنسب التفصيلية، أبرز الجوانب التي ظهرت في إجاباتك، وقراءة مبسطة مع اقتراحات عملية.
+</p>
+
+</div>
+
+
+<div class="checkoutPrice">
+
+<div class="muted">
+فتح التقرير الكامل
+</div>
+
+<div class="price">
+5 ر.س
+</div>
+
+<small>
+دفعة واحدة لهذا التقرير
+</small>
+
+</div>
+
+
+<!--
+بعد اعتماد بوابة الدفع نستبدل هذا الزر
+بطلب الدفع الحقيقي من الخادم.
+-->
+
+<button
+id="payButton"
+class="payButton"
+onclick="startPayment()">
+
+عرض التقرير الكامل — 5 ر.س
+
+</button>
+
+
+<div class="paymentLogos">
+
+الدفع الإلكتروني الآمن
+
+<br>
+
+مدى • Apple Pay • البطاقات
+
+</div>
+
+
+<div
+id="paymentStatus"
+class="policyBox"
+style="margin-top:18px;">
+
+<strong>
+بوابة الدفع قيد التجهيز
+</strong>
+
+<div class="muted" style="margin-top:5px;">
+سيتم تفعيل الدفع فور اعتماد حساب بوابة الدفع.
+</div>
+
+</div>
+
+
+<button
+class="secondary"
+style="margin-top:14px;"
+onclick="goHome()">
+
+العودة للاختبارات
+
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ====================================
+     التقرير
+==================================== -->
+
+<section id="result" class="card hidden">
 
 <div class="result">
+تقريرك التثقيفي
+</div>
 
-نتيجتك التثقيفية
-
+<div class="ornament">
+✦
 </div>
 
 <h2 id="resultTitle"></h2>
@@ -318,10 +974,7 @@ class="card hidden">
 
 <div id="fullReport"></div>
 
-<p
-id="resultText"
-class="muted">
-</p>
+<p id="resultText" class="muted"></p>
 
 
 <div class="actions">
@@ -366,57 +1019,205 @@ onclick="goHome()">
 </section>
 
 
-<section
-id="about"
-class="page hidden">
+<!-- ====================================
+     عن وعي
+==================================== -->
+
+<section id="about" class="page hidden">
 
 <h2>
 عن وَعْي
 </h2>
 
+<div class="ornament">
+✦
+</div>
+
 <p class="muted">
 
-وَعْي منصة تثقيفية مبسطة تساعد على التأمل في بعض جوانب الشخصية والمشاعر والسلوك والعلاقات.
-
-النتائج وصفية وليست تشخيصًا نفسيًا.
+وَعْي منصة رقمية تقدم محتوى واختبارات تثقيفية مبسطة تساعد المستخدم على التأمل في بعض جوانب الشخصية والمشاعر والسلوك والعلاقات.
 
 </p>
 
-<button
-class="start"
-onclick="goHome()">
+<p class="muted">
 
+التقارير المقدمة تعليمية وتثقيفية، ولا تمثل تشخيصًا نفسيًا أو طبيًا ولا بديلًا عن التقييم لدى مختص مؤهل.
+
+</p>
+
+<button class="start" onclick="goHome()">
 العودة
-
 </button>
 
 </section>
 
 
-<section
-id="privacy"
-class="page hidden">
+<!-- ====================================
+     الأسئلة الشائعة
+==================================== -->
+
+<section id="faq" class="page hidden">
 
 <h2>
-الخصوصية
+الأسئلة الشائعة
 </h2>
+
+<div class="ornament">
+✦
+</div>
+
+
+<div class="faqItem">
+
+<strong>
+هل بدء الاختبار مجاني؟
+</strong>
+
+<div class="muted">
+نعم. تستطيع الإجابة على جميع أسئلة الاختبار مجانًا.
+</div>
+
+</div>
+
+
+<div class="faqItem">
+
+<strong>
+متى أدفع؟
+</strong>
+
+<div class="muted">
+بعد الإجابة على آخر سؤال فقط، وقبل عرض التقرير الكامل.
+</div>
+
+</div>
+
+
+<div class="faqItem">
+
+<strong>
+كم سعر التقرير؟
+</strong>
+
+<div class="muted">
+سعر فتح التقرير الكامل 5 ريال لكل اختبار.
+</div>
+
+</div>
+
+
+<div class="faqItem">
+
+<strong>
+هل النتائج تشخيص نفسي؟
+</strong>
+
+<div class="muted">
+لا. جميع النتائج تثقيفية ووصفية ولا تستخدم لتشخيص الاضطرابات النفسية أو الطبية.
+</div>
+
+</div>
+
+
+<div class="faqItem">
+
+<strong>
+هل تُرسل إجاباتي إلى خادم؟
+</strong>
+
+<div class="muted">
+في النسخة الحالية تعمل أسئلة الاختبارات داخل متصفحك، وقد يتم حفظ تقدمك محليًا على جهازك.
+</div>
+
+</div>
+
+
+<button class="start" onclick="goHome()">
+العودة
+</button>
+
+</section>
+
+
+<!-- ====================================
+     الخصوصية والشروط
+==================================== -->
+
+<section id="privacy" class="page hidden">
+
+<h2>
+الخصوصية والشروط
+</h2>
+
+<div class="ornament">
+✦
+</div>
+
+
+<div class="policyBox">
+
+<strong>
+الخصوصية
+</strong>
 
 <p class="muted">
 
-تعمل الاختبارات داخل متصفحك.
+تعمل الاختبارات داخل متصفحك، وقد يُحفظ تقدم الاختبار محليًا على جهازك لتتمكن من المتابعة.
 
-لا يحتوي الموقع في نسخته الحالية على خادم يستقبل إجابات الاختبارات.
-
-قد يُحفظ تقدم الاختبار محليًا على جهازك حتى تستطيع المتابعة.
+عند تفعيل الدفع الإلكتروني، ستتم معالجة بيانات الدفع بواسطة مزود الدفع المعتمد، ولن يقوم وَعْي بتخزين بيانات بطاقتك البنكية.
 
 </p>
 
-<button
-class="start"
-onclick="goHome()">
+</div>
 
+
+<div class="policyBox">
+
+<strong>
+طبيعة الخدمة
+</strong>
+
+<p class="muted">
+
+التقارير والاختبارات المقدمة في وَعْي محتوى رقمي تثقيفي ولا تعد تشخيصًا طبيًا أو نفسيًا أو علاجًا أو استشارة متخصصة.
+
+</p>
+
+</div>
+
+
+<div class="policyBox">
+
+<strong>
+سياسة الاسترجاع
+</strong>
+
+<p class="muted">
+
+نظرًا لأن التقرير منتج رقمي يتم إتاحته مباشرة بعد إتمام الدفع، فلا يكون المبلغ قابلاً للاسترجاع بعد فتح التقرير، إلا في حال وجود خلل تقني يمنع تقديم الخدمة أو في الحالات التي تتطلبها الأنظمة المعمول بها.
+
+</p>
+
+</div>
+
+
+<div class="policyBox">
+
+<strong>
+السعر
+</strong>
+
+<p class="muted">
+
+سعر فتح التقرير الكامل لكل اختبار هو 5 ريال سعودي ما لم يظهر خلاف ذلك بشكل واضح قبل الدفع.
+
+</p>
+
+</div>
+
+
+<button class="start" onclick="goHome()">
 العودة
-
 </button>
 
 </section>
@@ -426,7 +1227,11 @@ onclick="goHome()">
 
 <footer>
 
-وَعْي | افهم نفسك أكثر
+<div class="footerLogo">
+وَعْي
+</div>
+
+افهم نفسك أكثر
 
 <br>
 
@@ -437,16 +1242,37 @@ onclick="goHome()">
 
 <script>
 
-const tests=[
+/* ====================================
+   إعداد الدفع
+==================================== */
+
+/*
+مهم:
+
+الموقع موجود على GitHub Pages وهو موقع ثابت.
+
+بعد اعتماد Geidea أو مزود الدفع، لا نضع المفتاح السري هنا.
+
+الدفع الحقيقي يجب أن يتم عبر Backend / Serverless Function
+ويتم فتح التقرير فقط بعد التحقق من نجاح العملية من الخادم.
+*/
+
+const REPORT_PRICE = 5;
+
+const PAYMENT_ENABLED = false;
 
 
 /* ====================================
-   اختبار الشخصية
+   بيانات الاختبارات
 ==================================== */
+
+const tests=[
 
 {
 
 type:"personality",
+
+icon:"◇",
 
 title:"اختبار أنماط الشخصية",
 
@@ -454,72 +1280,42 @@ description:
 "25 سؤالًا لاستكشاف خمسة ميول شخصية بصورة تثقيفية.",
 
 answers:[
-
 "لا تنطبق عليّ",
-
 "تنطبق قليلًا",
-
 "تنطبق غالبًا",
-
 "تنطبق جدًا"
-
 ],
 
 questions:[
 
-
 ["يهمني أن يلاحظ الآخرون إنجازاتي وقدراتي.","الميل النرجسي"],
-
 ["أشعر بالانزعاج عندما لا أحصل على التقدير الذي أتوقعه.","الميل النرجسي"],
-
 ["أحب أن أشعر بأنني مميز مقارنة بالآخرين.","الميل النرجسي"],
-
 ["أستمتع عندما أكون محط الاهتمام في بعض المواقف.","الميل النرجسي"],
-
 ["أرى أن الاعتراف بإنجازاتي أمر مهم بالنسبة لي.","الميل النرجسي"],
 
-
 ["أهتم كثيرًا بالتفاصيل والترتيب والدقة.","الميل الوسواسي"],
-
 ["يصعب علي ترك العمل قبل أن يصبح بالشكل الذي أراه مثاليًا.","الميل الوسواسي"],
-
 ["أفضل تنفيذ الأمور بطريقة محددة ومنظمة.","الميل الوسواسي"],
-
 ["أنزعج عندما تسير الأمور بطريقة مختلفة عن الخطة.","الميل الوسواسي"],
-
 ["قد أقضي وقتًا إضافيًا لتحسين تفاصيل صغيرة.","الميل الوسواسي"],
 
-
 ["أحتاج إلى رأي شخص أثق به قبل اتخاذ بعض القرارات المهمة.","الميل الاعتمادي"],
-
 ["أشعر بعدم الارتياح عندما أضطر لمواجهة الأمور وحدي.","الميل الاعتمادي"],
-
 ["يصعب علي مخالفة شخص أعتمد عليه حتى عندما لا أوافقه.","الميل الاعتمادي"],
-
 ["أشعر بالطمأنينة عندما يشاركني شخص موثوق في اتخاذ القرار.","الميل الاعتمادي"],
-
 ["أجد طلب الدعم من الآخرين أسهل من تحمل بعض المواقف وحدي.","الميل الاعتمادي"],
 
-
 ["أتجنب بعض المواقف الاجتماعية خوفًا من النقد أو الرفض.","الميل التجنبي"],
-
 ["أتردد في التقرب من الآخرين حتى أتأكد من تقبلهم لي.","الميل التجنبي"],
-
 ["أتأثر كثيرًا بالانتقاد أو التقييم السلبي.","الميل التجنبي"],
-
 ["أتردد في تجربة مواقف اجتماعية جديدة إذا خشيت الإحراج.","الميل التجنبي"],
-
 ["قد أتجنب إبداء رأيي عندما أخشى حكم الآخرين عليّ.","الميل التجنبي"],
 
-
 ["أفضل غالبًا الأنشطة الفردية على الاختلاط بالآخرين.","الميل الانعزالي"],
-
 ["لا أشعر بحاجة كبيرة إلى تكوين علاقات اجتماعية كثيرة.","الميل الانعزالي"],
-
 ["أشعر بالراحة عندما أقضي وقتًا طويلًا بمفردي.","الميل الانعزالي"],
-
 ["أفضل الاحتفاظ بجزء كبير من أفكاري ومشاعري لنفسي.","الميل الانعزالي"],
-
 ["لا أبحث عادة عن قدر كبير من التفاعل الاجتماعي.","الميل الانعزالي"]
 
 ]
@@ -527,13 +1323,11 @@ questions:[
 },
 
 
-/* ====================================
-   القلق والتوتر
-==================================== */
-
 {
 
 type:"general",
+
+icon:"◌",
 
 title:"اختبار القلق والتوتر",
 
@@ -541,37 +1335,23 @@ description:
 "10 أسئلة لمؤشر تثقيفي حول القلق والتوتر.",
 
 answers:[
-
 "أبدًا",
-
 "أحيانًا",
-
 "غالبًا",
-
 "بشكل كبير"
-
 ],
 
 questions:[
 
 "أشعر بالتوتر أو عدم الارتياح.",
-
 "يصعب علي إيقاف التفكير في الأمور التي تقلقني.",
-
 "أجد صعوبة في الاسترخاء.",
-
 "أفكر كثيرًا فيما قد يحدث مستقبلًا.",
-
 "أصبح سريع الانفعال عندما أكون تحت الضغط.",
-
 "يؤثر التفكير الزائد على تركيزي.",
-
 "أشعر بشد أو توتر جسدي عندما أقلق.",
-
 "يؤثر القلق أو التفكير على نومي.",
-
 "أتجنب بعض المواقف بسبب التوتر.",
-
 "يؤثر التوتر على نشاطي أو حياتي اليومية."
 
 ]
@@ -579,13 +1359,11 @@ questions:[
 },
 
 
-/* ====================================
-   التعلق
-==================================== */
-
 {
 
 type:"attachment",
+
+icon:"♡",
 
 title:"اختبار أسلوب التعلق في العلاقات",
 
@@ -593,44 +1371,27 @@ description:
 "12 سؤالًا لاستكشاف أنماط آمن وقلق وتجنبي.",
 
 answers:[
-
 "لا تنطبق عليّ",
-
 "تنطبق قليلًا",
-
 "تنطبق غالبًا",
-
 "تنطبق جدًا"
-
 ],
 
 questions:[
 
-
 ["أشعر بالراحة في العلاقات القريبة.","آمن"],
-
 ["أستطيع التعبير عن احتياجاتي للطرف الآخر بوضوح.","آمن"],
-
 ["أستطيع مناقشة الخلاف دون خوف شديد من انتهاء العلاقة.","آمن"],
-
 ["أستطيع الحفاظ على استقلاليتي مع وجود علاقة قريبة.","آمن"],
 
-
 ["أقلق كثيرًا من فقدان الشخص الذي أحبه.","قلق"],
-
 ["أتضايق بشدة عندما يتأخر شخص قريب مني في الرد.","قلق"],
-
 ["أحتاج إلى تأكيد متكرر بأن الطرف الآخر يهتم بي.","قلق"],
-
 ["أفكر كثيرًا في احتمال ابتعاد الطرف الآخر عني.","قلق"],
 
-
 ["أفضل الاحتفاظ بمشكلاتي ومشاعري لنفسي.","تجنبي"],
-
 ["أشعر بعدم الارتياح عندما يعتمد عليّ شخص عاطفيًا بشكل كبير.","تجنبي"],
-
 ["قد أبتعد عندما تصبح العلاقة شديدة القرب.","تجنبي"],
-
 ["أفضل الاعتماد على نفسي بدل طلب الدعم العاطفي.","تجنبي"]
 
 ]
@@ -638,60 +1399,40 @@ questions:[
 },
 
 
-/* ====================================
-   الطفل
-==================================== */
-
 {
 
 type:"child",
 
-title:
-"اختبار مؤشرات سلوك الطفل وانفعالاته",
+icon:"☆",
+
+title:"اختبار مؤشرات سلوك الطفل وانفعالاته",
 
 description:
 "12 سؤالًا لولي الأمر حول أربعة جوانب سلوكية وانفعالية.",
 
 answers:[
-
 "لا / نادرًا",
-
 "أحيانًا",
-
 "غالبًا",
-
 "بشكل كبير"
-
 ],
 
 questions:[
 
-
 ["يتشتت الطفل بسهولة.","الانتباه والاندفاع"],
-
 ["يجد صعوبة في الاستمرار في مهمة مناسبة لعمره.","الانتباه والاندفاع"],
-
 ["يتصرف أحيانًا قبل التفكير.","الانتباه والاندفاع"],
 
-
 ["يغضب بشدة في بعض المواقف.","تنظيم الانفعالات"],
-
 ["يجد صعوبة في تهدئة نفسه بعد الغضب.","تنظيم الانفعالات"],
-
 ["تتغير انفعالاته بسرعة في بعض المواقف.","تنظيم الانفعالات"],
 
-
 ["تظهر عليه مخاوف متكررة.","القلق والمخاوف"],
-
 ["يتجنب بعض المواقف بسبب الخوف.","القلق والمخاوف"],
-
 ["يطلب الطمأنة بشكل متكرر عند القلق.","القلق والمخاوف"],
 
-
 ["يجد صعوبة في التعامل مع الأطفال الآخرين.","التفاعل الاجتماعي"],
-
 ["يواجه صعوبة في تكوين صداقات مناسبة لعمره.","التفاعل الاجتماعي"],
-
 ["تظهر مشكلات متكررة أثناء اللعب أو التفاعل مع الآخرين.","التفاعل الاجتماعي"]
 
 ]
@@ -699,76 +1440,48 @@ questions:[
 },
 
 
-/* ====================================
-   الذكاء العاطفي
-==================================== */
-
 {
 
 type:"eq",
 
-title:
-"اختبار الذكاء العاطفي",
+icon:"✦",
+
+title:"اختبار الذكاء العاطفي",
 
 description:
 "20 سؤالًا لاستكشاف أربعة جوانب من الذكاء العاطفي.",
 
 answers:[
-
 "لا تنطبق عليّ",
-
 "تنطبق قليلًا",
-
 "تنطبق غالبًا",
-
 "تنطبق جدًا"
-
 ],
 
 questions:[
 
-
 ["أستطيع تحديد الشعور الذي أمر به بدقة.","الوعي بالمشاعر"],
-
 ["أعرف عادة سبب تغير مزاجي.","الوعي بالمشاعر"],
-
 ["ألاحظ تأثير مشاعري على قراراتي.","الوعي بالمشاعر"],
-
 ["أستطيع التمييز بين مشاعر متشابهة مثل القلق والغضب.","الوعي بالمشاعر"],
-
 ["ألاحظ تغير حالتي العاطفية أثناء اليوم.","الوعي بالمشاعر"],
 
-
 ["أستطيع تهدئة نفسي عندما أغضب.","تنظيم المشاعر"],
-
 ["أفكر قبل أن أرد عندما أكون منزعجًا.","تنظيم المشاعر"],
-
 ["أستطيع السيطرة على رد فعلي أثناء الخلاف.","تنظيم المشاعر"],
-
 ["أستطيع العودة إلى هدوئي بعد موقف مزعج.","تنظيم المشاعر"],
-
 ["لا أسمح لمشاعر لحظية بأن تتحكم في جميع قراراتي.","تنظيم المشاعر"],
 
-
 ["ألاحظ عندما يكون الشخص أمامي منزعجًا حتى لو لم يخبرني.","فهم مشاعر الآخرين"],
-
 ["أحاول فهم سبب شعور الآخرين بطريقة معينة.","فهم مشاعر الآخرين"],
-
 ["ألاحظ نبرة الصوت ولغة الجسد أثناء الحديث.","فهم مشاعر الآخرين"],
-
 ["أستطيع فهم وجهة نظر الآخر حتى عندما أختلف معه.","فهم مشاعر الآخرين"],
-
 ["أعرف متى يحتاج الشخص إلى الاستماع أكثر من النصيحة.","فهم مشاعر الآخرين"],
 
-
 ["أستطيع التعبير عن مشاعري بوضوح واحترام.","إدارة العلاقات"],
-
 ["أستطيع مناقشة الخلاف دون الإساءة للطرف الآخر.","إدارة العلاقات"],
-
 ["أعرف متى يجب أن أعتذر أو أصلح سوء تفاهم.","إدارة العلاقات"],
-
 ["أستطيع وضع حدود واضحة في علاقاتي.","إدارة العلاقات"],
-
 ["أحاول الوصول إلى حلول مناسبة للطرفين أثناء الخلاف.","إدارة العلاقات"]
 
 ]
@@ -779,63 +1492,39 @@ questions:[
 
 
 /* ====================================
-   شرح أنماط الشخصية
+   وصف أنماط الشخصية
 ==================================== */
 
 const descriptions={
 
 "الميل النرجسي":[
-
 "التقدير والظهور",
-
 "قد يكون الاهتمام بالتقدير والاعتراف بالإنجاز حاضرًا بصورة واضحة.",
-
 "وازن بين تقدير إنجازاتك والإنصات لاحتياجات الآخرين."
-
 ],
-
 
 "الميل الوسواسي":[
-
 "الدقة والتنظيم",
-
 "قد تميل إلى التنظيم والمثالية والاهتمام بالتفاصيل.",
-
 "حدد متى تكون الجودة كافية حتى لا تتحول الدقة إلى استنزاف."
-
 ],
-
 
 "الميل الاعتمادي":[
-
 "الدعم والطمأنينة",
-
 "قد تميل إلى طلب الدعم والطمأنينة عند اتخاذ بعض القرارات.",
-
 "درّب نفسك على اتخاذ قرارات صغيرة باستقلالية تدريجية."
-
 ],
-
 
 "الميل التجنبي":[
-
 "الحذر من النقد",
-
 "قد يظهر لديك حذر اجتماعي وحساسية تجاه النقد أو الرفض.",
-
 "جرّب التعرض التدريجي للمواقف الآمنة بدل تجنبها تلقائيًا."
-
 ],
 
-
 "الميل الانعزالي":[
-
 "الاستقلال والمساحة الشخصية",
-
 "قد ترتاح للاستقلال والأنشطة الفردية أكثر من كثرة التفاعل.",
-
 "حافظ على المساحة التي تناسبك مع عدم إهمال العلاقات الداعمة."
-
 ]
 
 };
@@ -846,31 +1535,23 @@ const descriptions={
 ==================================== */
 
 let currentTest=0;
-
 let currentQuestion=0;
-
 let userAnswers=[];
-
 let lastResultText="";
 
-
 const sections=[
-
 "home",
-
 "quiz",
-
+"checkout",
 "result",
-
 "about",
-
+"faq",
 "privacy"
-
 ];
 
 
 /* ====================================
-   إنشاء بطاقات الاختبارات
+   بطاقات الاختبارات
 ==================================== */
 
 const container=
@@ -882,25 +1563,41 @@ tests.forEach(function(test,index){
 const card=
 document.createElement("div");
 
-card.className="card";
+card.className="card testCard";
 
+card.innerHTML=`
 
-card.innerHTML=
+<div class="testIcon">
+${test.icon}
+</div>
 
-"<h2>"+
-test.title+
-"</h2>"+
+<h2>
+${test.title}
+</h2>
 
-"<p class='muted'>"+
-test.description+
-"</p>"+
+<p class="muted">
+${test.description}
+</p>
 
-"<button class='start' onclick='startTest("+
-index+
-")'>"+
-"ابدأ الاختبار"+
-"</button>";
+<button
+class="start"
+onclick="startTest(${index})">
+ابدأ الاختبار مجانًا
+</button>
 
+<div class="priceLine">
+
+<span>
+الأسئلة مجانية
+</span>
+
+<span class="priceBadge">
+التقرير 5 ر.س
+</span>
+
+</div>
+
+`;
 
 container.appendChild(card);
 
@@ -917,33 +1614,24 @@ sections.forEach(function(section){
 
 document
 .getElementById(section)
-.classList
-.add("hidden");
+.classList.add("hidden");
 
 });
 
-
 document
 .getElementById(id)
-.classList
-.remove("hidden");
-
+.classList.remove("hidden");
 
 window.scrollTo({
-
 top:0,
-
 behavior:"smooth"
-
 });
 
 }
 
 
 function goHome(){
-
 showPage("home");
-
 }
 
 
@@ -954,70 +1642,39 @@ showPage("home");
 function startTest(index){
 
 currentTest=index;
-
 currentQuestion=0;
 
-
 userAnswers=
-
 new Array(
-
-tests[index]
-.questions
-.length
-
+tests[index].questions.length
 ).fill(null);
-
-
-/* استعادة التقدم */
 
 try{
 
 const saved=
-
 JSON.parse(
-
 localStorage.getItem(
-
-"waei_progress_"+
-index
-
+"waei_progress_"+index
 )
-
 );
 
-
 if(
-
 saved &&
-
-Array.isArray(
-saved.answers
-) &&
-
-saved.answers.length ===
-userAnswers.length
-
+Array.isArray(saved.answers) &&
+saved.answers.length===userAnswers.length
 ){
 
-userAnswers=
-saved.answers;
-
+userAnswers=saved.answers;
 
 currentQuestion=
-
 Math.min(
-
 saved.current || 0,
-
 userAnswers.length-1
-
 );
 
 }
 
 }catch(error){}
-
 
 showPage("quiz");
 
@@ -1035,50 +1692,27 @@ showQuestion();
 function createButtons(){
 
 const box=
-document.getElementById(
-"answers"
-);
-
+document.getElementById("answers");
 
 box.innerHTML="";
 
-
-tests[currentTest]
-.answers
-.forEach(
-
+tests[currentTest].answers.forEach(
 function(answer,index){
 
 const button=
-document.createElement(
-"button"
-);
+document.createElement("button");
 
+button.className="option";
 
-button.className=
-"option";
+button.innerText=answer;
 
-
-button.innerText=
-answer;
-
-
-button.onclick=
-function(){
-
-answerQuestion(
-index
-);
-
+button.onclick=function(){
+answerQuestion(index);
 };
 
-
-box.appendChild(
-button
-);
+box.appendChild(button);
 
 }
-
 );
 
 }
@@ -1093,52 +1727,34 @@ function showQuestion(){
 const test=
 tests[currentTest];
 
-
 const item=
-test.questions[
-currentQuestion
-];
-
+test.questions[currentQuestion];
 
 document
-.getElementById(
-"testTitle"
-)
+.getElementById("testTitle")
 .innerText=
 test.title;
 
-
 document
-.getElementById(
-"counter"
-)
+.getElementById("counter")
 .innerText=
-
 "السؤال "+
 (currentQuestion+1)+
 " من "+
 test.questions.length;
 
-
 document
-.getElementById(
-"question"
-)
+.getElementById("question")
 .innerText=
-
 Array.isArray(item)
 ?
 item[0]
 :
 item;
 
-
 document
-.getElementById(
-"bar"
-)
+.getElementById("bar")
 .style.width=
-
 (
 (currentQuestion+1)
 /
@@ -1148,34 +1764,20 @@ test.questions.length
 )
 +"%";
 
-
 document
-.getElementById(
-"prevButton"
-)
+.getElementById("prevButton")
 .disabled=
-
 currentQuestion===0;
 
-
-/* إظهار الإجابة المختارة عند الرجوع */
-
 document
-.querySelectorAll(
-".option"
-)
+.querySelectorAll(".option")
 .forEach(
 
 function(button,index){
 
 button.classList.toggle(
-
 "selected",
-
-userAnswers[
-currentQuestion
-]===index
-
+userAnswers[currentQuestion]===index
 );
 
 }
@@ -1195,16 +1797,12 @@ try{
 
 localStorage.setItem(
 
-"waei_progress_"+
-currentTest,
+"waei_progress_"+currentTest,
 
 JSON.stringify({
 
-current:
-currentQuestion,
-
-answers:
-userAnswers
+current:currentQuestion,
+answers:userAnswers
 
 })
 
@@ -1216,23 +1814,16 @@ userAnswers
 
 
 /* ====================================
-   الإجابة
+   تسجيل الإجابة
 ==================================== */
 
 function answerQuestion(value){
 
-userAnswers[
-currentQuestion
-]=value;
-
+userAnswers[currentQuestion]=value;
 
 if(
-
 currentQuestion <
-
-tests[currentTest]
-.questions.length-1
-
+tests[currentTest].questions.length-1
 ){
 
 currentQuestion++;
@@ -1248,16 +1839,19 @@ else{
 try{
 
 localStorage.removeItem(
-
-"waei_progress_"+
-currentTest
-
+"waei_progress_"+currentTest
 );
 
 }catch(error){}
 
+/*
+بعد آخر سؤال:
+نذهب للدفع، وليس للتقرير.
+*/
 
-showResult();
+prepareResult();
+
+showCheckout();
 
 }
 
@@ -1270,9 +1864,7 @@ showResult();
 
 function previousQuestion(){
 
-if(
-currentQuestion>0
-){
+if(currentQuestion>0){
 
 currentQuestion--;
 
@@ -1286,6 +1878,86 @@ showQuestion();
 
 
 /* ====================================
+   صفحة الدفع
+==================================== */
+
+function showCheckout(){
+
+showPage("checkout");
+
+const status=
+document.getElementById("paymentStatus");
+
+if(PAYMENT_ENABLED){
+
+status.innerHTML=`
+
+<strong>
+اختر طريقة الدفع
+</strong>
+
+<div class="muted" style="margin-top:5px;">
+سيتم تحويلك إلى صفحة الدفع الآمنة.
+</div>
+
+`;
+
+}
+
+}
+
+
+/* ====================================
+   بدء الدفع
+==================================== */
+
+function startPayment(){
+
+if(!PAYMENT_ENABLED){
+
+alert(
+"بوابة الدفع الإلكتروني قيد الاعتماد حاليًا. سيتم تفعيلها قريبًا."
+);
+
+return;
+
+}
+
+/*
+
+========================================
+هنا سيتم ربط Geidea بعد الاعتماد
+========================================
+
+الطريقة الصحيحة لاحقًا:
+
+1- الموقع يرسل طلبًا إلى Backend.
+2- الـ Backend ينشئ عملية دفع بقيمة 5 ريال.
+3- المستخدم يكمل الدفع.
+4- Geidea تؤكد نجاح الدفع.
+5- Backend يتحقق من العملية.
+6- بعدها فقط يتم فتح التقرير.
+
+لا تضع Secret Key داخل هذا الملف.
+
+*/
+
+}
+
+
+/* ====================================
+   فتح التقرير
+   تستدعى بعد تحقق الدفع من الخادم
+==================================== */
+
+function paymentVerified(){
+
+showPage("result");
+
+}
+
+
+/* ====================================
    إعادة الاختبار
 ==================================== */
 
@@ -1294,27 +1966,17 @@ function restartTest(){
 try{
 
 localStorage.removeItem(
-
-"waei_progress_"+
-currentTest
-
+"waei_progress_"+currentTest
 );
 
 }catch(error){}
 
-
 currentQuestion=0;
 
-
 userAnswers=
-
 new Array(
-
-tests[currentTest]
-.questions.length
-
+tests[currentTest].questions.length
 ).fill(null);
-
 
 showPage("quiz");
 
@@ -1329,17 +1991,12 @@ showQuestion();
    حساب النسبة
 ==================================== */
 
-function percentage(
-value,
-maximum
-){
+function percentage(value,maximum){
 
 return Math.round(
-
 value/
 maximum*
 100
-
 );
 
 }
@@ -1349,10 +2006,7 @@ maximum*
    شريط النتيجة
 ==================================== */
 
-function scoreBox(
-name,
-value
-){
+function scoreBox(name,value){
 
 return `
 
@@ -1369,7 +2023,6 @@ ${value}%
 </span>
 
 </div>
-
 
 <div class="miniBar">
 
@@ -1391,45 +2044,29 @@ style="width:${value}%">
    حساب الفئات
 ==================================== */
 
-function calculateCategories(
-test
-){
+function calculateCategories(test){
 
 const scores={};
 
-
 test.questions.forEach(
-
 function(question,index){
 
-if(
-Array.isArray(question)
-){
+if(Array.isArray(question)){
 
 const category=
 question[1];
 
-
-if(
-scores[category]===
-undefined
-){
-
+if(scores[category]===undefined){
 scores[category]=0;
-
 }
 
-
 scores[category]+=
-
 userAnswers[index] ?? 0;
 
 }
 
 }
-
 );
-
 
 return scores;
 
@@ -1440,10 +2077,7 @@ return scores;
    صندوق التقرير
 ==================================== */
 
-function report(
-title,
-body
-){
+function report(title,body){
 
 return `
 
@@ -1465,48 +2099,29 @@ ${body}
 
 
 /* ====================================
-   عرض النتيجة
+   تجهيز التقرير
+   لا يتم عرضه للمستخدم قبل الدفع
 ==================================== */
 
-function showResult(){
-
-showPage(
-"result"
-);
-
+function prepareResult(){
 
 const test=
 tests[currentTest];
 
-
 const title=
-document.getElementById(
-"resultTitle"
-);
-
+document.getElementById("resultTitle");
 
 const details=
-document.getElementById(
-"details"
-);
-
+document.getElementById("details");
 
 const fullReport=
-document.getElementById(
-"fullReport"
-);
-
+document.getElementById("fullReport");
 
 const text=
-document.getElementById(
-"resultText"
-);
-
+document.getElementById("resultText");
 
 details.innerHTML="";
-
 fullReport.innerHTML="";
-
 text.innerText="";
 
 
@@ -1514,105 +2129,63 @@ text.innerText="";
    القلق والتوتر
 ==================================== */
 
-if(
-test.type===
-"general"
-){
+if(test.type==="general"){
 
 const total=
-
 userAnswers.reduce(
-
 function(sum,value){
-
-return sum+
-(value ?? 0);
-
+return sum+(value ?? 0);
 },
-
 0
-
 );
-
 
 const result=
-
-percentage(
-total,
-30
-);
-
+percentage(total,30);
 
 title.innerText=
-
 "مؤشر القلق والتوتر: "+
 result+
 "%";
 
-
 let level;
 
+if(result<34){
 
-if(
-result<34
-){
-
-level=
-"محدود";
+level="محدود";
 
 }
+else if(result<67){
 
-else if(
-result<67
-){
-
-level=
-"متوسط";
+level="متوسط";
 
 }
-
 else{
 
-level=
-"مرتفع نسبيًا";
+level="مرتفع نسبيًا";
 
 }
 
-
 details.innerHTML=
-
 scoreBox(
 "المؤشر العام",
 result
 );
 
-
 fullReport.innerHTML+=
-
 report(
-
 "قراءة النتيجة",
-
 "ظهر مستوى <b>"+
 level+
 "</b> من مؤشرات القلق والتوتر ضمن هذا الاختبار التثقيفي."
-
 );
-
 
 fullReport.innerHTML+=
-
 report(
-
 "خطوات عملية",
-
 "لاحظ المواقف التي ترفع التوتر، ونظّم النوم والنشاط اليومي، وجرّب تمارين التنفس أو الاسترخاء البسيطة. إذا استمرت الأعراض أو أثرت بوضوح على حياتك فناقشها مع مختص مرخص."
-
 );
 
-
 text.innerText=
-
 "هذه النسبة ليست درجة تشخيصية ولا تحدد وجود اضطراب قلق.";
 
 }
@@ -1625,360 +2198,208 @@ text.innerText=
 else{
 
 const scores=
-
-calculateCategories(
-test
-);
-
+calculateCategories(test);
 
 const sorted=
-
-Object.entries(
-scores
-)
+Object.entries(scores)
 .sort(
-
 function(a,b){
-
 return b[1]-a[1];
-
 }
-
 );
 
 
-/* ====================================
-   الشخصية
-==================================== */
+/* الشخصية */
 
-if(
-test.type===
-"personality"
-){
+if(test.type==="personality"){
 
 title.innerText=
-
 "الميل الأبرز: "+
 sorted[0][0];
 
-
 sorted.forEach(
-
 function(item){
 
 details.innerHTML+=
-
 scoreBox(
-
 item[0],
-
-percentage(
-item[1],
-15
-)
-
+percentage(item[1],15)
 );
 
 }
-
 );
 
-
 const first=
-
-descriptions[
-sorted[0][0]
-];
-
+descriptions[sorted[0][0]];
 
 const second=
-
-descriptions[
-sorted[1][0]
-];
-
+descriptions[sorted[1][0]];
 
 fullReport.innerHTML+=
-
 report(
-
 "أبرز ميلين",
-
 "الأول: <b>"+
 sorted[0][0]+
 "</b> — "+
 first[1]+
-
 "<br><br>"+
-
 "الثاني: <b>"+
 sorted[1][0]+
 "</b> — "+
 second[1]
-
 );
 
-
 fullReport.innerHTML+=
-
 report(
-
 "نقطة يمكن الاستفادة منها",
-
 first[0]+"."
-
 );
-
 
 fullReport.innerHTML+=
-
 report(
-
 "اقتراح للتطوير",
-
 first[2]
-
 );
-
 
 text.innerText=
-
 "النتيجة تصف ميولًا ظهرت في إجاباتك ولا تعني وجود اضطراب في الشخصية. تشخيص اضطرابات الشخصية يحتاج إلى تقييم سريري متخصص.";
 
 }
 
 
-/* ====================================
-   التعلق
-==================================== */
+/* التعلق */
 
-if(
-test.type===
-"attachment"
-){
+if(test.type==="attachment"){
 
 title.innerText=
-
 "أسلوب التعلق الأبرز: "+
 sorted[0][0];
 
-
 sorted.forEach(
-
 function(item){
 
 details.innerHTML+=
-
 scoreBox(
-
 item[0],
-
-percentage(
-item[1],
-12
-)
-
+percentage(item[1],12)
 );
 
 }
-
 );
 
-
 fullReport.innerHTML+=
-
 report(
-
 "قراءة النتيجة",
-
 "ظهر نمط <b>"+
 sorted[0][0]+
 "</b> بصورة أكبر، يليه <b>"+
 sorted[1][0]+
 "</b>. قد تختلف طريقة التعلق باختلاف العلاقة والسياق."
-
 );
-
 
 fullReport.innerHTML+=
-
 report(
-
 "للتطوير",
-
 "راقب طريقة استجابتك للقرب والخلاف وطلب الطمأنة والحاجة للمساحة الشخصية. التواصل الواضح والحدود الصحية يساعدان على بناء علاقات أكثر توازنًا."
-
 );
 
-
 text.innerText=
-
 "هذه نتيجة تثقيفية وليست تصنيفًا ثابتًا أو تشخيصًا نفسيًا.";
 
 }
 
 
-/* ====================================
-   الطفل
-==================================== */
+/* الطفل */
 
-if(
-test.type===
-"child"
-){
+if(test.type==="child"){
 
 title.innerText=
-
 "مؤشرات سلوك الطفل وانفعالاته";
 
-
 sorted.forEach(
-
 function(item){
 
 details.innerHTML+=
-
 scoreBox(
-
 item[0],
-
-percentage(
-item[1],
-9
-)
-
+percentage(item[1],9)
 );
 
 }
-
 );
 
-
 fullReport.innerHTML+=
-
 report(
-
 "أكثر جانب بروزًا",
-
 "ظهر <b>"+
 sorted[0][0]+
 "</b> كأعلى جانب في إجابات ولي الأمر. هذا لا يحدد سبب السلوك ولا يشخّص اضطرابًا."
-
 );
-
 
 fullReport.innerHTML+=
-
 report(
-
 "ما الذي يستحق الملاحظة؟",
-
 "راقب مدة السلوك، وشدته، ومدى مناسبته لعمر الطفل، وهل يظهر في أكثر من بيئة مثل المنزل والمدرسة، ومدى تأثيره على التعلم والعلاقات والحياة اليومية."
-
 );
 
-
 text.innerText=
-
 "إذا كانت السلوكيات مستمرة أو تسبب تعطيلًا واضحًا، فالتقييم لدى مختص أطفال مؤهل هو الأنسب.";
 
 }
 
 
-/* ====================================
-   الذكاء العاطفي
-==================================== */
+/* الذكاء العاطفي */
 
-if(
-test.type===
-"eq"
-){
+if(test.type==="eq"){
 
 const total=
-
-Object.values(
-scores
-)
+Object.values(scores)
 .reduce(
-
 function(sum,value){
-
 return sum+value;
-
 },
-
 0
-
 );
-
 
 const overall=
-
-percentage(
-total,
-60
-);
-
+percentage(total,60);
 
 title.innerText=
-
 "مؤشر الذكاء العاطفي: "+
 overall+
 "%";
 
-
 sorted.forEach(
-
 function(item){
 
 details.innerHTML+=
-
 scoreBox(
-
 item[0],
-
-percentage(
-item[1],
-15
-)
-
+percentage(item[1],15)
 );
 
 }
-
 );
 
-
 fullReport.innerHTML+=
-
 report(
-
 "أقوى جانب",
-
 "<b>"+
 sorted[0][0]+
 "</b> هو الأكثر بروزًا في إجاباتك."
-
 );
 
-
 fullReport.innerHTML+=
-
 report(
-
 "فرصة للتطوير",
-
 "<b>"+
 sorted[
 sorted.length-1
 ][0]+
 "</b> هو الجانب الأقل بروزًا. اختر موقفًا يوميًا واحدًا وراقب فيه مشاعرك وردود فعلك وتواصلك مع الآخرين، ثم دوّن ما يمكن تحسينه."
-
 );
 
-
 text.innerText=
-
 "هذا مؤشر تثقيفي مبسط وليس مقياسًا نفسيًا مقننًا للذكاء العاطفي.";
 
 }
@@ -1995,12 +2416,9 @@ lastResultText=
 "نتيجتي في "+
 test.title+
 "\n"+
-
 title.innerText+
 "\n\n"+
-
 "جرّب اختبارات وَعْي:\n"+
-
 "https://nthagafi1403-gif.github.io/waei/";
 
 }
@@ -2012,26 +2430,20 @@ title.innerText+
 
 async function shareResult(){
 
-if(
-navigator.share
-){
+if(navigator.share){
 
 try{
 
 await navigator.share({
 
-title:
-"وَعْي",
-
-text:
-lastResultText
+title:"وَعْي",
+text:lastResultText
 
 });
 
 }catch(error){}
 
 }
-
 else{
 
 copyResult();
@@ -2053,13 +2465,11 @@ await navigator.clipboard.writeText(
 lastResultText
 );
 
-
 alert(
 "تم نسخ النتيجة."
 );
 
 }
-
 catch(error){
 
 alert(
