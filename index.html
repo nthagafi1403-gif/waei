@@ -22,29 +22,21 @@ header{
 .logo{font-size:42px;font-weight:900}
 .subtitle{color:#758079;margin-top:5px}
 main{max-width:850px;margin:auto;padding:20px}
-
-.hero{
+.hero,.card,.notice{
  background:#fff;
- border-radius:25px;
- padding:28px;
- margin-bottom:20px
+ border-radius:22px;
+ padding:22px;
+ margin-bottom:18px
 }
-.hero h1{margin:0 0 10px;font-size:32px}
-.muted{color:#69766f;line-height:1.8}
-
+.hero h1{margin:0 0 10px;font-size:30px}
+.muted{color:#69766f;line-height:1.9}
 .grid{
  display:grid;
  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
  gap:15px
 }
-.card{
- background:#fff;
- border-radius:20px;
- padding:20px;
- box-shadow:0 8px 25px #0000000a
-}
+.card{box-shadow:0 8px 25px #0000000a}
 .card h2{font-size:20px;margin-top:0}
-
 button{
  border:0;
  border-radius:14px;
@@ -63,8 +55,9 @@ button{
  width:100%;
  background:#edf4f1;
  color:#173e34;
- margin:8px 0
+ margin:9px 0
 }
+.option:hover{background:#dcebe5}
 .hidden{display:none}
 .progress{
  height:9px;
@@ -76,28 +69,52 @@ button{
 .bar{
  height:100%;
  background:#34745f;
- width:0
+ width:0;
+ transition:.3s
 }
 .result{
- font-size:28px;
- font-weight:800
+ font-size:27px;
+ font-weight:800;
+ margin-bottom:15px
+}
+.resultBox{
+ background:#edf4f1;
+ padding:15px;
+ border-radius:15px;
+ margin:10px 0;
+ line-height:1.8
+}
+.scoreRow{
+ margin:14px 0
+}
+.scoreLine{
+ display:flex;
+ justify-content:space-between;
+ margin-bottom:6px
+}
+.miniBar{
+ height:8px;
+ background:#dce4e0;
+ border-radius:10px;
+ overflow:hidden
+}
+.miniFill{
+ height:100%;
+ background:#34745f
 }
 .notice{
- background:#fff;
- padding:20px;
- border-radius:20px;
- margin-top:20px;
  font-size:14px;
  line-height:1.8
 }
+#counter{color:#758079}
 </style>
 </head>
 
 <body>
 
 <header>
- <div class="logo">وَعْي</div>
- <div class="subtitle">افهم نفسك أكثر</div>
+<div class="logo">وَعْي</div>
+<div class="subtitle">افهم نفسك أكثر</div>
 </header>
 
 <main>
@@ -116,13 +133,14 @@ button{
 
 <div class="notice">
 <strong>تنبيه مهم</strong><br>
-منصة وَعْي منصة تثقيفية. الاختبارات الموجودة هنا ليست تشخيصًا
-نفسيًا أو طبيًا، ولا تغني عن التقييم لدى ممارس صحي مرخص.
+منصة وَعْي منصة تثقيفية. هذه الاختبارات ليست تشخيصًا نفسيًا
+أو طبيًا، ولا تغني عن التقييم لدى ممارس صحي مرخص.
 </div>
 
 </section>
 
 <section id="quiz" class="card hidden">
+
 <h2 id="testTitle"></h2>
 <div id="counter"></div>
 
@@ -132,12 +150,8 @@ button{
 
 <h2 id="question"></h2>
 
-<div id="answers">
-<button class="option" onclick="answer(0)">لا / نادرًا</button>
-<button class="option" onclick="answer(1)">أحيانًا</button>
-<button class="option" onclick="answer(2)">غالبًا</button>
-<button class="option" onclick="answer(3)">بشكل كبير</button>
-</div>
+<div id="answers"></div>
+
 </section>
 
 <section id="result" class="card hidden">
@@ -145,6 +159,8 @@ button{
 <div class="result">نتيجتك التثقيفية</div>
 
 <h2 id="resultTitle"></h2>
+
+<div id="details"></div>
 
 <p id="resultText" class="muted"></p>
 
@@ -160,83 +176,135 @@ button{
 
 const tests=[
 
+/* 1 — أنماط الشخصية */
 {
+type:"personality",
 title:"اختبار أنماط الشخصية",
+description:"استكشف النمط الأكثر بروزًا في إجاباتك.",
+answers:["لا تنطبق عليّ","تنطبق قليلًا","تنطبق غالبًا","تنطبق جدًا"],
 questions:[
-"أستمتع بالتعرف على أشخاص جدد.",
-"أفضل أحيانًا قضاء وقت هادئ بمفردي.",
-"أحب التخطيط لأعمالي مسبقًا.",
-"أفكر جيدًا قبل اتخاذ القرارات المهمة.",
-"أحاول فهم مشاعر الآخرين.",
-"أستمتع بتجربة أشياء جديدة.",
-"أحرص على إنهاء ما أبدأه.",
-"أتكيف عندما تتغير خططي.",
-"أستطيع التعبير عن رأيي بوضوح.",
-"أراجع تجاربي وأتعلم منها."
+["يهمني أن يلاحظ الآخرون إنجازاتي وقدراتي.","الميل النرجسي"],
+["أشعر بالانزعاج عندما لا أحصل على التقدير الذي أتوقعه.","الميل النرجسي"],
+["أحب أن أشعر بأنني مميز مقارنة بالآخرين.","الميل النرجسي"],
+
+["أهتم كثيرًا بالتفاصيل والترتيب والدقة.","الميل الوسواسي"],
+["يصعب علي ترك العمل قبل أن يصبح بالشكل الذي أراه مثاليًا.","الميل الوسواسي"],
+["أفضل تنفيذ الأمور بطريقة محددة ومنظمة.","الميل الوسواسي"],
+
+["أحتاج إلى رأي شخص أثق به قبل اتخاذ بعض القرارات المهمة.","الميل الاعتمادي"],
+["أشعر بعدم الارتياح عندما أضطر لمواجهة الأمور وحدي.","الميل الاعتمادي"],
+["يصعب علي مخالفة شخص أعتمد عليه حتى عندما لا أوافقه.","الميل الاعتمادي"],
+
+["أتجنب بعض المواقف الاجتماعية خوفًا من النقد أو الرفض.","الميل التجنبي"],
+["أتردد في التقرب من الآخرين حتى أتأكد من تقبلهم لي.","الميل التجنبي"],
+["أتأثر كثيرًا بالانتقاد أو التقييم السلبي.","الميل التجنبي"],
+
+["أفضل غالبًا الأنشطة الفردية على الاختلاط بالآخرين.","الميل الانعزالي"],
+["لا أشعر بحاجة كبيرة إلى تكوين علاقات اجتماعية كثيرة.","الميل الانعزالي"],
+["أشعر بالراحة عندما أقضي وقتًا طويلًا بمفردي.","الميل الانعزالي"]
 ]
 },
 
+/* 2 — القلق والتوتر */
 {
+type:"general",
 title:"اختبار القلق والتوتر",
+description:"مؤشر تثقيفي لبعض مشاعر القلق والتوتر.",
+answers:["أبدًا","أحيانًا","غالبًا","بشكل كبير"],
 questions:[
 "أشعر بالتوتر أو عدم الارتياح.",
 "يصعب علي إيقاف التفكير في الأمور التي تقلقني.",
 "أجد صعوبة في الاسترخاء.",
 "أفكر كثيرًا فيما قد يحدث مستقبلًا.",
 "أصبح سريع الانفعال عندما أكون تحت الضغط.",
-"يؤثر التفكير على تركيزي.",
-"أشعر بشد جسدي عندما أتوتر.",
+"يؤثر التفكير الزائد على تركيزي.",
+"أشعر بشد أو توتر جسدي عندما أقلق.",
 "يؤثر القلق أو التفكير على نومي.",
 "أتجنب بعض المواقف بسبب التوتر.",
-"يؤثر التوتر على حياتي اليومية."
+"يؤثر التوتر على نشاطي أو حياتي اليومية."
 ]
 },
 
+/* 3 — أسلوب التعلق */
 {
-title:"اختبار الذكاء العاطفي",
-questions:[
-"أستطيع تحديد الشعور الذي أمر به.",
-"أعرف عادة سبب تغير مزاجي.",
-"ألاحظ تأثير مشاعري على قراراتي.",
-"أستطيع تهدئة نفسي عند الغضب.",
-"أستطيع التحكم في رد فعلي أثناء الخلاف.",
-"ألاحظ عندما يكون شخص قريب مني منزعجًا.",
-"أحاول فهم مشاعر الآخرين.",
-"أستطيع الاستماع للآخر عندما يتحدث عن مشاعره.",
-"أستطيع التعبير عن مشاعري بوضوح.",
-"أستفيد من تجاربي العاطفية."
-]
-},
-
-{
+type:"attachment",
 title:"اختبار أسلوب التعلق في العلاقات",
+description:"استكشف الأسلوب الأكثر بروزًا في علاقاتك القريبة.",
+answers:["لا تنطبق عليّ","تنطبق قليلًا","تنطبق غالبًا","تنطبق جدًا"],
 questions:[
-"أشعر بالراحة في العلاقات القريبة.",
-"أستطيع التعبير عن احتياجاتي العاطفية.",
-"أقلق أحيانًا من فقدان الشخص الذي أحبه.",
-"أتضايق عندما يتأخر شخص قريب في الرد.",
-"أحتاج أحيانًا إلى تأكيد اهتمام الطرف الآخر.",
-"أفضل أحيانًا التعامل مع مشكلاتي وحدي.",
-"قد أبتعد عندما تصبح العلاقة شديدة القرب.",
-"أستطيع مناقشة الخلاف بهدوء.",
-"أجد صعوبة أحيانًا في الشعور بالأمان في العلاقات.",
-"أستطيع الحفاظ على استقلاليتي داخل العلاقة."
+["أشعر بالراحة في العلاقات القريبة.","آمن"],
+["أستطيع التعبير عن احتياجاتي للطرف الآخر بوضوح.","آمن"],
+["أستطيع مناقشة الخلاف دون خوف شديد من انتهاء العلاقة.","آمن"],
+["أستطيع الحفاظ على استقلاليتي مع وجود علاقة قريبة.","آمن"],
+
+["أقلق كثيرًا من فقدان الشخص الذي أحبه.","قلق"],
+["أتضايق بشدة عندما يتأخر شخص قريب مني في الرد.","قلق"],
+["أحتاج إلى تأكيد متكرر بأن الطرف الآخر يهتم بي.","قلق"],
+["أفكر كثيرًا في احتمال ابتعاد الطرف الآخر عني.","قلق"],
+
+["أفضل الاحتفاظ بمشكلاتي ومشاعري لنفسي.","تجنبي"],
+["أشعر بعدم الارتياح عندما يعتمد عليّ شخص عاطفيًا بشكل كبير.","تجنبي"],
+["قد أبتعد عندما تصبح العلاقة شديدة القرب.","تجنبي"],
+["أفضل الاعتماد على نفسي بدل طلب الدعم العاطفي.","تجنبي"]
 ]
 },
 
+/* 4 — الطفل */
 {
+type:"child",
 title:"اختبار مؤشرات سلوك الطفل وانفعالاته",
+description:"مؤشر تثقيفي لولي الأمر حول بعض سلوكيات الطفل.",
+answers:["لا / نادرًا","أحيانًا","غالبًا","بشكل كبير"],
 questions:[
-"يتشتت الطفل بسهولة.",
-"يجد صعوبة في الاستمرار في مهمة مناسبة لعمره.",
-"يتصرف أحيانًا قبل التفكير.",
-"يجد صعوبة في انتظار دوره.",
-"يغضب بشدة في بعض المواقف.",
-"يجد صعوبة في تهدئة نفسه.",
-"تظهر عليه مخاوف متكررة.",
-"يتجنب بعض المواقف بسبب الخوف.",
-"يجد صعوبة في التعامل مع الأطفال الآخرين.",
-"تؤثر بعض سلوكياته أو انفعالاته على حياته اليومية."
+["يتشتت الطفل بسهولة.","الانتباه والاندفاع"],
+["يجد صعوبة في الاستمرار في مهمة مناسبة لعمره.","الانتباه والاندفاع"],
+["يتصرف أحيانًا قبل التفكير.","الانتباه والاندفاع"],
+
+["يغضب بشدة في بعض المواقف.","تنظيم الانفعالات"],
+["يجد صعوبة في تهدئة نفسه بعد الغضب.","تنظيم الانفعالات"],
+["تتغير انفعالاته بسرعة في بعض المواقف.","تنظيم الانفعالات"],
+
+["تظهر عليه مخاوف متكررة.","القلق والمخاوف"],
+["يتجنب بعض المواقف بسبب الخوف.","القلق والمخاوف"],
+["يطلب الطمأنة بشكل متكرر عند القلق.","القلق والمخاوف"],
+
+["يجد صعوبة في التعامل مع الأطفال الآخرين.","التفاعل الاجتماعي"],
+["يواجه صعوبة في تكوين أو الحفاظ على صداقات مناسبة لعمره.","التفاعل الاجتماعي"],
+["تظهر مشكلات متكررة أثناء اللعب أو التفاعل مع الآخرين.","التفاعل الاجتماعي"]
+]
+},
+
+/* 5 — الذكاء العاطفي */
+{
+type:"eq",
+title:"اختبار الذكاء العاطفي",
+description:"20 سؤالًا لاستكشاف أربعة جوانب من الذكاء العاطفي.",
+answers:["لا تنطبق عليّ","تنطبق قليلًا","تنطبق غالبًا","تنطبق جدًا"],
+questions:[
+
+["أستطيع تحديد الشعور الذي أمر به بدقة.","الوعي بالمشاعر"],
+["أعرف عادة سبب تغير مزاجي.","الوعي بالمشاعر"],
+["ألاحظ تأثير مشاعري على قراراتي.","الوعي بالمشاعر"],
+["أستطيع التمييز بين مشاعر متشابهة مثل القلق والغضب.","الوعي بالمشاعر"],
+["ألاحظ تغير حالتي العاطفية أثناء اليوم.","الوعي بالمشاعر"],
+
+["أستطيع تهدئة نفسي عندما أغضب.","تنظيم المشاعر"],
+["أفكر قبل أن أرد عندما أكون منزعجًا.","تنظيم المشاعر"],
+["أستطيع السيطرة على رد فعلي أثناء الخلاف.","تنظيم المشاعر"],
+["أستطيع العودة إلى هدوئي بعد موقف مزعج.","تنظيم المشاعر"],
+["لا أسمح لمشاعر لحظية بأن تتحكم في جميع قراراتي.","تنظيم المشاعر"],
+
+["ألاحظ عندما يكون الشخص أمامي منزعجًا حتى لو لم يخبرني.","فهم مشاعر الآخرين"],
+["أحاول فهم سبب شعور الآخرين بطريقة معينة.","فهم مشاعر الآخرين"],
+["ألاحظ نبرة الصوت ولغة الجسد أثناء الحديث.","فهم مشاعر الآخرين"],
+["أستطيع فهم وجهة نظر الآخر حتى عندما أختلف معه.","فهم مشاعر الآخرين"],
+["أعرف متى يحتاج الشخص إلى الاستماع أكثر من النصيحة.","فهم مشاعر الآخرين"],
+
+["أستطيع التعبير عن مشاعري بوضوح واحترام.","إدارة العلاقات"],
+["أستطيع مناقشة الخلاف دون الإساءة للطرف الآخر.","إدارة العلاقات"],
+["أعرف متى يجب أن أعتذر أو أصلح سوء تفاهم.","إدارة العلاقات"],
+["أستطيع وضع حدود واضحة في علاقاتي.","إدارة العلاقات"],
+["أحاول الوصول إلى حلول مناسبة للطرفين أثناء الخلاف.","إدارة العلاقات"]
 ]
 }
 
@@ -245,6 +313,7 @@ questions:[
 let currentTest=0;
 let currentQuestion=0;
 let score=0;
+let categoryScores={};
 
 const list=document.getElementById("tests");
 
@@ -255,7 +324,7 @@ card.className="card";
 
 card.innerHTML=
 "<h2>"+test.title+"</h2>"+
-"<p class='muted'>اختبار تثقيفي مبسط.</p>"+
+"<p class='muted'>"+test.description+"</p>"+
 "<button class='start' onclick='startTest("+index+")'>ابدأ الاختبار</button>";
 
 list.appendChild(card);
@@ -267,18 +336,45 @@ function startTest(index){
 currentTest=index;
 currentQuestion=0;
 score=0;
+categoryScores={};
 
 document.getElementById("home").classList.add("hidden");
 document.getElementById("result").classList.add("hidden");
 document.getElementById("quiz").classList.remove("hidden");
 
+createAnswers();
 showQuestion();
+
+}
+
+function createAnswers(){
+
+const test=tests[currentTest];
+const box=document.getElementById("answers");
+box.innerHTML="";
+
+test.answers.forEach((text,index)=>{
+
+let b=document.createElement("button");
+b.className="option";
+b.innerText=text;
+b.onclick=function(){answer(index)};
+box.appendChild(b);
+
+});
+
+}
+
+function getQuestionText(q){
+
+if(Array.isArray(q)) return q[0];
+return q;
 
 }
 
 function showQuestion(){
 
-let test=tests[currentTest];
+const test=tests[currentTest];
 
 document.getElementById("testTitle").innerText=test.title;
 
@@ -286,7 +382,7 @@ document.getElementById("counter").innerText=
 "السؤال "+(currentQuestion+1)+" من "+test.questions.length;
 
 document.getElementById("question").innerText=
-test.questions[currentQuestion];
+getQuestionText(test.questions[currentQuestion]);
 
 document.getElementById("bar").style.width=
 ((currentQuestion/test.questions.length)*100)+"%";
@@ -295,10 +391,28 @@ document.getElementById("bar").style.width=
 
 function answer(value){
 
+const test=tests[currentTest];
+const q=test.questions[currentQuestion];
+
+if(test.type==="general"){
+
 score+=value;
+
+}else{
+
+const category=q[1];
+
+if(categoryScores[category]===undefined){
+categoryScores[category]=0;
+}
+
+categoryScores[category]+=value;
+
+}
+
 currentQuestion++;
 
-if(currentQuestion < tests[currentTest].questions.length){
+if(currentQuestion<test.questions.length){
 
 showQuestion();
 
@@ -310,41 +424,172 @@ showResult();
 
 }
 
+function percent(value,max){
+
+return Math.round((value/max)*100);
+
+}
+
+function scoreBox(name,value){
+
+return `
+<div class="scoreRow">
+<div class="scoreLine">
+<strong>${name}</strong>
+<span>${value}%</span>
+</div>
+
+<div class="miniBar">
+<div class="miniFill" style="width:${value}%"></div>
+</div>
+</div>
+`;
+
+}
+
 function showResult(){
+
+const test=tests[currentTest];
 
 document.getElementById("quiz").classList.add("hidden");
 document.getElementById("result").classList.remove("hidden");
 
-let max=tests[currentTest].questions.length*3;
-let percent=Math.round((score/max)*100);
+const title=document.getElementById("resultTitle");
+const text=document.getElementById("resultText");
+const details=document.getElementById("details");
 
-document.getElementById("resultTitle").innerText=
-"المؤشر الوصفي: "+percent+"%";
+details.innerHTML="";
+text.innerText="";
 
-let text="";
+if(test.type==="general"){
 
-if(percent < 35){
+const max=test.questions.length*3;
+const p=percent(score,max);
 
-text="ظهرت مؤشرات قليلة وفق إجاباتك.";
+title.innerText="مؤشر القلق والتوتر: "+p+"%";
 
-}else if(percent < 65){
+if(p<34){
 
-text="ظهرت بعض المؤشرات التي قد تستحق الملاحظة وفهمها بصورة أكبر.";
+text.innerText=
+"إجاباتك تشير إلى مؤشرات محدودة من القلق والتوتر ضمن هذا الاختبار التثقيفي.";
+
+}else if(p<67){
+
+text.innerText=
+"إجاباتك تشير إلى وجود بعض مؤشرات القلق والتوتر. قد يفيد الانتباه إلى المواقف التي تزيدها ومدى تأثيرها على حياتك.";
 
 }else{
 
-text="ظهرت عدة مؤشرات في إجاباتك. إذا كانت مستمرة أو تؤثر على حياتك اليومية، فقد يكون من المناسب مناقشتها مع ممارس صحي مرخص.";
+text.innerText=
+"إجاباتك تشير إلى ارتفاع عدد مؤشرات القلق والتوتر في هذا الاختبار. إذا كانت مستمرة أو تؤثر على نومك أو عملك أو حياتك اليومية، فقد يكون من المناسب مناقشتها مع مختص مرخص.";
 
 }
 
-document.getElementById("resultText").innerText=text;
+return;
+
+}
+
+if(test.type==="personality"){
+
+let arr=Object.entries(categoryScores)
+.sort((a,b)=>b[1]-a[1]);
+
+let top=arr[0];
+
+title.innerText="النمط الأبرز في إجاباتك: "+top[0];
+
+arr.forEach(item=>{
+
+let p=percent(item[1],9);
+details.innerHTML+=scoreBox(item[0],p);
+
+});
+
+text.innerText=
+"تعكس النتيجة ميولًا ظهرت في إجاباتك ولا تعني أنك تحمل اضطرابًا في الشخصية. تشخيص اضطرابات الشخصية يحتاج إلى تقييم سريري متخصص.";
+
+return;
+
+}
+
+if(test.type==="attachment"){
+
+let arr=Object.entries(categoryScores)
+.sort((a,b)=>b[1]-a[1]);
+
+title.innerText="أسلوب التعلق الأبرز: "+arr[0][0];
+
+arr.forEach(item=>{
+
+let p=percent(item[1],12);
+details.innerHTML+=scoreBox(item[0],p);
+
+});
+
+text.innerText=
+"هذه النتيجة وصف تثقيفي لميولك في العلاقات وليست تصنيفًا ثابتًا أو تشخيصًا نفسيًا. قد تختلف طريقة ارتباط الشخص من علاقة إلى أخرى.";
+
+return;
+
+}
+
+if(test.type==="child"){
+
+title.innerText="مؤشرات سلوك الطفل وانفعالاته";
+
+Object.entries(categoryScores).forEach(item=>{
+
+let p=percent(item[1],9);
+details.innerHTML+=scoreBox(item[0],p);
+
+});
+
+text.innerText=
+"هذه المؤشرات لا تشخّص أي اضطراب لدى الطفل. يجب تفسير السلوك وفق عمر الطفل ومدة ظهوره ووجوده في أكثر من بيئة ومدى تأثيره على حياته. عند وجود قلق واضح يُنصح بالتقييم لدى مختص مؤهل.";
+
+return;
+
+}
+
+if(test.type==="eq"){
+
+let total=0;
+
+Object.values(categoryScores).forEach(v=>total+=v);
+
+let overall=percent(total,60);
+
+title.innerText="مؤشر الذكاء العاطفي: "+overall+"%";
+
+Object.entries(categoryScores).forEach(item=>{
+
+let p=percent(item[1],15);
+details.innerHTML+=scoreBox(item[0],p);
+
+});
+
+let strongest=Object.entries(categoryScores)
+.sort((a,b)=>b[1]-a[1])[0][0];
+
+let weakest=Object.entries(categoryScores)
+.sort((a,b)=>a[1]-b[1])[0][0];
+
+text.innerText=
+"يظهر في إجاباتك أن الجانب الأكثر بروزًا هو «"+strongest+
+"»، بينما الجانب الأقل بروزًا هو «"+weakest+
+"». النتيجة مؤشر تثقيفي مبسط وليست مقياسًا نفسيًا مقننًا للذكاء العاطفي.";
+
+}
 
 }
 
 function goHome(){
 
 document.getElementById("result").classList.add("hidden");
+document.getElementById("quiz").classList.add("hidden");
 document.getElementById("home").classList.remove("hidden");
+
+window.scrollTo({top:0,behavior:"smooth"});
 
 }
 
