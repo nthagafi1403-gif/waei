@@ -22,13 +22,9 @@
   --shadow:0 15px 40px rgba(36,55,46,.08);
 }
 
-*{
-  box-sizing:border-box;
-}
+*{box-sizing:border-box}
 
-html{
-  scroll-behavior:smooth;
-}
+html{scroll-behavior:smooth}
 
 body{
   margin:0;
@@ -40,8 +36,6 @@ body{
   color:var(--text);
   min-height:100vh;
 }
-
-/* زخرفة عامة */
 
 body:before,
 body:after{
@@ -129,12 +123,6 @@ header:after{
 .subtitle{
   color:var(--gold);
   font-weight:700;
-  letter-spacing:.3px;
-}
-
-.muted{
-  color:var(--muted);
-  line-height:1.9;
 }
 
 nav{
@@ -241,6 +229,11 @@ main{
   background:linear-gradient(to right,transparent,var(--gold2));
 }
 
+.muted{
+  color:var(--muted);
+  line-height:1.9;
+}
+
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
@@ -324,10 +317,6 @@ button:active{
   box-shadow:0 8px 18px rgba(39,107,86,.17);
 }
 
-.start:hover{
-  filter:brightness(1.04);
-}
-
 .secondary,
 .option{
   width:100%;
@@ -360,10 +349,6 @@ button:active{
 .sectionTitle{
   text-align:center;
   margin:38px 0 18px;
-}
-
-.sectionTitle h2{
-  margin-bottom:5px;
 }
 
 .howGrid{
@@ -442,7 +427,6 @@ button:active{
 
 .quizNav button:disabled{
   opacity:.45;
-  cursor:not-allowed;
 }
 
 .result{
@@ -470,13 +454,8 @@ button:active{
   line-height:1.9;
 }
 
-.report h3{
-  margin:0 0 7px;
-}
-
 .paymentWrap{
   text-align:center;
-  padding:8px 0;
 }
 
 .successIcon{
@@ -507,22 +486,12 @@ button:active{
   color:var(--green);
 }
 
-.checkoutPrice small{
-  color:var(--muted);
-}
-
 .payButton{
   width:100%;
   color:#fff;
   background:linear-gradient(135deg,#af8a48,#ccb06d);
   font-weight:900;
   font-size:18px;
-  box-shadow:0 9px 20px rgba(184,149,88,.20);
-}
-
-.payButton:disabled{
-  opacity:.7;
-  cursor:not-allowed;
 }
 
 .paymentLogos{
@@ -532,32 +501,12 @@ button:active{
 }
 
 .lockedPreview{
-  position:relative;
   margin-top:18px;
   padding:19px;
   background:#f8faf9;
   border:1px dashed #cfdad5;
   border-radius:19px;
   text-align:right;
-}
-
-.lockIcon{
-  font-size:25px;
-  margin-bottom:8px;
-}
-
-.faqItem{
-  border-bottom:1px solid var(--border);
-  padding:16px 0;
-}
-
-.faqItem:last-child{
-  border-bottom:0;
-}
-
-.faqItem strong{
-  display:block;
-  margin-bottom:6px;
 }
 
 .policyBox{
@@ -568,6 +517,11 @@ button:active{
   margin-top:15px;
 }
 
+.faqItem{
+  border-bottom:1px solid var(--border);
+  padding:16px 0;
+}
+
 footer{
   text-align:center;
   color:#758079;
@@ -576,17 +530,13 @@ footer{
   padding:15px 20px 35px;
 }
 
-footer .footerLogo{
+.footerLogo{
   color:var(--green);
   font-weight:900;
   font-size:18px;
 }
 
 @media(max-width:650px){
-
-  .hero{
-    padding:34px 18px;
-  }
 
   .hero h1{
     font-size:28px;
@@ -604,7 +554,6 @@ footer .footerLogo{
   .quizNav button,
   .actions button{
     width:100%;
-    flex:none;
   }
 
   header:before,
@@ -612,7 +561,6 @@ footer .footerLogo{
     display:none;
   }
 }
-
 </style>
 </head>
 
@@ -630,51 +578,33 @@ footer .footerLogo{
 
 <nav>
 
-<button onclick="goHome()">
-الاختبارات
-</button>
-
-<button onclick="showPage('about')">
-عن وَعْي
-</button>
-
-<button onclick="showPage('faq')">
-الأسئلة الشائعة
-</button>
-
-<button onclick="showPage('privacy')">
-الخصوصية
-</button>
+<button onclick="goHome()">الاختبارات</button>
+<button onclick="showPage('about')">عن وَعْي</button>
+<button onclick="showPage('faq')">الأسئلة الشائعة</button>
+<button onclick="showPage('privacy')">الخصوصية</button>
 
 </nav>
 
 </header>
 
-
 <main>
-
-<!-- ====================================
-     الصفحة الرئيسية
-==================================== -->
 
 <section id="home">
 
 <div class="hero">
 
 <div class="heroTag">
-وعي ذاتي • محتوى تثقيفي • تقارير مبسطة
+وعي ذاتي • قدرات ذهنية • محتوى تثقيفي
 </div>
 
 <h1>
 رحلة لفهم نفسك تبدأ بخطوة
 </h1>
 
-<div class="ornament">
-✦
-</div>
+<div class="ornament">✦</div>
 
 <p class="muted">
-اختبارات تثقيفية مبسطة تساعدك على استكشاف بعض جوانب الشخصية والمشاعر والسلوك والعلاقات.
+اختبارات تثقيفية مبسطة تساعدك على استكشاف بعض جوانب القدرات الذهنية والشخصية والمشاعر والسلوك والعلاقات.
 </p>
 
 <p style="font-weight:800;color:#174d40;">
@@ -683,12 +613,9 @@ footer .footerLogo{
 
 </div>
 
-
 <div class="sectionTitle">
 
-<h2>
-اختر الاختبار
-</h2>
+<h2>اختر الاختبار</h2>
 
 <div class="muted">
 الإجابة على جميع الأسئلة مجانية
@@ -696,92 +623,45 @@ footer .footerLogo{
 
 </div>
 
-
 <div class="grid" id="tests"></div>
 
-
 <div class="sectionTitle">
-
-<h2>
-كيف يعمل وَعْي؟
-</h2>
-
+<h2>كيف يعمل وَعْي؟</h2>
 </div>
-
 
 <div class="howGrid">
 
 <div class="howItem">
-
-<div class="howNumber">
-1
+<div class="howNumber">1</div>
+<strong>اختر الاختبار</strong>
+<p class="muted">اختر المجال الذي ترغب في استكشافه.</p>
 </div>
-
-<strong>
-اختر الاختبار
-</strong>
-
-<p class="muted">
-اختر الجانب الذي ترغب في استكشافه.
-</p>
-
-</div>
-
 
 <div class="howItem">
-
-<div class="howNumber">
-2
+<div class="howNumber">2</div>
+<strong>أجب على الأسئلة</strong>
+<p class="muted">أكمل جميع الأسئلة مجانًا.</p>
 </div>
-
-<strong>
-أجب على الأسئلة
-</strong>
-
-<p class="muted">
-أكمل جميع الأسئلة مجانًا وبهدوء.
-</p>
-
-</div>
-
 
 <div class="howItem">
-
-<div class="howNumber">
-3
-</div>
-
-<strong>
-افتح تقريرك
-</strong>
-
-<p class="muted">
-بعد الانتهاء يمكنك عرض التقرير الكامل مقابل 5 ريال.
-</p>
-
+<div class="howNumber">3</div>
+<strong>افتح تقريرك</strong>
+<p class="muted">بعد الانتهاء يمكنك عرض التقرير الكامل مقابل 5 ريال.</p>
 </div>
 
 </div>
-
 
 <div class="notice" style="margin-top:20px;">
 
-<b>
-تنبيه مهم
-</b>
+<b>تنبيه مهم</b>
 
 <br>
 
-اختبارات وَعْي تثقيفية وغير مقننة للتشخيص، ولا تغني عن التقييم لدى مختص مؤهل.
+اختبارات وَعْي تثقيفية وغير مقننة للتشخيص، واختبارات القدرات الذهنية لا تعطي درجة IQ معيارية ولا تغني عن التقييم لدى مختص مؤهل.
 
 </div>
 
 </section>
-
-
-<!-- ====================================
-     صفحة الاختبار
-==================================== -->
 
 <section id="quiz" class="card hidden">
 
@@ -793,18 +673,13 @@ footer .footerLogo{
 
 </div>
 
-
 <div class="progress">
-
 <div class="bar" id="bar"></div>
-
 </div>
-
 
 <h2 id="question"></h2>
 
 <div id="answers"></div>
-
 
 <div class="quizNav">
 
@@ -812,74 +687,48 @@ footer .footerLogo{
 id="prevButton"
 class="secondary"
 onclick="previousQuestion()">
-
 ← السؤال السابق
-
 </button>
-
 
 <button
 class="secondary"
 onclick="goHome()">
-
 الخروج للاختبارات
-
 </button>
 
 </div>
 
-
 <p class="muted" style="font-size:13px;text-align:center;">
-
 يُحفظ تقدم الاختبار محليًا على جهازك.
-
 </p>
 
 </section>
-
-
-<!-- ====================================
-     صفحة ما قبل الدفع
-==================================== -->
 
 <section id="checkout" class="checkoutBox hidden">
 
 <div class="paymentWrap">
 
-<div class="successIcon">
-✓
-</div>
+<div class="successIcon">✓</div>
 
-<h1>
-أحسنت، أكملت الاختبار
-</h1>
+<h1>أحسنت، أكملت الاختبار</h1>
 
 <p class="muted">
 تم تحليل إجاباتك وتقريرك التثقيفي جاهز.
 </p>
 
-
-<div class="ornament">
-✦
-</div>
-
+<div class="ornament">✦</div>
 
 <div class="lockedPreview">
 
-<div class="lockIcon">
-🔒
-</div>
+<div style="font-size:26px">🔒</div>
 
-<strong>
-تقريرك الكامل يتضمن:
-</strong>
+<strong>تقريرك الكامل يتضمن:</strong>
 
 <p class="muted">
-النتيجة والنسب التفصيلية، أبرز الجوانب التي ظهرت في إجاباتك، وقراءة مبسطة مع اقتراحات عملية.
+النتيجة، النسب التفصيلية، أبرز الجوانب التي ظهرت في إجاباتك وقراءة مبسطة للنتيجة.
 </p>
 
 </div>
-
 
 <div class="checkoutPrice">
 
@@ -897,66 +746,39 @@ onclick="goHome()">
 
 </div>
 
-
-<!--
-بعد اعتماد بوابة الدفع نستبدل هذا الزر
-بطلب الدفع الحقيقي من الخادم.
--->
-
 <button
 id="payButton"
 class="payButton"
 onclick="startPayment()">
-
 عرض التقرير الكامل — 5 ر.س
-
 </button>
 
-
 <div class="paymentLogos">
-
 الدفع الإلكتروني الآمن
-
 <br>
-
 مدى • Apple Pay • البطاقات
-
 </div>
 
+<div id="paymentStatus" class="policyBox">
 
-<div
-id="paymentStatus"
-class="policyBox"
-style="margin-top:18px;">
+<strong>بوابة الدفع قيد التجهيز</strong>
 
-<strong>
-بوابة الدفع قيد التجهيز
-</strong>
-
-<div class="muted" style="margin-top:5px;">
+<div class="muted">
 سيتم تفعيل الدفع فور اعتماد حساب بوابة الدفع.
 </div>
 
 </div>
 
-
 <button
 class="secondary"
 style="margin-top:14px;"
 onclick="goHome()">
-
 العودة للاختبارات
-
 </button>
 
 </div>
 
 </section>
-
-
-<!-- ====================================
-     التقرير
-==================================== -->
 
 <section id="result" class="card hidden">
 
@@ -964,9 +786,7 @@ onclick="goHome()">
 تقريرك التثقيفي
 </div>
 
-<div class="ornament">
-✦
-</div>
+<div class="ornament">✦</div>
 
 <h2 id="resultTitle"></h2>
 
@@ -976,254 +796,142 @@ onclick="goHome()">
 
 <p id="resultText" class="muted"></p>
 
-
 <div class="actions">
 
-<button
-class="start"
-onclick="restartTest()">
-
+<button class="start" onclick="restartTest()">
 إعادة الاختبار
-
 </button>
 
-
-<button
-class="start"
-onclick="shareResult()">
-
+<button class="start" onclick="shareResult()">
 مشاركة النتيجة
-
 </button>
 
-
-<button
-class="secondary"
-onclick="copyResult()">
-
+<button class="secondary" onclick="copyResult()">
 نسخ النتيجة
-
 </button>
 
-
-<button
-class="secondary"
-onclick="goHome()">
-
+<button class="secondary" onclick="goHome()">
 العودة للاختبارات
-
 </button>
 
 </div>
 
 </section>
-
-
-<!-- ====================================
-     عن وعي
-==================================== -->
 
 <section id="about" class="page hidden">
 
-<h2>
-عن وَعْي
-</h2>
+<h2>عن وَعْي</h2>
 
-<div class="ornament">
-✦
-</div>
+<div class="ornament">✦</div>
 
 <p class="muted">
-
-وَعْي منصة رقمية تقدم محتوى واختبارات تثقيفية مبسطة تساعد المستخدم على التأمل في بعض جوانب الشخصية والمشاعر والسلوك والعلاقات.
-
+وَعْي منصة رقمية تقدم اختبارات ومحتوى تثقيفيًا مبسطًا في القدرات الذهنية والشخصية والمشاعر والسلوك والعلاقات.
 </p>
 
 <p class="muted">
-
-التقارير المقدمة تعليمية وتثقيفية، ولا تمثل تشخيصًا نفسيًا أو طبيًا ولا بديلًا عن التقييم لدى مختص مؤهل.
-
+جميع النتائج تعليمية وتثقيفية ولا تمثل تشخيصًا نفسيًا أو طبيًا أو قياسًا معياريًا لمعدل الذكاء.
 </p>
 
-<button class="start" onclick="goHome()">
-العودة
-</button>
+<button class="start" onclick="goHome()">العودة</button>
 
 </section>
-
-
-<!-- ====================================
-     الأسئلة الشائعة
-==================================== -->
 
 <section id="faq" class="page hidden">
 
-<h2>
-الأسئلة الشائعة
-</h2>
+<h2>الأسئلة الشائعة</h2>
 
-<div class="ornament">
-✦
-</div>
-
+<div class="ornament">✦</div>
 
 <div class="faqItem">
-
-<strong>
-هل بدء الاختبار مجاني؟
-</strong>
-
+<strong>هل بدء الاختبار مجاني؟</strong>
 <div class="muted">
 نعم. تستطيع الإجابة على جميع أسئلة الاختبار مجانًا.
 </div>
-
 </div>
 
-
 <div class="faqItem">
-
-<strong>
-متى أدفع؟
-</strong>
-
+<strong>متى أدفع؟</strong>
 <div class="muted">
 بعد الإجابة على آخر سؤال فقط، وقبل عرض التقرير الكامل.
 </div>
-
 </div>
-
 
 <div class="faqItem">
-
-<strong>
-كم سعر التقرير؟
-</strong>
-
+<strong>كم سعر التقرير؟</strong>
 <div class="muted">
-سعر فتح التقرير الكامل 5 ريال لكل اختبار.
+5 ريال لكل اختبار.
 </div>
-
 </div>
-
 
 <div class="faqItem">
-
-<strong>
-هل النتائج تشخيص نفسي؟
-</strong>
-
+<strong>هل اختبارات القدرات تعطي IQ؟</strong>
 <div class="muted">
-لا. جميع النتائج تثقيفية ووصفية ولا تستخدم لتشخيص الاضطرابات النفسية أو الطبية.
+لا. هي اختبارات تثقيفية مبسطة ولا تعطي درجة ذكاء معيارية أو تشخيصًا للقدرات العقلية.
 </div>
-
 </div>
-
 
 <div class="faqItem">
-
-<strong>
-هل تُرسل إجاباتي إلى خادم؟
-</strong>
-
+<strong>هل الاختبارات النفسية تشخيص؟</strong>
 <div class="muted">
-في النسخة الحالية تعمل أسئلة الاختبارات داخل متصفحك، وقد يتم حفظ تقدمك محليًا على جهازك.
+لا. النتائج تثقيفية ووصفية فقط.
+</div>
 </div>
 
-</div>
-
-
-<button class="start" onclick="goHome()">
-العودة
-</button>
+<button class="start" onclick="goHome()">العودة</button>
 
 </section>
 
-
-<!-- ====================================
-     الخصوصية والشروط
-==================================== -->
-
 <section id="privacy" class="page hidden">
 
-<h2>
-الخصوصية والشروط
-</h2>
+<h2>الخصوصية والشروط</h2>
 
-<div class="ornament">
-✦
-</div>
-
+<div class="ornament">✦</div>
 
 <div class="policyBox">
 
-<strong>
-الخصوصية
-</strong>
+<strong>الخصوصية</strong>
 
 <p class="muted">
-
 تعمل الاختبارات داخل متصفحك، وقد يُحفظ تقدم الاختبار محليًا على جهازك لتتمكن من المتابعة.
-
-عند تفعيل الدفع الإلكتروني، ستتم معالجة بيانات الدفع بواسطة مزود الدفع المعتمد، ولن يقوم وَعْي بتخزين بيانات بطاقتك البنكية.
-
 </p>
 
 </div>
-
 
 <div class="policyBox">
 
-<strong>
-طبيعة الخدمة
-</strong>
+<strong>طبيعة الخدمة</strong>
 
 <p class="muted">
-
-التقارير والاختبارات المقدمة في وَعْي محتوى رقمي تثقيفي ولا تعد تشخيصًا طبيًا أو نفسيًا أو علاجًا أو استشارة متخصصة.
-
+الاختبارات والتقارير محتوى رقمي تثقيفي ولا تعد تشخيصًا نفسيًا أو طبيًا، ولا تعطي اختبارات القدرات درجة IQ معيارية.
 </p>
 
 </div>
-
 
 <div class="policyBox">
 
-<strong>
-سياسة الاسترجاع
-</strong>
+<strong>سياسة الاسترجاع</strong>
 
 <p class="muted">
-
-نظرًا لأن التقرير منتج رقمي يتم إتاحته مباشرة بعد إتمام الدفع، فلا يكون المبلغ قابلاً للاسترجاع بعد فتح التقرير، إلا في حال وجود خلل تقني يمنع تقديم الخدمة أو في الحالات التي تتطلبها الأنظمة المعمول بها.
-
+نظرًا لأن التقرير منتج رقمي يتم إتاحته بعد الدفع، فلا يكون المبلغ قابلًا للاسترجاع بعد فتح التقرير، إلا في حال وجود خلل تقني يمنع تقديم الخدمة أو وفق ما تقتضيه الأنظمة.
 </p>
 
 </div>
-
 
 <div class="policyBox">
 
-<strong>
-السعر
-</strong>
+<strong>السعر</strong>
 
 <p class="muted">
-
-سعر فتح التقرير الكامل لكل اختبار هو 5 ريال سعودي ما لم يظهر خلاف ذلك بشكل واضح قبل الدفع.
-
+سعر التقرير الكامل لكل اختبار 5 ريال سعودي.
 </p>
 
 </div>
 
-
-<button class="start" onclick="goHome()">
-العودة
-</button>
+<button class="start" onclick="goHome()">العودة</button>
 
 </section>
 
 </main>
-
 
 <footer>
 
@@ -1235,57 +943,395 @@ onclick="goHome()">
 
 <br>
 
-محتوى تثقيفي غير مخصص للتشخيص النفسي أو الطبي.
+محتوى تثقيفي غير مخصص للتشخيص النفسي أو الطبي أو قياس IQ المعياري.
 
 </footer>
 
-
 <script>
 
-/* ====================================
-   إعداد الدفع
-==================================== */
+const REPORT_PRICE=5;
 
-/*
-مهم:
-
-الموقع موجود على GitHub Pages وهو موقع ثابت.
-
-بعد اعتماد Geidea أو مزود الدفع، لا نضع المفتاح السري هنا.
-
-الدفع الحقيقي يجب أن يتم عبر Backend / Serverless Function
-ويتم فتح التقرير فقط بعد التحقق من نجاح العملية من الخادم.
-*/
-
-const REPORT_PRICE = 5;
-
-const PAYMENT_ENABLED = false;
-
-
-/* ====================================
-   بيانات الاختبارات
-==================================== */
+const PAYMENT_ENABLED=false;
 
 const tests=[
 
+/* 1 ==================================
+القدرات الذهنية للأطفال
+================================== */
+
 {
+type:"cognitiveChild",
+icon:"🧩",
+title:"اختبار القدرات الذهنية للأطفال",
+description:"20 سؤالًا تثقيفيًا لأطفال سن المدرسة في الاستدلال والأنماط والحساب والانتباه.",
+questions:[
 
+{
+q:"أي شكل يكمل النمط: ● ■ ● ■ ؟",
+options:["●","▲","■","◆"],
+correct:0,
+category:"الأنماط والمنطق"
+},
+
+{
+q:"إذا كان كل العصافير لها أجنحة، وهذا عصفور، فماذا نعرف؟",
+options:["له أجنحة","لا يطير أبدًا","أكبر من القطة","يعيش في الماء"],
+correct:0,
+category:"الأنماط والمنطق"
+},
+
+{
+q:"أي كلمة لا تنتمي للمجموعة؟",
+options:["تفاحة","برتقالة","موزة","كرسي"],
+correct:3,
+category:"الأنماط والمنطق"
+},
+
+{
+q:"إذا كان أحمد أطول من سالم، وسالم أطول من مازن، فمن الأطول؟",
+options:["مازن","سالم","أحمد","لا يمكن معرفة ذلك"],
+correct:2,
+category:"الأنماط والمنطق"
+},
+
+{
+q:"ما العدد التالي: 2، 4، 6، 8، ؟",
+options:["9","10","11","12"],
+correct:1,
+category:"الأنماط والمنطق"
+},
+
+{
+q:"معك 12 قطعة حلوى وأعطيت 5، كم بقي؟",
+options:["5","6","7","8"],
+correct:2,
+category:"الحساب والاستدلال"
+},
+
+{
+q:"إذا كان ثمن القلم 3 ريالات، فكم ثمن قلمين؟",
+options:["5","6","7","9"],
+correct:1,
+category:"الحساب والاستدلال"
+},
+
+{
+q:"أي عدد أكبر؟",
+options:["18","21","16","19"],
+correct:1,
+category:"الحساب والاستدلال"
+},
+
+{
+q:"لدى 4 أطفال كرتان لكل طفل، كم عدد الكرات؟",
+options:["6","7","8","10"],
+correct:2,
+category:"الحساب والاستدلال"
+},
+
+{
+q:"ما نصف العدد 14؟",
+options:["6","7","8","9"],
+correct:1,
+category:"الحساب والاستدلال"
+},
+
+{
+q:"اقرأ الأرقام ثم اخترها بالعكس: 3 - 8 - 1",
+options:["1 - 8 - 3","3 - 1 - 8","8 - 3 - 1","1 - 3 - 8"],
+correct:0,
+category:"الذاكرة والانتباه"
+},
+
+{
+q:"أي زوج متطابق تمامًا؟",
+options:["5832 / 5823","7416 / 7416","9261 / 9216","3158 / 3518"],
+correct:1,
+category:"الذاكرة والانتباه"
+},
+
+{
+q:"في العبارة: قطة، شجرة، كتاب، قمر — ما الكلمة الثالثة؟",
+options:["قطة","شجرة","كتاب","قمر"],
+correct:2,
+category:"الذاكرة والانتباه"
+},
+
+{
+q:"اختر الترتيب العكسي للحروف: ب - س - م - ر",
+options:["ر - م - س - ب","ر - س - م - ب","ب - م - س - ر","م - ر - س - ب"],
+correct:0,
+category:"الذاكرة والانتباه"
+},
+
+{
+q:"كم مرة يظهر الرقم 4 في: 4 7 4 2 9 4 1؟",
+options:["2","3","4","5"],
+correct:1,
+category:"الذاكرة والانتباه"
+},
+
+{
+q:"ما عكس كلمة سريع؟",
+options:["كبير","بطيء","قريب","قوي"],
+correct:1,
+category:"اللغة والفهم"
+},
+
+{
+q:"الطبيب يعمل في المستشفى، والمعلم يعمل في...؟",
+options:["المطار","المدرسة","المزرعة","المصنع"],
+correct:1,
+category:"اللغة والفهم"
+},
+
+{
+q:"أي كلمتين أقرب في المعنى؟",
+options:["فرح وسعادة","برد ونار","ليل ونهار","طويل وقصير"],
+correct:0,
+category:"اللغة والفهم"
+},
+
+{
+q:"إذا قيل: الجو ممطر، فما الشيء المناسب أخذه للخارج؟",
+options:["مظلة","وسادة","ملعقة","كتاب فقط"],
+correct:0,
+category:"اللغة والفهم"
+},
+
+{
+q:"أكمل العلاقة: عين : رؤية = أذن : ؟",
+options:["مشي","سمع","لمس","شم"],
+correct:1,
+category:"اللغة والفهم"
+}
+
+]
+},
+
+
+/* 2 ==================================
+القدرات الذهنية للكبار
+================================== */
+
+{
+type:"cognitiveAdult",
+icon:"🧠",
+title:"اختبار القدرات الذهنية للكبار",
+description:"20 سؤالًا تثقيفيًا في المنطق والأرقام والأنماط والذاكرة العاملة.",
+questions:[
+
+{
+q:"كل المهندسين يجيدون الحساب. بعض الموظفين مهندسون. ما العبارة التي يمكن استنتاجها؟",
+options:[
+"كل الموظفين مهندسون",
+"بعض الموظفين يجيدون الحساب",
+"لا موظف يجيد الحساب",
+"كل من يجيد الحساب مهندس"
+],
+correct:1,
+category:"الاستدلال المنطقي"
+},
+
+{
+q:"إذا كانت سارة قبل نورة في الصف، ونورة قبل ريم، فمن تأتي أخيرًا؟",
+options:["سارة","نورة","ريم","لا يمكن التحديد"],
+correct:2,
+category:"الاستدلال المنطقي"
+},
+
+{
+q:"أي عنصر يختلف عن البقية؟",
+options:["مثلث","مربع","دائرة","مكعب"],
+correct:3,
+category:"الاستدلال المنطقي"
+},
+
+{
+q:"إذا كان كل A هو B، ولا شيء من B هو C، فأي عبارة صحيحة؟",
+options:[
+"بعض A هو C",
+"لا شيء من A هو C",
+"كل C هو A",
+"لا يمكن الاستنتاج"
+],
+correct:1,
+category:"الاستدلال المنطقي"
+},
+
+{
+q:"كتاب بالنسبة للقراءة مثل شوكة بالنسبة إلى...؟",
+options:["الكتابة","الأكل","القياس","القيادة"],
+correct:1,
+category:"الاستدلال المنطقي"
+},
+
+{
+q:"ما العدد التالي: 3، 6، 12، 24، ؟",
+options:["30","36","42","48"],
+correct:3,
+category:"الاستدلال العددي"
+},
+
+{
+q:"إذا كان 25% من عدد يساوي 20، فما العدد؟",
+options:["40","60","80","100"],
+correct:2,
+category:"الاستدلال العددي"
+},
+
+{
+q:"اشترى شخص 3 منتجات بسعر 14 ريالًا للواحد. كم دفع؟",
+options:["28","38","42","44"],
+correct:2,
+category:"الاستدلال العددي"
+},
+
+{
+q:"ما متوسط الأعداد 6، 8، 10؟",
+options:["7","8","9","10"],
+correct:1,
+category:"الاستدلال العددي"
+},
+
+{
+q:"قطعت سيارة 180 كم في 3 ساعات. ما متوسط السرعة؟",
+options:["50 كم/س","60 كم/س","70 كم/س","90 كم/س"],
+correct:1,
+category:"الاستدلال العددي"
+},
+
+{
+q:"ما الحرف التالي في النمط: أ، ج، هـ، ؟",
+options:["و","ز","ح","ط"],
+correct:1,
+category:"الأنماط"
+},
+
+{
+q:"ما العدد التالي: 1، 4، 9، 16، ؟",
+options:["20","24","25","32"],
+correct:2,
+category:"الأنماط"
+},
+
+{
+q:"ما العدد الناقص: 2، 5، 11، 23، ؟",
+options:["35","46","47","48"],
+correct:2,
+category:"الأنماط"
+},
+
+{
+q:"إذا تكرر النمط: أحمر، أزرق، أخضر، أحمر، أزرق، ؟",
+options:["أحمر","أخضر","أزرق","أصفر"],
+correct:1,
+category:"الأنماط"
+},
+
+{
+q:"ما العدد التالي: 100، 90، 72، 48، ؟",
+options:["24","20","18","12"],
+correct:2,
+category:"الأنماط"
+},
+
+{
+q:"اختر الترتيب العكسي للأرقام: 7 - 2 - 9 - 4",
+options:[
+"4 - 9 - 2 - 7",
+"4 - 2 - 9 - 7",
+"7 - 9 - 2 - 4",
+"9 - 4 - 2 - 7"
+],
+correct:0,
+category:"الذاكرة العاملة"
+},
+
+{
+q:"ابدأ بالعدد 18، أضف 7 ثم اطرح 5. ما الناتج؟",
+options:["19","20","21","22"],
+correct:1,
+category:"الذاكرة العاملة"
+},
+
+{
+q:"الكلمات هي: بحر، مفتاح، قمر، نافذة. ما الكلمة الثانية؟",
+options:["بحر","مفتاح","قمر","نافذة"],
+correct:1,
+category:"الذاكرة العاملة"
+},
+
+{
+q:"رتب الأعداد 9، 3، 7، 1 من الأصغر للأكبر. ما العدد الثالث؟",
+options:["3","7","9","1"],
+correct:1,
+category:"الذاكرة العاملة"
+},
+
+{
+q:"احفظ 6 - 1 - 8، ثم أضف 1 لكل رقم. أي تسلسل ينتج؟",
+options:["7 - 2 - 9","6 - 2 - 8","7 - 1 - 9","5 - 0 - 7"],
+correct:0,
+category:"الذاكرة العاملة"
+}
+
+]
+},
+
+
+/* 3 ==================================
+مؤشرات الطفل
+================================== */
+
+{
+type:"child",
+icon:"☆",
+title:"اختبار مؤشرات سلوك الطفل وانفعالاته",
+description:"12 سؤالًا لولي الأمر حول أربعة جوانب سلوكية وانفعالية.",
+answers:[
+"لا / نادرًا",
+"أحيانًا",
+"غالبًا",
+"بشكل كبير"
+],
+questions:[
+
+["يتشتت الطفل بسهولة.","الانتباه والاندفاع"],
+["يجد صعوبة في الاستمرار في مهمة مناسبة لعمره.","الانتباه والاندفاع"],
+["يتصرف أحيانًا قبل التفكير.","الانتباه والاندفاع"],
+
+["يغضب بشدة في بعض المواقف.","تنظيم الانفعالات"],
+["يجد صعوبة في تهدئة نفسه بعد الغضب.","تنظيم الانفعالات"],
+["تتغير انفعالاته بسرعة في بعض المواقف.","تنظيم الانفعالات"],
+
+["تظهر عليه مخاوف متكررة.","القلق والمخاوف"],
+["يتجنب بعض المواقف بسبب الخوف.","القلق والمخاوف"],
+["يطلب الطمأنة بشكل متكرر عند القلق.","القلق والمخاوف"],
+
+["يجد صعوبة في التعامل مع الأطفال الآخرين.","التفاعل الاجتماعي"],
+["يواجه صعوبة في تكوين صداقات مناسبة لعمره.","التفاعل الاجتماعي"],
+["تظهر مشكلات متكررة أثناء اللعب أو التفاعل مع الآخرين.","التفاعل الاجتماعي"]
+
+]
+},
+
+
+/* 4 ==================================
+الشخصية
+================================== */
+
+{
 type:"personality",
-
 icon:"◇",
-
 title:"اختبار أنماط الشخصية",
-
-description:
-"25 سؤالًا لاستكشاف خمسة ميول شخصية بصورة تثقيفية.",
-
+description:"25 سؤالًا لاستكشاف خمسة ميول شخصية بصورة تثقيفية.",
 answers:[
 "لا تنطبق عليّ",
 "تنطبق قليلًا",
 "تنطبق غالبًا",
 "تنطبق جدًا"
 ],
-
 questions:[
 
 ["يهمني أن يلاحظ الآخرون إنجازاتي وقدراتي.","الميل النرجسي"],
@@ -1319,145 +1365,24 @@ questions:[
 ["لا أبحث عادة عن قدر كبير من التفاعل الاجتماعي.","الميل الانعزالي"]
 
 ]
-
 },
 
 
-{
-
-type:"general",
-
-icon:"◌",
-
-title:"اختبار القلق والتوتر",
-
-description:
-"10 أسئلة لمؤشر تثقيفي حول القلق والتوتر.",
-
-answers:[
-"أبدًا",
-"أحيانًا",
-"غالبًا",
-"بشكل كبير"
-],
-
-questions:[
-
-"أشعر بالتوتر أو عدم الارتياح.",
-"يصعب علي إيقاف التفكير في الأمور التي تقلقني.",
-"أجد صعوبة في الاسترخاء.",
-"أفكر كثيرًا فيما قد يحدث مستقبلًا.",
-"أصبح سريع الانفعال عندما أكون تحت الضغط.",
-"يؤثر التفكير الزائد على تركيزي.",
-"أشعر بشد أو توتر جسدي عندما أقلق.",
-"يؤثر القلق أو التفكير على نومي.",
-"أتجنب بعض المواقف بسبب التوتر.",
-"يؤثر التوتر على نشاطي أو حياتي اليومية."
-
-]
-
-},
-
+/* 5 ==================================
+الذكاء العاطفي
+================================== */
 
 {
-
-type:"attachment",
-
-icon:"♡",
-
-title:"اختبار أسلوب التعلق في العلاقات",
-
-description:
-"12 سؤالًا لاستكشاف أنماط آمن وقلق وتجنبي.",
-
-answers:[
-"لا تنطبق عليّ",
-"تنطبق قليلًا",
-"تنطبق غالبًا",
-"تنطبق جدًا"
-],
-
-questions:[
-
-["أشعر بالراحة في العلاقات القريبة.","آمن"],
-["أستطيع التعبير عن احتياجاتي للطرف الآخر بوضوح.","آمن"],
-["أستطيع مناقشة الخلاف دون خوف شديد من انتهاء العلاقة.","آمن"],
-["أستطيع الحفاظ على استقلاليتي مع وجود علاقة قريبة.","آمن"],
-
-["أقلق كثيرًا من فقدان الشخص الذي أحبه.","قلق"],
-["أتضايق بشدة عندما يتأخر شخص قريب مني في الرد.","قلق"],
-["أحتاج إلى تأكيد متكرر بأن الطرف الآخر يهتم بي.","قلق"],
-["أفكر كثيرًا في احتمال ابتعاد الطرف الآخر عني.","قلق"],
-
-["أفضل الاحتفاظ بمشكلاتي ومشاعري لنفسي.","تجنبي"],
-["أشعر بعدم الارتياح عندما يعتمد عليّ شخص عاطفيًا بشكل كبير.","تجنبي"],
-["قد أبتعد عندما تصبح العلاقة شديدة القرب.","تجنبي"],
-["أفضل الاعتماد على نفسي بدل طلب الدعم العاطفي.","تجنبي"]
-
-]
-
-},
-
-
-{
-
-type:"child",
-
-icon:"☆",
-
-title:"اختبار مؤشرات سلوك الطفل وانفعالاته",
-
-description:
-"12 سؤالًا لولي الأمر حول أربعة جوانب سلوكية وانفعالية.",
-
-answers:[
-"لا / نادرًا",
-"أحيانًا",
-"غالبًا",
-"بشكل كبير"
-],
-
-questions:[
-
-["يتشتت الطفل بسهولة.","الانتباه والاندفاع"],
-["يجد صعوبة في الاستمرار في مهمة مناسبة لعمره.","الانتباه والاندفاع"],
-["يتصرف أحيانًا قبل التفكير.","الانتباه والاندفاع"],
-
-["يغضب بشدة في بعض المواقف.","تنظيم الانفعالات"],
-["يجد صعوبة في تهدئة نفسه بعد الغضب.","تنظيم الانفعالات"],
-["تتغير انفعالاته بسرعة في بعض المواقف.","تنظيم الانفعالات"],
-
-["تظهر عليه مخاوف متكررة.","القلق والمخاوف"],
-["يتجنب بعض المواقف بسبب الخوف.","القلق والمخاوف"],
-["يطلب الطمأنة بشكل متكرر عند القلق.","القلق والمخاوف"],
-
-["يجد صعوبة في التعامل مع الأطفال الآخرين.","التفاعل الاجتماعي"],
-["يواجه صعوبة في تكوين صداقات مناسبة لعمره.","التفاعل الاجتماعي"],
-["تظهر مشكلات متكررة أثناء اللعب أو التفاعل مع الآخرين.","التفاعل الاجتماعي"]
-
-]
-
-},
-
-
-{
-
 type:"eq",
-
 icon:"✦",
-
 title:"اختبار الذكاء العاطفي",
-
-description:
-"20 سؤالًا لاستكشاف أربعة جوانب من الذكاء العاطفي.",
-
+description:"20 سؤالًا لاستكشاف أربعة جوانب من الذكاء العاطفي.",
 answers:[
 "لا تنطبق عليّ",
 "تنطبق قليلًا",
 "تنطبق غالبًا",
 "تنطبق جدًا"
 ],
-
 questions:[
 
 ["أستطيع تحديد الشعور الذي أمر به بدقة.","الوعي بالمشاعر"],
@@ -1485,15 +1410,78 @@ questions:[
 ["أحاول الوصول إلى حلول مناسبة للطرفين أثناء الخلاف.","إدارة العلاقات"]
 
 ]
+},
 
+
+/* 6 ==================================
+التعلق
+================================== */
+
+{
+type:"attachment",
+icon:"♡",
+title:"اختبار أسلوب التعلق في العلاقات",
+description:"12 سؤالًا لاستكشاف أنماط آمن وقلق وتجنبي.",
+answers:[
+"لا تنطبق عليّ",
+"تنطبق قليلًا",
+"تنطبق غالبًا",
+"تنطبق جدًا"
+],
+questions:[
+
+["أشعر بالراحة في العلاقات القريبة.","آمن"],
+["أستطيع التعبير عن احتياجاتي للطرف الآخر بوضوح.","آمن"],
+["أستطيع مناقشة الخلاف دون خوف شديد من انتهاء العلاقة.","آمن"],
+["أستطيع الحفاظ على استقلاليتي مع وجود علاقة قريبة.","آمن"],
+
+["أقلق كثيرًا من فقدان الشخص الذي أحبه.","قلق"],
+["أتضايق بشدة عندما يتأخر شخص قريب مني في الرد.","قلق"],
+["أحتاج إلى تأكيد متكرر بأن الطرف الآخر يهتم بي.","قلق"],
+["أفكر كثيرًا في احتمال ابتعاد الطرف الآخر عني.","قلق"],
+
+["أفضل الاحتفاظ بمشكلاتي ومشاعري لنفسي.","تجنبي"],
+["أشعر بعدم الارتياح عندما يعتمد عليّ شخص عاطفيًا بشكل كبير.","تجنبي"],
+["قد أبتعد عندما تصبح العلاقة شديدة القرب.","تجنبي"],
+["أفضل الاعتماد على نفسي بدل طلب الدعم العاطفي.","تجنبي"]
+
+]
+},
+
+
+/* 7 ==================================
+القلق والتوتر
+================================== */
+
+{
+type:"general",
+icon:"◌",
+title:"اختبار القلق والتوتر",
+description:"10 أسئلة لمؤشر تثقيفي حول القلق والتوتر.",
+answers:[
+"أبدًا",
+"أحيانًا",
+"غالبًا",
+"بشكل كبير"
+],
+questions:[
+
+"أشعر بالتوتر أو عدم الارتياح.",
+"يصعب علي إيقاف التفكير في الأمور التي تقلقني.",
+"أجد صعوبة في الاسترخاء.",
+"أفكر كثيرًا فيما قد يحدث مستقبلًا.",
+"أصبح سريع الانفعال عندما أكون تحت الضغط.",
+"يؤثر التفكير الزائد على تركيزي.",
+"أشعر بشد أو توتر جسدي عندما أقلق.",
+"يؤثر القلق أو التفكير على نومي.",
+"أتجنب بعض المواقف بسبب التوتر.",
+"يؤثر التوتر على نشاطي أو حياتي اليومية."
+
+]
 }
 
 ];
 
-
-/* ====================================
-   وصف أنماط الشخصية
-==================================== */
 
 const descriptions={
 
@@ -1530,14 +1518,11 @@ const descriptions={
 };
 
 
-/* ====================================
-   المتغيرات
-==================================== */
-
 let currentTest=0;
 let currentQuestion=0;
 let userAnswers=[];
 let lastResultText="";
+
 
 const sections=[
 "home",
@@ -1549,10 +1534,6 @@ const sections=[
 "privacy"
 ];
 
-
-/* ====================================
-   بطاقات الاختبارات
-==================================== */
 
 const container=
 document.getElementById("tests");
@@ -1604,10 +1585,6 @@ container.appendChild(card);
 });
 
 
-/* ====================================
-   التنقل
-==================================== */
-
 function showPage(id){
 
 sections.forEach(function(section){
@@ -1634,10 +1611,6 @@ function goHome(){
 showPage("home");
 }
 
-
-/* ====================================
-   بدء الاختبار
-==================================== */
 
 function startTest(index){
 
@@ -1678,16 +1651,10 @@ userAnswers.length-1
 
 showPage("quiz");
 
-createButtons();
-
 showQuestion();
 
 }
 
-
-/* ====================================
-   أزرار الإجابة
-==================================== */
 
 function createButtons(){
 
@@ -1696,8 +1663,26 @@ document.getElementById("answers");
 
 box.innerHTML="";
 
-tests[currentTest].answers.forEach(
-function(answer,index){
+const test=
+tests[currentTest];
+
+const item=
+test.questions[currentQuestion];
+
+const answerList=
+(
+item &&
+typeof item==="object" &&
+!Array.isArray(item) &&
+Array.isArray(item.options)
+)
+?
+item.options
+:
+test.answers;
+
+
+answerList.forEach(function(answer,index){
 
 const button=
 document.createElement("button");
@@ -1712,15 +1697,10 @@ answerQuestion(index);
 
 box.appendChild(button);
 
-}
-);
+});
 
 }
 
-
-/* ====================================
-   عرض السؤال
-==================================== */
 
 function showQuestion(){
 
@@ -1743,18 +1723,43 @@ document
 " من "+
 test.questions.length;
 
+
+let questionText="";
+
+
+if(
+item &&
+typeof item==="object" &&
+!Array.isArray(item)
+){
+
+questionText=item.q;
+
+}
+else if(
+Array.isArray(item)
+){
+
+questionText=item[0];
+
+}
+else{
+
+questionText=item;
+
+}
+
+
 document
 .getElementById("question")
 .innerText=
-Array.isArray(item)
-?
-item[0]
-:
-item;
+questionText;
+
 
 document
 .getElementById("bar")
 .style.width=
+
 (
 (currentQuestion+1)
 /
@@ -1764,32 +1769,29 @@ test.questions.length
 )
 +"%";
 
+
 document
 .getElementById("prevButton")
 .disabled=
 currentQuestion===0;
 
+
+createButtons();
+
+
 document
 .querySelectorAll(".option")
-.forEach(
-
-function(button,index){
+.forEach(function(button,index){
 
 button.classList.toggle(
 "selected",
 userAnswers[currentQuestion]===index
 );
 
-}
-
-);
+});
 
 }
 
-
-/* ====================================
-   حفظ التقدم
-==================================== */
 
 function saveProgress(){
 
@@ -1813,13 +1815,10 @@ answers:userAnswers
 }
 
 
-/* ====================================
-   تسجيل الإجابة
-==================================== */
-
 function answerQuestion(value){
 
 userAnswers[currentQuestion]=value;
+
 
 if(
 currentQuestion <
@@ -1844,11 +1843,6 @@ localStorage.removeItem(
 
 }catch(error){}
 
-/*
-بعد آخر سؤال:
-نذهب للدفع، وليس للتقرير.
-*/
-
 prepareResult();
 
 showCheckout();
@@ -1857,10 +1851,6 @@ showCheckout();
 
 }
 
-
-/* ====================================
-   السؤال السابق
-==================================== */
 
 function previousQuestion(){
 
@@ -1877,16 +1867,13 @@ showQuestion();
 }
 
 
-/* ====================================
-   صفحة الدفع
-==================================== */
-
 function showCheckout(){
 
 showPage("checkout");
 
 const status=
 document.getElementById("paymentStatus");
+
 
 if(PAYMENT_ENABLED){
 
@@ -1896,7 +1883,7 @@ status.innerHTML=`
 اختر طريقة الدفع
 </strong>
 
-<div class="muted" style="margin-top:5px;">
+<div class="muted">
 سيتم تحويلك إلى صفحة الدفع الآمنة.
 </div>
 
@@ -1906,10 +1893,6 @@ status.innerHTML=`
 
 }
 
-
-/* ====================================
-   بدء الدفع
-==================================== */
 
 function startPayment(){
 
@@ -1925,30 +1908,19 @@ return;
 
 /*
 
-========================================
-هنا سيتم ربط Geidea بعد الاعتماد
-========================================
+بعد اعتماد بوابة الدفع:
 
-الطريقة الصحيحة لاحقًا:
+1- إنشاء عملية دفع من Backend.
+2- إرسال العميل إلى صفحة الدفع.
+3- التحقق من نجاح العملية من الخادم.
+4- بعدها يتم تشغيل paymentVerified().
 
-1- الموقع يرسل طلبًا إلى Backend.
-2- الـ Backend ينشئ عملية دفع بقيمة 5 ريال.
-3- المستخدم يكمل الدفع.
-4- Geidea تؤكد نجاح الدفع.
-5- Backend يتحقق من العملية.
-6- بعدها فقط يتم فتح التقرير.
-
-لا تضع Secret Key داخل هذا الملف.
+لا تضع المفتاح السري داخل index.html.
 
 */
 
 }
 
-
-/* ====================================
-   فتح التقرير
-   تستدعى بعد تحقق الدفع من الخادم
-==================================== */
 
 function paymentVerified(){
 
@@ -1956,10 +1928,6 @@ showPage("result");
 
 }
 
-
-/* ====================================
-   إعادة الاختبار
-==================================== */
 
 function restartTest(){
 
@@ -1980,18 +1948,16 @@ tests[currentTest].questions.length
 
 showPage("quiz");
 
-createButtons();
-
 showQuestion();
 
 }
 
 
-/* ====================================
-   حساب النسبة
-==================================== */
-
 function percentage(value,maximum){
+
+if(maximum===0){
+return 0;
+}
 
 return Math.round(
 value/
@@ -2001,10 +1967,6 @@ maximum*
 
 }
 
-
-/* ====================================
-   شريط النتيجة
-==================================== */
 
 function scoreBox(name,value){
 
@@ -2040,13 +2002,10 @@ style="width:${value}%">
 }
 
 
-/* ====================================
-   حساب الفئات
-==================================== */
-
 function calculateCategories(test){
 
 const scores={};
+
 
 test.questions.forEach(
 function(question,index){
@@ -2056,8 +2015,13 @@ if(Array.isArray(question)){
 const category=
 question[1];
 
-if(scores[category]===undefined){
+if(
+scores[category]===
+undefined
+){
+
 scores[category]=0;
+
 }
 
 scores[category]+=
@@ -2072,10 +2036,6 @@ return scores;
 
 }
 
-
-/* ====================================
-   صندوق التقرير
-==================================== */
 
 function report(title,body){
 
@@ -2098,11 +2058,6 @@ ${body}
 }
 
 
-/* ====================================
-   تجهيز التقرير
-   لا يتم عرضه للمستخدم قبل الدفع
-==================================== */
-
 function prepareResult(){
 
 const test=
@@ -2120,148 +2075,412 @@ document.getElementById("fullReport");
 const text=
 document.getElementById("resultText");
 
+
 details.innerHTML="";
 fullReport.innerHTML="";
 text.innerText="";
 
 
 /* ====================================
-   القلق والتوتر
+القدرات الذهنية
 ==================================== */
 
-if(test.type==="general"){
+if(
+test.type==="cognitiveChild" ||
+test.type==="cognitiveAdult"
+){
 
-const total=
-userAnswers.reduce(
-function(sum,value){
-return sum+(value ?? 0);
-},
-0
-);
+const domainScores={};
 
-const result=
-percentage(total,30);
+const domainTotals={};
 
-title.innerText=
-"مؤشر القلق والتوتر: "+
-result+
-"%";
+let totalCorrect=0;
 
-let level;
 
-if(result<34){
+test.questions.forEach(
+function(item,index){
 
-level="محدود";
+if(
+domainScores[item.category]===
+undefined
+){
+
+domainScores[item.category]=0;
+
+domainTotals[item.category]=0;
 
 }
-else if(result<67){
 
-level="متوسط";
+domainTotals[item.category]++;
+
+
+if(
+userAnswers[index]===
+item.correct
+){
+
+domainScores[item.category]++;
+
+totalCorrect++;
+
+}
+
+}
+);
+
+
+const overall=
+percentage(
+totalCorrect,
+test.questions.length
+);
+
+
+let level="";
+
+
+if(overall>=80){
+
+level=
+"مرتفع ضمن أسئلة هذا الاختبار";
+
+}
+else if(overall>=60){
+
+level=
+"جيد ضمن أسئلة هذا الاختبار";
+
+}
+else if(overall>=40){
+
+level=
+"متوسط ضمن أسئلة هذا الاختبار";
 
 }
 else{
 
-level="مرتفع نسبيًا";
+level=
+"يحتاج إلى مزيد من التدريب ضمن هذه المهام";
 
 }
 
+
+title.innerText=
+
+"الأداء العام: "+
+overall+
+"%";
+
+
+Object.keys(
+domainScores
+)
+.forEach(
+function(category){
+
+details.innerHTML+=
+
+scoreBox(
+
+category,
+
+percentage(
+domainScores[category],
+domainTotals[category]
+)
+
+);
+
+}
+);
+
+
+fullReport.innerHTML+=
+
+report(
+
+"قراءة النتيجة",
+
+"أجبت إجابة صحيحة عن <b>"+
+totalCorrect+
+" من "+
+test.questions.length+
+"</b> سؤالًا. ويُوصف الأداء بأنه <b>"+
+level+
+"</b> ضمن أسئلة هذا الاختبار."
+
+);
+
+
+fullReport.innerHTML+=
+
+report(
+
+"تفاصيل المجالات",
+
+"تعرض النسب أعلاه أداءك في كل مجال بصورة منفصلة. النسب مرتبطة بأسئلة هذا الاختبار فقط ولا تتم مقارنتها بمعايير عمرية أو سكانية."
+
+);
+
+
+fullReport.innerHTML+=
+
+report(
+
+"كيف تستفيد من النتيجة؟",
+
+"يمكن استخدام المجالات الأقل نتيجة لتحديد نوع المهام التي يمكن التدرب عليها، مثل الاستدلال، الحساب، الأنماط، اللغة، الانتباه أو الذاكرة العاملة."
+
+);
+
+
+if(
+test.type==="cognitiveChild"
+){
+
+text.innerText=
+
+"هذا اختبار تثقيفي مبسط للأطفال وليس اختبار ذكاء مقننًا، ولا يعطي درجة IQ. قياس القدرات المعرفية لدى الطفل بصورة معيارية يحتاج إلى اختبار مناسب للعمر يطبقه مختص مؤهل.";
+
+}
+else{
+
+text.innerText=
+
+"هذا اختبار تثقيفي مبسط للكبار وليس اختبار ذكاء مقننًا، ولا يعطي درجة IQ. القياس المعياري للقدرات المعرفية يحتاج إلى اختبار مقنن وتطبيق متخصص.";
+
+}
+
+}
+
+
+/* ====================================
+القلق والتوتر
+==================================== */
+
+else if(
+test.type==="general"
+){
+
+const total=
+
+userAnswers.reduce(
+
+function(sum,value){
+
+return sum+
+(value ?? 0);
+
+},
+
+0
+
+);
+
+
+const result=
+
+percentage(
+total,
+30
+);
+
+
+title.innerText=
+
+"مؤشر القلق والتوتر: "+
+result+
+"%";
+
+
+let level;
+
+
+if(
+result<34
+){
+
+level=
+"محدود";
+
+}
+else if(
+result<67
+){
+
+level=
+"متوسط";
+
+}
+else{
+
+level=
+"مرتفع نسبيًا";
+
+}
+
+
 details.innerHTML=
+
 scoreBox(
 "المؤشر العام",
 result
 );
 
+
 fullReport.innerHTML+=
+
 report(
+
 "قراءة النتيجة",
+
 "ظهر مستوى <b>"+
 level+
 "</b> من مؤشرات القلق والتوتر ضمن هذا الاختبار التثقيفي."
+
 );
+
 
 fullReport.innerHTML+=
+
 report(
+
 "خطوات عملية",
+
 "لاحظ المواقف التي ترفع التوتر، ونظّم النوم والنشاط اليومي، وجرّب تمارين التنفس أو الاسترخاء البسيطة. إذا استمرت الأعراض أو أثرت بوضوح على حياتك فناقشها مع مختص مرخص."
+
 );
 
+
 text.innerText=
+
 "هذه النسبة ليست درجة تشخيصية ولا تحدد وجود اضطراب قلق.";
 
 }
 
 
 /* ====================================
-   بقية الاختبارات
+بقية الاختبارات
 ==================================== */
 
 else{
 
 const scores=
-calculateCategories(test);
+
+calculateCategories(
+test
+);
+
 
 const sorted=
-Object.entries(scores)
+
+Object.entries(
+scores
+)
 .sort(
+
 function(a,b){
+
 return b[1]-a[1];
+
 }
+
 );
 
 
 /* الشخصية */
 
-if(test.type==="personality"){
+if(
+test.type==="personality"
+){
 
 title.innerText=
+
 "الميل الأبرز: "+
 sorted[0][0];
 
+
 sorted.forEach(
+
 function(item){
 
 details.innerHTML+=
+
 scoreBox(
+
 item[0],
-percentage(item[1],15)
+
+percentage(
+item[1],
+15
+)
+
 );
 
 }
+
 );
 
+
 const first=
-descriptions[sorted[0][0]];
+
+descriptions[
+sorted[0][0]
+];
+
 
 const second=
-descriptions[sorted[1][0]];
+
+descriptions[
+sorted[1][0]
+];
+
 
 fullReport.innerHTML+=
+
 report(
+
 "أبرز ميلين",
+
 "الأول: <b>"+
 sorted[0][0]+
 "</b> — "+
 first[1]+
+
 "<br><br>"+
+
 "الثاني: <b>"+
 sorted[1][0]+
 "</b> — "+
 second[1]
+
 );
 
+
 fullReport.innerHTML+=
+
 report(
+
 "نقطة يمكن الاستفادة منها",
+
 first[0]+"."
+
 );
 
+
 fullReport.innerHTML+=
+
 report(
+
 "اقتراح للتطوير",
+
 first[2]
+
 );
+
 
 text.innerText=
+
 "النتيجة تصف ميولًا ظهرت في إجاباتك ولا تعني وجود اضطراب في الشخصية. تشخيص اضطرابات الشخصية يحتاج إلى تقييم سريري متخصص.";
 
 }
@@ -2269,41 +2488,66 @@ text.innerText=
 
 /* التعلق */
 
-if(test.type==="attachment"){
+if(
+test.type==="attachment"
+){
 
 title.innerText=
+
 "أسلوب التعلق الأبرز: "+
 sorted[0][0];
 
+
 sorted.forEach(
+
 function(item){
 
 details.innerHTML+=
+
 scoreBox(
+
 item[0],
-percentage(item[1],12)
+
+percentage(
+item[1],
+12
+)
+
 );
 
 }
+
 );
 
+
 fullReport.innerHTML+=
+
 report(
+
 "قراءة النتيجة",
+
 "ظهر نمط <b>"+
 sorted[0][0]+
 "</b> بصورة أكبر، يليه <b>"+
 sorted[1][0]+
 "</b>. قد تختلف طريقة التعلق باختلاف العلاقة والسياق."
+
 );
+
 
 fullReport.innerHTML+=
+
 report(
+
 "للتطوير",
+
 "راقب طريقة استجابتك للقرب والخلاف وطلب الطمأنة والحاجة للمساحة الشخصية. التواصل الواضح والحدود الصحية يساعدان على بناء علاقات أكثر توازنًا."
+
 );
 
+
 text.innerText=
+
 "هذه نتيجة تثقيفية وليست تصنيفًا ثابتًا أو تشخيصًا نفسيًا.";
 
 }
@@ -2311,38 +2555,63 @@ text.innerText=
 
 /* الطفل */
 
-if(test.type==="child"){
+if(
+test.type==="child"
+){
 
 title.innerText=
+
 "مؤشرات سلوك الطفل وانفعالاته";
 
+
 sorted.forEach(
+
 function(item){
 
 details.innerHTML+=
+
 scoreBox(
+
 item[0],
-percentage(item[1],9)
+
+percentage(
+item[1],
+9
+)
+
 );
 
 }
+
 );
 
+
 fullReport.innerHTML+=
+
 report(
+
 "أكثر جانب بروزًا",
+
 "ظهر <b>"+
 sorted[0][0]+
 "</b> كأعلى جانب في إجابات ولي الأمر. هذا لا يحدد سبب السلوك ولا يشخّص اضطرابًا."
+
 );
+
 
 fullReport.innerHTML+=
+
 report(
+
 "ما الذي يستحق الملاحظة؟",
-"راقب مدة السلوك، وشدته، ومدى مناسبته لعمر الطفل، وهل يظهر في أكثر من بيئة مثل المنزل والمدرسة، ومدى تأثيره على التعلم والعلاقات والحياة اليومية."
+
+"راقب مدة السلوك وشدته ومدى مناسبته لعمر الطفل، وهل يظهر في أكثر من بيئة مثل المنزل والمدرسة، ومدى تأثيره على التعلم والعلاقات والحياة اليومية."
+
 );
 
+
 text.innerText=
+
 "إذا كانت السلوكيات مستمرة أو تسبب تعطيلًا واضحًا، فالتقييم لدى مختص أطفال مؤهل هو الأنسب.";
 
 }
@@ -2350,66 +2619,101 @@ text.innerText=
 
 /* الذكاء العاطفي */
 
-if(test.type==="eq"){
+if(
+test.type==="eq"
+){
 
 const total=
-Object.values(scores)
+
+Object.values(
+scores
+)
 .reduce(
+
 function(sum,value){
+
 return sum+value;
+
 },
+
 0
+
 );
 
+
 const overall=
-percentage(total,60);
+
+percentage(
+total,
+60
+);
+
 
 title.innerText=
+
 "مؤشر الذكاء العاطفي: "+
 overall+
 "%";
 
+
 sorted.forEach(
+
 function(item){
 
 details.innerHTML+=
+
 scoreBox(
+
 item[0],
-percentage(item[1],15)
+
+percentage(
+item[1],
+15
+)
+
 );
 
 }
+
 );
 
+
 fullReport.innerHTML+=
+
 report(
+
 "أقوى جانب",
+
 "<b>"+
 sorted[0][0]+
 "</b> هو الأكثر بروزًا في إجاباتك."
+
 );
 
+
 fullReport.innerHTML+=
+
 report(
+
 "فرصة للتطوير",
+
 "<b>"+
 sorted[
 sorted.length-1
 ][0]+
 "</b> هو الجانب الأقل بروزًا. اختر موقفًا يوميًا واحدًا وراقب فيه مشاعرك وردود فعلك وتواصلك مع الآخرين، ثم دوّن ما يمكن تحسينه."
+
 );
 
+
 text.innerText=
+
 "هذا مؤشر تثقيفي مبسط وليس مقياسًا نفسيًا مقننًا للذكاء العاطفي.";
 
 }
 
 }
 
-
-/* ====================================
-   نص المشاركة
-==================================== */
 
 lastResultText=
 
@@ -2424,20 +2728,21 @@ title.innerText+
 }
 
 
-/* ====================================
-   مشاركة النتيجة
-==================================== */
-
 async function shareResult(){
 
-if(navigator.share){
+if(
+navigator.share
+){
 
 try{
 
 await navigator.share({
 
-title:"وَعْي",
-text:lastResultText
+title:
+"وَعْي",
+
+text:
+lastResultText
 
 });
 
@@ -2452,10 +2757,6 @@ copyResult();
 
 }
 
-
-/* ====================================
-   نسخ النتيجة
-==================================== */
 
 async function copyResult(){
 
