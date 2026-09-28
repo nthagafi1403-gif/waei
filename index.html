@@ -381,6 +381,20 @@ main{
 
 }
 
+.testCard.hasPhoto{
+  padding-top:0;
+}
+
+.testPhoto{
+  width:calc(100% + 48px);
+  margin:-24px -24px 20px;
+  height:220px;
+  object-fit:cover;
+  object-position:center 35%;
+  display:block;
+  border-radius:25px 25px 0 0;
+}
+
 
 .testCard::before{
 
@@ -758,8 +772,6 @@ button{
 
   font-weight:900;
 
-}
-
 
 .paymentWrap{
 
@@ -834,7 +846,7 @@ button{
     135deg,
     var(--blue),
     var(--blue2)
-  );
+   );
 
   font-weight:900;
 
@@ -1512,9 +1524,7 @@ onclick="goHome()">
 ================================= -->
 
 
-<section
-id="faq"
-class="page hidden">
+<section id="faq" class="page hidden">
 
 
 <h2>
@@ -2966,10 +2976,12 @@ document.createElement("div");
 
 
 card.className=
-"card testCard";
+"card testCard" + (index===0 ? " hasPhoto" : "");
 
 
 card.innerHTML=`
+
+${index===0 ? '<img class="testPhoto" src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=1200&q=85" alt="طفل في سن المدرسة">' : ''}
 
 <div class="testIcon">
 ${test.icon}
@@ -3209,8 +3221,7 @@ function(answer,index){
 
 const button=
 
-document
-.createElement("button");
+document.createElement("button");
 
 
 button.className=
@@ -3412,8 +3423,7 @@ JSON.stringify({
 current:
 currentQuestion,
 
-answers:
-userAnswers
+answers:userAnswers
 
 })
 
@@ -3668,10 +3678,8 @@ return 0;
 
 return Math.round(
 
-value
-/
-maximum
-*
+value/
+maximum*
 100
 
 );
@@ -3836,23 +3844,19 @@ tests[currentTest];
 
 
 const title=
-document
-.getElementById("resultTitle");
+document.getElementById("resultTitle");
 
 
 const details=
-document
-.getElementById("details");
+document.getElementById("details");
 
 
 const fullReport=
-document
-.getElementById("fullReport");
+document.getElementById("fullReport");
 
 
 const text=
-document
-.getElementById("resultText");
+document.getElementById("resultText");
 
 
 details.innerHTML="";
@@ -4267,8 +4271,7 @@ test
 
 const sorted=
 
-Object
-.entries(scores)
+Object.entries(scores)
 .sort(
 
 function(
@@ -4573,8 +4576,9 @@ test.type===
 
 const total=
 
-Object
-.values(scores)
+Object.values(
+scores
+)
 .reduce(
 
 function(
@@ -4760,9 +4764,7 @@ async function copyResult(){
 try{
 
 
-await navigator
-.clipboard
-.writeText(
+await navigator.clipboard.writeText(
 lastResultText
 );
 
