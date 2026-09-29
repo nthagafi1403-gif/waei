@@ -1486,7 +1486,7 @@ class="policyBox">
 
 <p class="muted">
 
-الدفع الحالي في وضع الاختبار Sandbox فقط ولا يتم خصم أموال حقيقية.
+الدفع الحالي في وضع الاختبار Sandbox فقط ولا يتم خصم أموال حقيقية. يتوفر مدى وVisa وMastercard وApple Pay عند توفره على الجهاز والنطاق المسجل لدى ميسر.
 
 </p>
 
@@ -3817,9 +3817,24 @@ supported_networks:[
 
 methods:[
 
-"creditcard"
+"creditcard",
 
-]
+"applepay"
+
+],
+
+apple_pay:{
+
+country:
+"SA",
+
+label:
+"وَعْي",
+
+validate_merchant_url:
+"https://api.moyasar.com/v1/applepay/initiate"
+
+}
 
 });
 
