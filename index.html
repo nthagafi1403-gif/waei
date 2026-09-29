@@ -1463,7 +1463,7 @@ class="moyasarSandboxBox">
 
 <p class="muted" style="font-size:13px;margin-bottom:0;">
 
-هذا النموذج يستخدم مفتاح ميسر التجريبي. في التشغيل الفعلي يجب التحقق من الدفع في الخادم قبل فتح التقرير.
+هذا النموذج يستخدم مفتاح ميسر التجريبي، ويتم التحقق من الدفع عبر Cloudflare Worker قبل فتح التقرير.
 
 </p>
 
@@ -1486,7 +1486,7 @@ class="policyBox">
 
 <p class="muted">
 
-الدفع الحالي في وضع الاختبار Sandbox فقط ولا يتم خصم أموال حقيقية. يتوفر مدى وVisa وMastercard للاختبار. سيتم تفعيل Apple Pay عند الانتقال إلى البيئة الفعلية وبعد تسجيل النطاق لدى ميسر.
+الدفع الحالي في وضع الاختبار Sandbox فقط ولا يتم خصم أموال حقيقية. يتم التحقق من كل عملية عبر الخادم قبل فتح التقرير. Apple Pay سيُفعّل عند الانتقال إلى البيئة الفعلية وبعد تسجيل النطاق لدى ميسر.
 
 </p>
 
@@ -1857,6 +1857,8 @@ const PAYMENT_MODE="test";
 const MOYASAR_PUBLISHABLE_KEY="pk_test_2RP1yn7gR9RdwVihoNPdgZ2cvKmiRYGVdoWot12c";
 
 const MOYASAR_CALLBACK_URL="https://nthagafi1403-gif.github.io/waei/";
+
+const PAYMENT_VERIFY_URL="https://waei-payment-github.nthagafi1403.workers.dev/verify-payment";
 
 
 const TEST_IMAGES=[
@@ -4954,11 +4956,11 @@ title.innerText+
 
 
 /* =================================
-العودة من ميسر - وضع الاختبار
+العودة من ميسر - تحقق آمن عبر Cloudflare
 ================================= */
 
 
-function handleMoyasarTestReturn(){
+async function handleMoyasarTestReturn(){
 
 
 const params=
@@ -4974,13 +4976,6 @@ const paymentId=
 
 params.get(
 "id"
-);
-
-
-const status=
-
-params.get(
-"status"
 );
 
 
@@ -5039,23 +5034,90 @@ userAnswers=
 pending.answers;
 
 
-prepareResult();
+}
 
+
+showPage(
+"checkout"
+);
+
+
+const message=
+
+document.getElementById(
+"paymentReturnMessage"
+);
+
+
+message.classList.add(
+"show"
+);
+
+
+message.innerHTML=
+
+"<strong>جاري التحقق من الدفع...</strong><br>"+
+
+"يتم الآن التأكد من العملية من ميسر قبل فتح التقرير.";
+
+
+try{
+
+
+const verifyResponse=
+
+await fetch(
+
+PAYMENT_VERIFY_URL+
+
+"?id="+
+
+encodeURIComponent(
+paymentId
+),
+
+{
+
+method:
+"GET",
+
+headers:{
+
+"Accept":
+"application/json"
 
 }
+
+}
+
+);
+
+
+const verification=
+
+await verifyResponse.json();
 
 
 if(
 
-PAYMENT_MODE===
-"test" &&
+verifyResponse.ok &&
 
-status===
-"paid" &&
+verification &&
+
+verification.verified===true &&
+
+verification.status==="paid" &&
+
+verification.amount===500 &&
+
+verification.currency==="SAR" &&
 
 pending
 
 ){
+
+
+prepareResult();
 
 
 showPage(
@@ -5070,19 +5132,27 @@ document.getElementById(
 );
 
 
+if(
+reportBox
+){
+
+
 reportBox.insertAdjacentHTML(
 
 "afterbegin",
 
 report(
 
-"اختبار الدفع التجريبي",
+"تم التحقق من الدفع",
 
-"تمت العودة من ميسر بحالة <b>paid</b> في وضع الاختبار فقط. تم فتح التقرير لأغراض تجربة الربط. عند التحويل إلى الدفع الحقيقي لن يتم فتح التقرير إلا بعد تحقق الخادم من حالة العملية والمبلغ والعملة."
+"تم التحقق من عملية الدفع بنجاح من ميسر عبر الخادم. تم فتح التقرير الكامل."
 
 )
 
 );
+
+
+}
 
 
 try{
@@ -5114,34 +5184,25 @@ return;
 }
 
 
-showPage(
-"checkout"
-);
+message.innerHTML=
+
+"<strong>لم يتم فتح التقرير.</strong><br>"+
+
+"تعذر التحقق من أن العملية مدفوعة بقيمة 5 ر.س. إذا كنت في الوضع التجريبي، تأكد من استخدام بطاقة اختبار ناجحة ثم أعد المحاولة.";
 
 
-const message=
-
-document.getElementById(
-"paymentReturnMessage"
-);
-
-
-message.classList.add(
-"show"
-);
+}
+catch(error){
 
 
 message.innerHTML=
 
-"<strong>نتيجة العودة من ميسر:</strong><br>"+
+"<strong>تعذر التحقق من الدفع الآن.</strong><br>"+
 
-"الحالة: "+
+"حدث خطأ أثناء الاتصال بخادم التحقق. أعد المحاولة بعد قليل.";
 
-(status || "غير معروفة")+
 
-"<br>"+
-
-"في التشغيل الفعلي يجب أن يتحقق الخادم من العملية قبل فتح التقرير.";
+}
 
 
 history.replaceState(
