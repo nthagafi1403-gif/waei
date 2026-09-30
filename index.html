@@ -268,6 +268,111 @@ body{
 }
 
 
+
+/* =================================
+صفحة التواصل ـ Instagram
+================================= */
+
+.contactPage{
+  text-align:center;
+  overflow:hidden;
+  position:relative;
+}
+
+.contactPage::before{
+  content:"";
+  position:absolute;
+  width:240px;
+  height:240px;
+  top:-120px;
+  right:-110px;
+  border-radius:50%;
+  background:linear-gradient(135deg,rgba(131,58,180,.12),rgba(253,29,29,.10),rgba(252,176,69,.13));
+  pointer-events:none;
+}
+
+.instagramMark{
+  width:92px;
+  height:92px;
+  margin:8px auto 20px;
+  border-radius:25px;
+  position:relative;
+  background:radial-gradient(circle at 30% 105%,#fdf497 0 5%,#fd5949 38%,#d6249f 62%,#285AEB 90%);
+  box-shadow:0 10px 28px rgba(214,36,159,.18);
+}
+
+.instagramMark::before{
+  content:"";
+  position:absolute;
+  inset:19px;
+  border:6px solid #fff;
+  border-radius:19px;
+}
+
+.instagramLens{
+  position:absolute;
+  width:24px;
+  height:24px;
+  border:6px solid #fff;
+  border-radius:50%;
+  left:28px;
+  top:28px;
+}
+
+.instagramDot{
+  position:absolute;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#fff;
+  right:23px;
+  top:22px;
+}
+
+.contactPage h2{
+  margin:0 0 12px;
+  font-size:30px;
+  color:#173f4d;
+}
+
+.contactLead{
+  max-width:650px;
+  margin:0 auto 20px;
+  line-height:2;
+}
+
+.instagramHandle{
+  direction:ltr;
+  display:inline-block;
+  padding:11px 18px;
+  margin:2px auto 20px;
+  border-radius:999px;
+  background:#f7f3f8;
+  color:#5d355e;
+  font-weight:800;
+}
+
+.instagramButton{
+  display:block;
+  width:100%;
+  box-sizing:border-box;
+  text-decoration:none;
+  color:#fff;
+  font-weight:900;
+  padding:16px 20px;
+  border-radius:16px;
+  background:linear-gradient(100deg,#833ab4,#d6249f,#fd5949,#fcb045);
+  box-shadow:0 8px 20px rgba(214,36,159,.20);
+}
+
+.contactBack{
+  margin-top:12px;
+}
+
+.contactResultButton{
+  flex-basis:100% !important;
+}
+
 /* =================================
 بقية الصفحة
 ================================= */
@@ -1660,12 +1765,59 @@ onclick="goHome()">
 
 </button>
 
+<button
+class="secondary contactResultButton"
+onclick="showPage('contact')">
+
+للتواصل والاستفسار
+
+</button>
+
 
 </div>
 
 
 </section>
 
+
+
+
+<!-- =================================
+التواصل والاستفسار
+================================= -->
+
+<section id="contact" class="page hidden contactPage">
+
+<div class="instagramMark" aria-hidden="true">
+  <div class="instagramLens"></div>
+  <div class="instagramDot"></div>
+</div>
+
+<h2>تواصل معنا</h2>
+
+<p class="muted contactLead">
+للاستفسارات والملاحظات أو في حال وجود مشكلة في التقرير أو الدفع، يسعدنا تواصلك معنا عبر Instagram.
+</p>
+
+<div class="instagramHandle">
+Instagram: @waei.waei.waei
+</div>
+
+<a
+class="instagramButton"
+href="https://www.instagram.com/waei.waei.waei/"
+target="_blank"
+rel="noopener noreferrer">
+التواصل عبر Instagram
+</a>
+
+<button
+class="secondary contactBack"
+onclick="goHome()">
+العودة للاختبارات
+</button>
+
+</section>
 
 
 <!-- =================================
@@ -3115,6 +3267,8 @@ const sections=[
 "checkout",
 
 "result",
+
+"contact",
 
 "about",
 
