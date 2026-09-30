@@ -310,9 +310,101 @@ main{
 
 
 .heroIntro{
-
+  position:relative;
   text-align:center;
+  background:linear-gradient(180deg,#ffffff 0%,#f5fcfd 72%,#e8f8f8 100%);
+  border:2px solid #1593bd;
+  border-radius:34px 34px 22px 22px;
+  padding:38px 28px 92px;
+  margin:0 auto 82px;
+  box-shadow:0 14px 34px rgba(11,126,164,.16);
+  overflow:visible;
+}
 
+.heroIntro::after{
+  content:"";
+  position:absolute;
+  left:50%;
+  bottom:-70px;
+  width:140px;
+  height:140px;
+  background:linear-gradient(135deg,#e8f8f8,#f7fcfd);
+  border-right:2px solid #1593bd;
+  border-bottom:2px solid #1593bd;
+  transform:translateX(-50%) rotate(45deg);
+  border-radius:0 0 24px 0;
+  box-shadow:12px 12px 22px rgba(11,126,164,.10);
+  z-index:0;
+}
+
+.heroIntro > *{
+  position:relative;
+  z-index:1;
+}
+
+.heroIntro h1{
+  font-size:clamp(30px,7vw,48px);
+  line-height:1.35;
+  margin:0 0 24px;
+  color:#0876a2;
+  font-weight:900;
+}
+
+.heroIntro .muted{
+  font-size:clamp(17px,4.4vw,22px);
+  line-height:2;
+  color:#6c7d7b;
+  margin:0 auto 24px;
+  max-width:820px;
+}
+
+.heroIntro .heroPrice{
+  margin:0 auto;
+  color:#0876a2;
+  font-size:clamp(19px,4.8vw,25px);
+  line-height:1.65;
+  font-weight:900;
+  max-width:820px;
+}
+
+.heroIntro .pricePill{
+  display:inline-block;
+  margin-top:6px;
+  padding:2px 18px 5px;
+  border-radius:999px;
+  background:linear-gradient(90deg,#e2f7eb,#d6f4ed);
+  color:#075f85;
+}
+
+.heroIntro .arrowMark{
+  position:absolute;
+  left:50%;
+  bottom:-50px;
+  transform:translateX(-50%);
+  z-index:2;
+  color:#0876a2;
+  font-size:42px;
+  line-height:1;
+  font-weight:900;
+}
+
+@media(max-width:700px){
+  .heroIntro{
+    padding:30px 20px 82px;
+    margin-bottom:74px;
+    border-radius:28px 28px 18px 18px;
+  }
+
+  .heroIntro::after{
+    width:118px;
+    height:118px;
+    bottom:-59px;
+  }
+
+  .heroIntro .arrowMark{
+    bottom:-43px;
+    font-size:36px;
+  }
 }
 
 .notice{
@@ -340,14 +432,6 @@ main{
 }
 
 
-.heroIntro h1{
-
-  margin:
-  0 0 8px;
-
-  color:var(--blue2);
-
-}
 
 
 .muted{
@@ -1233,14 +1317,13 @@ footer{
 </p>
 
 
-<p style="
-font-weight:800;
-color:#087da9;
-">
-
-أكمل الاختبار مجانًا، ثم افتح التقرير الكامل مقابل 5 ريال فقط.
-
+<p class="heroPrice">
+أكمل الاختبار مجانًا، ثم افتح التقرير الكامل
+<br>
+<span class="pricePill">مقابل 5 ريال فقط.</span>
 </p>
+
+<div class="arrowMark">⌄</div>
 
 </div>
 
