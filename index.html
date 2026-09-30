@@ -901,181 +901,167 @@ button{
 
   font-weight:900;
 
+}
 
 .paymentWrap{
-
   text-align:center;
-
 }
 
-
-.successIcon{
-
-  width:74px;
-
-  height:74px;
-
-  margin:
-  0 auto 15px;
-
+.reportReadyIcon{
+  width:78px;
+  height:78px;
+  margin:0 auto 16px;
   border-radius:50%;
-
-  background:#e4f5fa;
-
+  background:linear-gradient(135deg,#e7f7fb,#d9f1f7);
   color:var(--blue2);
-
   display:flex;
-
   align-items:center;
-
   justify-content:center;
-
   font-size:34px;
-
+  box-shadow:0 10px 24px rgba(9,116,154,.12);
 }
 
-
-.checkoutPrice{
-
-  background:#fff9ed;
-
-  border:
-  1px solid
-  #eadab9;
-
-  border-radius:22px;
-
-  padding:20px;
-
-  margin:20px 0;
-
+.paymentWrap h1{
+  margin:0 0 8px;
+  color:var(--green);
+  font-size:30px;
 }
 
-
-.checkoutPrice .price{
-
-  font-size:38px;
-
-  font-weight:900;
-
-  color:var(--blue2);
-
+.paymentLead{
+  max-width:520px;
+  margin:0 auto 20px;
+  color:#6d7d7d;
+  line-height:1.9;
 }
-
-
-.payButton{
-
-  width:100%;
-
-  color:white;
-
-  background:
-
-  linear-gradient(
-    135deg,
-    var(--blue),
-    var(--blue2)
-   );
-
-  font-weight:900;
-
-}
-
 
 .lockedPreview{
-
-  margin-top:18px;
-
-  padding:19px;
-
-  background:#f7fafb;
-
-  border:
-  1px dashed
-  #bfd1d8;
-
-  border-radius:19px;
-
+  margin:18px 0;
+  padding:20px;
+  background:linear-gradient(180deg,#fbfdfd,#f5fafb);
+  border:1px solid #d7e5e8;
+  border-radius:22px;
   text-align:right;
-
 }
 
+.lockedPreviewTitle{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  margin-bottom:14px;
+  color:var(--green);
+  font-weight:900;
+  font-size:19px;
+}
+
+.reportFeatures{
+  display:grid;
+  gap:11px;
+}
+
+.reportFeature{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:#627476;
+  line-height:1.6;
+}
+
+.reportFeature .check{
+  width:25px;
+  height:25px;
+  flex:0 0 25px;
+  border-radius:50%;
+  background:#e2f4f7;
+  color:var(--blue2);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:900;
+}
+
+.checkoutPrice{
+  background:linear-gradient(135deg,#fffaf0,#fffdf8);
+  border:1px solid #eadab9;
+  border-radius:22px;
+  padding:18px 20px;
+  margin:18px 0;
+}
+
+.checkoutPrice .priceLabel{
+  color:#718080;
+  font-weight:700;
+}
+
+.checkoutPrice .price{
+  margin:3px 0;
+  font-size:40px;
+  font-weight:900;
+  color:var(--blue2);
+}
+
+.checkoutPrice small{
+  color:#7b8585;
+}
+
+.payButton{
+  width:100%;
+  min-height:58px;
+  border-radius:18px;
+  color:white;
+  background:linear-gradient(135deg,var(--blue),var(--blue2));
+  font-size:18px;
+  font-weight:900;
+  box-shadow:0 10px 22px rgba(8,126,170,.18);
+}
+
+.securePaymentNote{
+  margin:12px 0 0;
+  color:#708082;
+  font-size:13px;
+  line-height:1.7;
+}
 
 .moyasarSandboxBox{
-
   display:none;
-
-  margin-top:20px;
-
-  padding:20px;
-
-  background:#f7fbfd;
-
-  border:
-  1px solid #cfe4ec;
-
+  margin-top:18px;
+  padding:18px;
+  background:#f8fbfc;
+  border:1px solid #d5e6eb;
   border-radius:20px;
-
   text-align:right;
-
 }
-
 
 .moyasarSandboxBox.active{
-
   display:block;
-
 }
-
 
 .testModeBadge{
-
-  display:inline-block;
-
-  margin-bottom:14px;
-
-  padding:7px 12px;
-
-  border-radius:999px;
-
-  background:#fff1ef;
-
-  color:#b43b2f;
-
+  display:block;
+  margin:18px 0 0;
+  padding:11px 14px;
+  border-radius:14px;
+  background:#fff8df;
+  border:1px solid #efd993;
+  color:#81661b;
   font-size:13px;
-
-  font-weight:900;
-
+  font-weight:800;
+  text-align:center;
 }
-
 
 .paymentReturnMessage{
-
   display:none;
-
   margin-top:16px;
-
-  padding:16px;
-
+  padding:15px;
   border-radius:16px;
-
   background:#eef8fb;
-
-  border:
-  1px solid #c9e4ec;
-
+  border:1px solid #c9e4ec;
   line-height:1.8;
-
+  color:var(--green);
 }
-
 
 .paymentReturnMessage.show{
-
   display:block;
-
 }
-
-
 
 .policyBox{
 
@@ -1532,122 +1518,68 @@ text-align:center;
 id="checkout"
 class="checkoutBox hidden">
 
-
 <div class="paymentWrap">
 
+<div class="reportReadyIcon">🔒</div>
 
-<div class="successIcon">
-✓
-</div>
+<h1>تقريرك جاهز</h1>
 
-
-<h1>
-أحسنت، أكملت الاختبار
-</h1>
-
-
-<p class="muted">
-
-تم تحليل إجاباتك وتقريرك التثقيفي جاهز.
-
+<p class="paymentLead">
+أكملت الاختبار، ويمكنك الآن فتح تقريرك الكامل.
 </p>
-
 
 <div class="lockedPreview">
 
-<div style="font-size:26px">
-🔒
+<div class="lockedPreviewTitle">
+<span>📄</span>
+<span>ماذا يتضمن التقرير؟</span>
 </div>
 
-<strong>
-تقريرك الكامل يتضمن:
-</strong>
-
-
-<p class="muted">
-
-النتيجة والنسب التفصيلية وأبرز الجوانب التي ظهرت في إجاباتك وقراءة مبسطة للنتيجة.
-
-</p>
-
+<div class="reportFeatures">
+  <div class="reportFeature"><span class="check">✓</span><span>نتيجتك بالتفصيل</span></div>
+  <div class="reportFeature"><span class="check">✓</span><span>النسب والجوانب الأبرز</span></div>
+  <div class="reportFeature"><span class="check">✓</span><span>قراءة مبسطة لإجاباتك</span></div>
+  <div class="reportFeature"><span class="check">✓</span><span>نقاط تساعدك على فهم النتيجة</span></div>
 </div>
 
+</div>
 
 <div class="checkoutPrice">
-
-<div class="muted">
-فتح التقرير الكامل
+  <div class="priceLabel">التقرير الكامل</div>
+  <div class="price">5 ر.س فقط</div>
+  <small>دفعة واحدة لهذا التقرير</small>
 </div>
-
-<div class="price">
-5 ر.س
-</div>
-
-<small>
-دفعة واحدة لهذا التقرير
-</small>
-
-</div>
-
 
 <button
 class="payButton"
 onclick="startPayment()">
-
-فتح التقرير الكامل — 5 ر.س
-
+فتح التقرير الكامل — 5 ر.س 🔒
 </button>
+
+<p class="securePaymentNote">
+دفع آمن • يتم فتح التقرير مباشرة بعد نجاح الدفع
+</p>
 
 <div
 id="moyasarSandboxBox"
 class="moyasarSandboxBox">
-
-<div class="testModeBadge">
-وضع تجريبي — لا يتم خصم أموال حقيقية
+  <div class="mysr-form"></div>
 </div>
-
-<div class="mysr-form"></div>
-
-<p class="muted" style="font-size:13px;margin-bottom:0;">
-
-هذا النموذج يستخدم مفتاح ميسر التجريبي، ويتم التحقق من الدفع عبر Cloudflare Worker قبل فتح التقرير. يتم أيضًا حفظ بيانات الاختبار مؤقتًا على الجهاز حتى يعود المستخدم من صفحة الدفع.
-
-</p>
-
-</div>
-
 
 <div
 id="paymentReturnMessage"
 class="paymentReturnMessage">
 </div>
 
-
-<div
-id="paymentStatus"
-class="policyBox">
-
-<strong>
-تجربة ميسر مفعّلة
-</strong>
-
-<p class="muted">
-
-الدفع الحالي في وضع الاختبار Sandbox فقط ولا يتم خصم أموال حقيقية. يتم التحقق من كل عملية عبر الخادم قبل فتح التقرير. Apple Pay سيُفعّل عند الانتقال إلى البيئة الفعلية وبعد تسجيل النطاق لدى ميسر.
-
-</p>
-
+<div class="testModeBadge">
+🧪 وضع تجريبي — لن يتم خصم أموال حقيقية
 </div>
-
 
 <button
 class="secondary"
 onclick="goHome()">
-
 العودة للاختبارات
-
 </button>
-
 
 </div>
 
@@ -5303,7 +5235,7 @@ message.innerHTML=
 
 "<strong>جاري التحقق من الدفع...</strong><br>"+
 
-"يتم الآن التأكد من العملية من ميسر قبل فتح التقرير.";
+"لحظات وسيتم فتح تقريرك بعد التأكد من نجاح العملية.";
 
 
 try{
@@ -5387,9 +5319,9 @@ if(
 
 message.innerHTML=
 
-"<strong>تم التحقق من الدفع بنجاح ✅</strong><br>"+
+"<strong>تم الدفع بنجاح ✅</strong><br>"+
 
-"لكن تعذر استعادة إجابات الاختبار من هذا المتصفح. ارجع للاختبار وأعد إكماله ثم ادفع من نفس الجهاز والمتصفح، ولن يتم احتساب هذه المحاولة مرتين في وضع الاختبار.";
+"تعذر استعادة إجابات الاختبار من هذا المتصفح. ارجع للاختبار وأكمله من نفس الجهاز والمتصفح ثم حاول فتح التقرير مرة أخرى.";
 
 
 history.replaceState(
@@ -5427,23 +5359,7 @@ document.getElementById(
 if(
 reportBox
 ){
-
-
-reportBox.insertAdjacentHTML(
-
-"afterbegin",
-
-report(
-
-"تم التحقق من الدفع",
-
-"تم التحقق من عملية الدفع بنجاح من ميسر عبر الخادم، وتم فتح التقرير الكامل."
-
-)
-
-);
-
-
+  /* تم فتح التقرير بعد التحقق من الدفع بنجاح. */
 }
 
 
@@ -5481,56 +5397,10 @@ return;
 }
 
 
-const statusText=
-
-verification && verification.status
-?
-verification.status
-:
-"غير متاح";
-
-
-const amountText=
-
-verification && verification.amount!==undefined
-?
-String(
-verification.amount
-)
-:
-"غير متاح";
-
-
-const currencyText=
-
-verification && verification.currency
-?
-String(
-verification.currency
-)
-:
-"غير متاح";
-
-
 message.innerHTML=
 
-"<strong>لم يتم فتح التقرير.</strong><br>"+
-
-"نتيجة التحقق: الحالة "+
-
-statusText+
-
-" — المبلغ "+
-
-amountText+
-
-" — العملة "+
-
-currencyText+
-
-".<br>"+
-
-"يجب أن تكون الحالة paid والمبلغ 500 والعملة SAR.";
+"<strong>لم تكتمل عملية الدفع.</strong><br>"+
+"لم يتم فتح التقرير. حاول مرة أخرى باستخدام وسيلة دفع تجريبية صالحة.";
 
 
 }
@@ -5541,7 +5411,7 @@ message.innerHTML=
 
 "<strong>تعذر التحقق من الدفع الآن.</strong><br>"+
 
-"الاتصال بخادم التحقق لم ينجح. أعد فتح الصفحة بعد قليل أو أعد محاولة الدفع التجريبية.";
+"حاول مرة أخرى بعد قليل.";
 
 
 }
