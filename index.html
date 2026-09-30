@@ -4038,24 +4038,28 @@ value,
 maximum
 ){
 
+const numericValue=Number(value);
+const numericMaximum=Number(maximum);
 
 if(
-maximum===0
+!Number.isFinite(numericValue) ||
+!Number.isFinite(numericMaximum) ||
+numericMaximum<=0
 ){
-
 return 0;
-
 }
 
-
-return Math.round(
-
-value/
-maximum*
+return Math.max(
+0,
+Math.min(
+100,
+Math.round(
+numericValue/
+numericMaximum*
 100
-
+)
+)
 );
-
 
 }
 
@@ -4071,6 +4075,12 @@ name,
 value
 ){
 
+const safeValue=
+Number.isFinite(Number(value))
+?
+Math.max(0,Math.min(100,Math.round(Number(value))))
+:
+0;
 
 return `
 
@@ -4083,7 +4093,7 @@ ${name}
 </strong>
 
 <span>
-${value}%
+${safeValue}%
 </span>
 
 </div>
@@ -4093,7 +4103,7 @@ ${value}%
 <div
 class="miniFill"
 style="
-width:${value}%
+width:${safeValue}%
 ">
 </div>
 
@@ -4213,6 +4223,21 @@ function prepareResult(){
 
 const test=
 tests[currentTest];
+
+/* حماية سلامة النتيجة: لا نحسب تقريرًا من إجابات ناقصة أو غير صالحة */
+const expectedAnswers=test.questions.length;
+const answersAreValid=
+Array.isArray(userAnswers) &&
+userAnswers.length===expectedAnswers &&
+userAnswers.every(function(value){
+return Number.isInteger(value) && value>=0 && value<=3;
+});
+
+if(!answersAreValid){
+alert("تعذر حساب النتيجة بدقة. يرجى إعادة الاختبار وإكمال جميع الأسئلة.");
+goHome();
+return;
+}
 
 
 const title=
@@ -4517,10 +4542,7 @@ value
 ){
 
 
-return
-
-sum+
-(value ?? 0);
+return sum + (value ?? 0);
 
 
 },
@@ -4652,10 +4674,7 @@ b
 ){
 
 
-return
-
-b[1]-
-a[1];
+return b[1] - a[1];
 
 
 }
@@ -4959,10 +4978,7 @@ value
 ){
 
 
-return
-
-sum+
-value;
+return sum + value;
 
 
 },
