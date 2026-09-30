@@ -1463,7 +1463,7 @@ class="moyasarSandboxBox">
 
 <p class="muted" style="font-size:13px;margin-bottom:0;">
 
-هذا النموذج يستخدم مفتاح ميسر التجريبي، ويتم التحقق من الدفع عبر Cloudflare Worker قبل فتح التقرير.
+هذا النموذج يستخدم مفتاح ميسر التجريبي، ويتم التحقق من الدفع عبر Cloudflare Worker قبل فتح التقرير. يتم أيضًا حفظ بيانات الاختبار مؤقتًا على الجهاز حتى يعود المستخدم من صفحة الدفع.
 
 </p>
 
@@ -3682,22 +3682,44 @@ showQuestion();
 function showCheckout(){
 
 
+const pendingPaymentData={
+
+testIndex:
+currentTest,
+
+answers:
+userAnswers,
+
+savedAt:
+Date.now()
+
+};
+
+
 try{
+
+
+const serialized=
+
+JSON.stringify(
+pendingPaymentData
+);
 
 
 localStorage.setItem(
 
 "waei_pending_payment",
 
-JSON.stringify({
+serialized
 
-testIndex:
-currentTest,
+);
 
-answers:
-userAnswers
 
-})
+sessionStorage.setItem(
+
+"waei_pending_payment",
+
+serialized
 
 );
 
@@ -3716,6 +3738,38 @@ showPage(
 
 
 function startPayment(){
+
+
+try{
+
+
+const rawPending=
+
+localStorage.getItem(
+"waei_pending_payment"
+);
+
+
+if(
+rawPending
+){
+
+
+sessionStorage.setItem(
+
+"waei_pending_payment",
+
+rawPending
+
+);
+
+
+}
+
+
+}
+catch(error){}
+
 
 
 if(
@@ -4993,36 +5047,88 @@ return;
 let pending=null;
 
 
-try{
+function readPendingPayment(){
 
 
-pending=
-
-JSON.parse(
+const sources=[
 
 localStorage.getItem(
 "waei_pending_payment"
+),
+
+sessionStorage.getItem(
+"waei_pending_payment"
 )
 
+];
+
+
+for(
+const raw of sources
+){
+
+
+if(
+!raw
+){
+
+
+continue;
+
+
+}
+
+
+try{
+
+
+const parsed=
+
+JSON.parse(
+raw
 );
+
+
+if(
+
+parsed &&
+
+Number.isInteger(
+parsed.testIndex
+) &&
+
+Array.isArray(
+parsed.answers
+)
+
+){
+
+
+return parsed;
+
+
+}
 
 
 }
 catch(error){}
 
 
+}
+
+
+return null;
+
+
+}
+
+
+pending=
+readPendingPayment();
+
+
 if(
-
-pending &&
-
-Number.isInteger(
-pending.testIndex
-) &&
-
-Array.isArray(
-pending.answers
-)
-
+pending
 ){
 
 
@@ -5086,19 +5192,32 @@ headers:{
 "Accept":
 "application/json"
 
-}
+},
+
+cache:
+"no-store"
 
 }
 
 );
 
 
-const verification=
+let verification=null;
+
+
+try{
+
+
+verification=
 
 await verifyResponse.json();
 
 
-if(
+}
+catch(error){}
+
+
+const paymentIsValid=
 
 verifyResponse.ok &&
 
@@ -5108,13 +5227,47 @@ verification.verified===true &&
 
 verification.status==="paid" &&
 
-verification.amount===500 &&
+Number(
+verification.amount
+)===500 &&
 
-verification.currency==="SAR" &&
+String(
+verification.currency
+).toUpperCase()==="SAR";
 
-pending
 
+if(
+paymentIsValid
 ){
+
+
+if(
+!pending
+){
+
+
+message.innerHTML=
+
+"<strong>تم التحقق من الدفع بنجاح ✅</strong><br>"+
+
+"لكن تعذر استعادة إجابات الاختبار من هذا المتصفح. ارجع للاختبار وأعد إكماله ثم ادفع من نفس الجهاز والمتصفح، ولن يتم احتساب هذه المحاولة مرتين في وضع الاختبار.";
+
+
+history.replaceState(
+
+{},
+
+document.title,
+
+window.location.pathname
+
+);
+
+
+return;
+
+
+}
 
 
 prepareResult();
@@ -5145,7 +5298,7 @@ report(
 
 "تم التحقق من الدفع",
 
-"تم التحقق من عملية الدفع بنجاح من ميسر عبر الخادم. تم فتح التقرير الكامل."
+"تم التحقق من عملية الدفع بنجاح من ميسر عبر الخادم، وتم فتح التقرير الكامل."
 
 )
 
@@ -5159,6 +5312,11 @@ try{
 
 
 localStorage.removeItem(
+"waei_pending_payment"
+);
+
+
+sessionStorage.removeItem(
 "waei_pending_payment"
 );
 
@@ -5184,11 +5342,56 @@ return;
 }
 
 
+const statusText=
+
+verification && verification.status
+?
+verification.status
+:
+"غير متاح";
+
+
+const amountText=
+
+verification && verification.amount!==undefined
+?
+String(
+verification.amount
+)
+:
+"غير متاح";
+
+
+const currencyText=
+
+verification && verification.currency
+?
+String(
+verification.currency
+)
+:
+"غير متاح";
+
+
 message.innerHTML=
 
 "<strong>لم يتم فتح التقرير.</strong><br>"+
 
-"تعذر التحقق من أن العملية مدفوعة بقيمة 5 ر.س. إذا كنت في الوضع التجريبي، تأكد من استخدام بطاقة اختبار ناجحة ثم أعد المحاولة.";
+"نتيجة التحقق: الحالة "+
+
+statusText+
+
+" — المبلغ "+
+
+amountText+
+
+" — العملة "+
+
+currencyText+
+
+".<br>"+
+
+"يجب أن تكون الحالة paid والمبلغ 500 والعملة SAR.";
 
 
 }
@@ -5199,7 +5402,7 @@ message.innerHTML=
 
 "<strong>تعذر التحقق من الدفع الآن.</strong><br>"+
 
-"حدث خطأ أثناء الاتصال بخادم التحقق. أعد المحاولة بعد قليل.";
+"الاتصال بخادم التحقق لم ينجح. أعد فتح الصفحة بعد قليل أو أعد محاولة الدفع التجريبية.";
 
 
 }
