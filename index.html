@@ -1309,6 +1309,178 @@ footer{
 
 }
 
+
+
+/* =================================
+تصميم التقرير التثقيفي ـ أسلوب بطاقات وَعْي
+================================= */
+
+#result.card{
+  position:relative;
+  overflow:hidden;
+  padding:0 0 28px;
+  background:linear-gradient(180deg,#dff3f7 0%,#eaf8f7 48%,#f6fbfa 100%);
+  border:1px solid #c8e6ec;
+  border-radius:30px;
+  box-shadow:0 18px 45px rgba(7,95,133,.14);
+}
+
+#result.card::before,
+#result.card::after{
+  content:"";
+  position:absolute;
+  width:190px;
+  height:90px;
+  background:rgba(255,255,255,.72);
+  border-radius:55% 55% 45% 45%;
+  filter:blur(.2px);
+  pointer-events:none;
+}
+#result.card::before{top:92px;left:-95px;}
+#result.card::after{top:235px;right:-110px;}
+
+#result .result{
+  position:relative;
+  z-index:1;
+  margin:0;
+  padding:34px 24px 8px;
+  text-align:center;
+  color:#075f85;
+  font-size:clamp(30px,6vw,44px);
+  font-weight:900;
+}
+
+#result #resultTitle{
+  position:relative;
+  z-index:1;
+  max-width:760px;
+  margin:0 auto 24px;
+  padding:0 22px;
+  text-align:center;
+  color:#174d40;
+  font-size:clamp(22px,4.5vw,32px);
+  line-height:1.65;
+}
+
+#result #details,
+#result #fullReport{
+  position:relative;
+  z-index:1;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:22px 16px;
+  padding:0 24px;
+}
+
+#result #details{margin-bottom:22px;}
+
+#result .scoreRow,
+#result .report{
+  position:relative;
+  margin:0;
+  padding:30px 22px 22px;
+  background:rgba(255,255,255,.97);
+  border:1px solid rgba(7,95,133,.10);
+  border-radius:24px;
+  box-shadow:0 10px 24px rgba(20,72,82,.08);
+  line-height:2;
+}
+
+#result .scoreRow{
+  grid-column:1 / -1;
+  padding-top:34px;
+}
+
+#result .report h3,
+#result .scoreLine strong{
+  position:absolute;
+  top:-15px;
+  right:22px;
+  min-width:132px;
+  margin:0;
+  padding:8px 18px;
+  border-radius:11px;
+  background:linear-gradient(135deg,#0b86b3,#075f85);
+  color:#fff;
+  text-align:center;
+  font-size:15px;
+  font-weight:900;
+  box-shadow:0 7px 16px rgba(7,95,133,.18);
+}
+
+#result .report h3{
+  display:inline-block;
+}
+
+#result .scoreLine{
+  font-size:18px;
+  color:#174d40;
+}
+
+#result .scoreLine strong{
+  position:absolute;
+  top:-15px;
+  right:22px;
+  min-width:132px;
+  padding:8px 18px;
+  border-radius:11px;
+  background:linear-gradient(135deg,#0b86b3,#075f85);
+  color:#fff;
+  text-align:center;
+  font-size:15px;
+  font-weight:900;
+  box-shadow:0 7px 16px rgba(7,95,133,.18);
+}
+#result .scoreLine span{
+  width:100%;
+  text-align:center;
+  font-size:34px;
+  font-weight:900;
+  color:#075f85;
+}
+
+#result .miniBar{
+  height:14px;
+  margin:13px 0 0;
+  background:#dcecee;
+}
+
+#result .miniFill{
+  background:linear-gradient(90deg,#0b86b3,#38a9c9);
+}
+
+#result #resultText{
+  position:relative;
+  z-index:1;
+  margin:24px 24px 0;
+  padding:18px 20px;
+  background:rgba(255,255,255,.72);
+  border:1px dashed #8bc5d5;
+  border-radius:18px;
+  color:#526d6d;
+  text-align:center;
+}
+
+#result .actions{
+  position:relative;
+  z-index:1;
+  padding:0 24px;
+}
+
+@media(max-width:700px){
+  #result #details,
+  #result #fullReport{
+    grid-template-columns:1fr;
+    padding:0 16px;
+  }
+  #result .result{padding-top:30px;}
+  #result #resultTitle{padding:0 16px;}
+  #result #resultText{margin-left:16px;margin-right:16px;}
+  #result .actions{padding:0 16px;}
+  #result .report h3,
+  #result .scoreLine strong{right:18px;}
+}
+
 </style>
 
 
@@ -5023,5 +5195,3 @@ lastResultText
 
 
 </body>
-
-</html>
