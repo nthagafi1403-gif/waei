@@ -4261,11 +4261,16 @@ supported_networks:[
 
 ],
 
-methods:[
+methods: [
+  "creditcard",
+  "applepay"
+],
 
-"creditcard",
- "applepay"
-]
+apple_pay: {
+  country: "SA",
+  label: "وعي",
+  validate_merchant_url: "https://api.moyasar.com/v1/applepay/initiate"
+}
 
 });
 
