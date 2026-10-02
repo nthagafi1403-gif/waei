@@ -4237,7 +4237,7 @@
     ".mysr-form",
 
     amount:
-    500,
+    20000,
 
     currency:
     "SAR",
@@ -4262,8 +4262,14 @@
     ],
 
     methods: [
-      "creditcard"
-    ]
+      "applepay"
+    ],
+
+    apple_pay: {
+      country: "SA",
+      label: "وعي",
+      validate_merchant_url: "https://api.moyasar.com/v1/applepay/initiate"
+    }
 
     });
 
