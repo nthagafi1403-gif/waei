@@ -1897,14 +1897,6 @@
         <button class="start" type="button" onclick="beginSignatureAnalysis()">بدء التحليل</button>
       </div>
 
-      <div id="signaturePreview" class="report hidden" style="max-width:760px;margin:18px auto 0;text-align:right;"></div>
-
-      <button id="signaturePayButton" class="start hidden" type="button"
-        style="max-width:760px;margin:12px auto 0;display:block;"
-        onclick="openSignatureCheckout()">
-        فتح تحليل التوقيع الكامل — 5 ر.س
-      </button>
-
       <div class="signatureNote">
         تحليل التوقيع هنا محتوى تثقيفي/ترفيهي وفق أسلوب الجرافولوجي، وليس تقييمًا نفسيًا أو تشخيصًا علميًا للشخصية.
       </div>
@@ -4415,213 +4407,13 @@
       }
     }
 
-    let signatureAnalysisData=null;
-
-    function analyzeSignatureGeometry(){
-      const ratio=Math.max(window.devicePixelRatio || 1,1);
-      const w=signatureCanvas.width;
-      const h=signatureCanvas.height;
-      const image=signatureCtx.getImageData(0,0,w,h).data;
-
-      let minX=w, minY=h, maxX=-1, maxY=-1, count=0;
-      let sumX=0, sumY=0;
-      let leftY=0, leftN=0, rightY=0, rightN=0;
-
-      for(let y=0;y<h;y+=2){
-        for(let x=0;x<w;x+=2){
-          const a=image[((y*w+x)*4)+3];
-
-          if(a>20){
-            count++;
-            minX=Math.min(minX,x);
-            minY=Math.min(minY,y);
-            maxX=Math.max(maxX,x);
-            maxY=Math.max(maxY,y);
-            sumX+=x;
-            sumY+=y;
-          }
-        }
-      }
-
-      if(count<18 || maxX<0){
-        return null;
-      }
-
-      const boxW=maxX-minX+1;
-      const boxH=maxY-minY+1;
-      const areaRatio=(boxW*boxH)/(w*h);
-      const widthRatio=boxW/w;
-      const heightRatio=boxH/h;
-      const centerX=(sumX/count)/w;
-      const centerY=(sumY/count)/h;
-
-      const split=minX+(boxW/2);
-
-      for(let y=minY;y<=maxY;y+=2){
-        for(let x=minX;x<=maxX;x+=2){
-          const a=image[((y*w+x)*4)+3];
-
-          if(a>20){
-            if(x<split){
-              leftY+=y;
-              leftN++;
-            }
-            else{
-              rightY+=y;
-              rightN++;
-            }
-          }
-        }
-      }
-
-      const leftAvg=leftN ? leftY/leftN : 0;
-      const rightAvg=rightN ? rightY/rightN : 0;
-      const slope=(leftN && rightN) ? (leftAvg-rightAvg)/boxH : 0;
-
-      const sizeLabel=
-        areaRatio<0.10 ? "صغير ومختصر" :
-        areaRatio>0.30 ? "كبير وبارز" :
-        "متوسط ومتوازن بصريًا";
-
-      const spreadLabel=
-        widthRatio>0.72 ? "ممتد أفقيًا" :
-        widthRatio<0.38 ? "مضغوط أفقيًا" :
-        "متوسط الامتداد";
-
-      const positionLabel=
-        centerX<0.42 ? "يميل إلى جهة اليمين من مساحة التوقيع" :
-        centerX>0.58 ? "يميل إلى جهة اليسار من مساحة التوقيع" :
-        "قريب من منتصف مساحة التوقيع";
-
-      const directionLabel=
-        slope>0.10 ? "اتجاهه العام صاعد" :
-        slope<-0.10 ? "اتجاهه العام هابط" :
-        "اتجاهه العام شبه أفقي";
-
-      const density=(count*4)/(boxW*boxH);
-      const complexityLabel=
-        density>0.18 ? "كثافة خطوط مرتفعة نسبيًا" :
-        density<0.07 ? "خطوط قليلة وبسيطة نسبيًا" :
-        "كثافة خطوط متوسطة";
-
-      return{
-        sizeLabel,
-        spreadLabel,
-        positionLabel,
-        directionLabel,
-        complexityLabel,
-        metrics:{
-          areaRatio,
-          widthRatio,
-          heightRatio,
-          centerX,
-          centerY,
-          slope,
-          density
-        }
-      };
-    }
-
     function beginSignatureAnalysis(){
       if(!signatureHasInk){
         alert("وقّع داخل المربع أولًا.");
         return;
       }
 
-      const analysis=analyzeSignatureGeometry();
-
-      if(!analysis){
-        alert("التوقيع قصير جدًا للتحليل. أعد التوقيع بشكل أوضح.");
-        return;
-      }
-
-      signatureAnalysisData=analysis;
-
-      const preview=document.getElementById("signaturePreview");
-      const payButton=document.getElementById("signaturePayButton");
-
-      preview.innerHTML=
-        "<h3 style='margin-top:0'>معاينة مجانية</h3>"+
-        "<b>شكل التوقيع:</b> "+analysis.sizeLabel+"، "+analysis.spreadLabel+".<br>"+
-        "<b>اتجاهه:</b> "+analysis.directionLabel+".<br><br>"+
-        "<span class='muted'>التقرير الكامل يضيف قراءة لبقية الخصائص المرصودة ومعناها وفق الجرافولوجي.</span>";
-
-      preview.classList.remove("hidden");
-      payButton.classList.remove("hidden");
-      payButton.style.display="block";
-
-      preview.scrollIntoView({behavior:"smooth",block:"center"});
-    }
-
-    function openSignatureCheckout(){
-      if(!signatureAnalysisData){
-        beginSignatureAnalysis();
-        return;
-      }
-
-      const pendingPaymentData={
-        type:"signature",
-        signatureAnalysis:signatureAnalysisData,
-        savedAt:Date.now()
-      };
-
-      try{
-        const serialized=JSON.stringify(pendingPaymentData);
-        localStorage.setItem("waei_pending_payment",serialized);
-        sessionStorage.setItem("waei_pending_payment",serialized);
-      }
-      catch(error){}
-
-      showPage("checkout");
-    }
-
-    function prepareSignatureFullReport(data){
-      const details=document.getElementById("details");
-      const fullReport=document.getElementById("fullReport");
-      const text=document.getElementById("resultText");
-      const title=document.getElementById("resultTitle");
-
-      details.innerHTML="";
-      fullReport.innerHTML="";
-      title.innerText="تحليل التوقيع";
-      text.innerText="هذه قراءة جرافولوجية تثقيفية/ترفيهية مبنية على خصائص شكلية للتوقيع، وليست قياسًا علميًا للشخصية أو تشخيصًا نفسيًا.";
-
-      const a=data.signatureAnalysis;
-
-      details.innerHTML=
-        '<div class="report"><h3>الخصائص المرصودة</h3>'+
-        'الحجم: <b>'+a.sizeLabel+'</b><br>'+
-        'الامتداد: <b>'+a.spreadLabel+'</b><br>'+
-        'الموضع: <b>'+a.positionLabel+'</b><br>'+
-        'الاتجاه: <b>'+a.directionLabel+'</b><br>'+
-        'كثافة الخطوط: <b>'+a.complexityLabel+'</b></div>';
-
-      const sizeReading=
-        a.metrics.areaRatio<0.10
-        ? "في تفسيرات الجرافولوجي يُربط التوقيع الأصغر أحيانًا بالتحفظ أو تقليل إبراز الذات."
-        : a.metrics.areaRatio>0.30
-        ? "في تفسيرات الجرافولوجي يُربط التوقيع الأكبر أحيانًا بالرغبة في الحضور وإبراز الذات."
-        : "في تفسيرات الجرافولوجي يُقرأ الحجم المتوسط عادةً بوصفه حضورًا بصريًا غير مبالغ فيه.";
-
-      const directionReading=
-        a.metrics.slope>0.10
-        ? "الاتجاه الصاعد يُفسَّر جرافولوجيًا أحيانًا على أنه نزعة نحو التطلع أو التفاؤل."
-        : a.metrics.slope<-0.10
-        ? "الاتجاه الهابط يُفسَّر جرافولوجيًا أحيانًا على أنه تحفظ أو انخفاض في الاندفاع لحظة الكتابة."
-        : "الاتجاه شبه الأفقي يُفسَّر جرافولوجيًا أحيانًا على أنه ميل إلى الثبات والاتزان في العرض.";
-
-      const complexityReading=
-        a.metrics.density>0.18
-        ? "كثافة الخطوط الأعلى تُربط في بعض مدارس الجرافولوجي بالتفصيل أو التعقيد في طريقة تقديم التوقيع."
-        : a.metrics.density<0.07
-        ? "بساطة الخطوط تُربط في بعض مدارس الجرافولوجي بالاختصار والمباشرة."
-        : "كثافة الخطوط المتوسطة لا تُظهر تطرفًا بصريًا واضحًا بين البساطة والتعقيد.";
-
-      fullReport.innerHTML=
-        report("قراءة الحجم",sizeReading)+
-        report("قراءة الاتجاه",directionReading)+
-        report("قراءة بنية التوقيع",complexityReading)+
-        report("مهم","هذه المعاني من تفسيرات الجرافولوجي وليست استنتاجات نفسية مثبتة علميًا. لا يمكن تحديد شخصية الإنسان أو حالته النفسية من التوقيع وحده.");
+      alert("تم التقاط التوقيع بنجاح. في الخطوة التالية سنربط زر «بدء التحليل» بصفحة التحليل ثم الدفع.");
     }
 
 
@@ -4687,3 +4479,1013 @@
     box.classList.add(
     "active"
     );
+
+
+    if(
+    box.dataset.initialized===
+    "1"
+    ){
+
+
+    box.scrollIntoView({
+
+    behavior:"smooth",
+
+    block:"center"
+
+    });
+
+
+    return;
+
+
+    }
+
+
+    if(
+    typeof Moyasar===
+    "undefined"
+    ){
+
+
+    alert(
+
+    "تعذر تحميل نموذج ميسر. تحقق من اتصال الإنترنت ثم أعد المحاولة."
+
+    );
+
+
+    return;
+
+
+    }
+
+
+    Moyasar.init({
+
+    element:
+    ".mysr-form",
+
+    amount:
+    500,
+
+    currency:
+    "SAR",
+
+    description:
+    "تقرير وَعْي",
+
+    publishable_api_key:
+    MOYASAR_PUBLISHABLE_KEY,
+
+    callback_url:
+    MOYASAR_CALLBACK_URL,
+
+    supported_networks:[
+
+    "visa",
+
+    "mastercard",
+
+    "mada"
+
+    ],
+
+    methods: [
+  "creditcard",
+  "applepay"
+],
+
+    apple_pay: {
+      country: "SA",
+     label: "WAEI" ,
+      validate_merchant_url: "https://api.moyasar.com/v1/applepay/initiate"
+    }
+
+    });
+
+
+    box.dataset.initialized=
+    "1";
+
+
+    box.scrollIntoView({
+
+    behavior:"smooth",
+
+    block:"center"
+
+    });
+
+
+    }
+
+
+
+    function paymentVerified(){
+
+
+    showPage(
+    "result"
+    );
+
+
+    }
+
+
+
+    /* =================================
+    إعادة الاختبار
+    ================================= */
+
+
+    function restartTest(){
+
+
+    try{
+
+
+    localStorage
+    .removeItem(
+
+    "waei_progress_"+
+    currentTest
+
+    );
+
+
+    }
+    catch(error){}
+
+
+    currentQuestion=0;
+
+
+    userAnswers=
+
+    new Array(
+
+    tests[currentTest]
+    .questions
+    .length
+
+    ).fill(null);
+
+
+    showPage("quiz");
+
+
+    showQuestion();
+
+
+    }
+
+
+
+    /* =================================
+    النسبة
+    ================================= */
+
+
+    function percentage(
+    value,
+    maximum
+    ){
+
+    const numericValue=Number(value);
+    const numericMaximum=Number(maximum);
+
+    if(
+    !Number.isFinite(numericValue) ||
+    !Number.isFinite(numericMaximum) ||
+    numericMaximum<=0
+    ){
+    return 0;
+    }
+
+    return Math.max(
+    0,
+    Math.min(
+    100,
+    Math.round(
+    numericValue/
+    numericMaximum*
+    100
+    )
+    )
+    );
+
+    }
+
+
+
+    /* =================================
+    شريط النتيجة
+    ================================= */
+
+
+    function scoreBox(
+    name,
+    value
+    ){
+
+    const safeValue=
+    Number.isFinite(Number(value))
+    ?
+    Math.max(0,Math.min(100,Math.round(Number(value))))
+    :
+    0;
+
+    return `
+
+    <div class="scoreRow">
+
+    <div class="scoreLine">
+
+    <strong>
+    ${name}
+    </strong>
+
+    <span>
+    ${safeValue}%
+    </span>
+
+    </div>
+
+    <div class="miniBar">
+
+    <div
+    class="miniFill"
+    style="
+    width:${safeValue}%
+    ">
+    </div>
+
+    </div>
+
+    </div>
+
+    `;
+
+
+    }
+
+
+
+    /* =================================
+    تصنيف النتائج
+    ================================= */
+
+
+    function calculateCategories(test){
+
+
+    const scores={};
+
+
+    test.questions
+    .forEach(
+
+    function(
+    question,
+    index
+    ){
+
+
+    if(
+    Array.isArray(question)
+    ){
+
+
+    const category=
+    question[1];
+
+
+    if(
+
+    scores[category]===
+    undefined
+
+    ){
+
+
+    scores[category]=0;
+
+
+    }
+
+
+    const rawValue=userAnswers[index] ?? 0;
+    const isReverse=question[2]===true;
+    scores[category]+=isReverse ? (3-rawValue) : rawValue;
+
+
+    }
+
+
+    }
+
+    );
+
+
+    return scores;
+
+
+    }
+
+
+
+    /* =================================
+    صندوق التقرير
+    ================================= */
+
+
+    function report(
+    title,
+    body
+    ){
+
+
+    return `
+
+    <div class="report">
+
+    <h3>
+    ${title}
+    </h3>
+
+    <div>
+    ${body}
+    </div>
+
+    </div>
+
+    `;
+
+
+    }
+
+
+
+    /* =================================
+    إعداد النتيجة
+    ================================= */
+
+
+    function prepareResult(){
+
+    const test=tests[currentTest];
+    const expectedAnswers=test.questions.length;
+    const maxAnswerIndex=test.type==="attractiveness"?4:3;
+    const answersAreValid=Array.isArray(userAnswers) && userAnswers.length===expectedAnswers && userAnswers.every(function(value){return Number.isInteger(value) && value>=0 && value<=maxAnswerIndex;});
+    if(!answersAreValid){alert("تعذر حساب النتيجة بدقة. يرجى إعادة الاختبار وإكمال جميع الأسئلة.");goHome();return;}
+
+    const title=document.getElementById("resultTitle");
+    const details=document.getElementById("details");
+    const fullReport=document.getElementById("fullReport");
+    const text=document.getElementById("resultText");
+    details.innerHTML=""; fullReport.innerHTML=""; text.innerText="";
+
+    const domainDefinitions={
+    "الثقة والارتياح مع النفس":"يعكس هذا المجال الثقة في التعبير عن النفس والتصرف بطبيعية، مع عدم ربط قيمة الشخص بمدى إعجاب الآخرين به.",
+    "التواصل والاهتمام":"يعكس قدرتك على الاستماع وإظهار الاهتمام والتفاعل المتبادل دون سيطرة على الحوار أو ضغط على الطرف الآخر.",
+    "الدفء وخفة الروح":"يعكس الود وخفة الروح والقدرة على خلق تفاعل مريح وإيجابي مع الآخرين.",
+    "العناية بالنفس والحضور":"يعكس اهتمامك بالعناية الشخصية والمظهر المناسب والحضور غير اللفظي أثناء التواصل.",
+    "النضج واحترام الحدود":"يعكس احترام حدود الآخرين، والنضج في التعامل مع الخلاف، وتحمل المسؤولية عن التصرفات والالتزامات.",
+    "الأنماط والمنطق":"يقيس قدرة الطفل على ملاحظة الأنماط والعلاقات بين المعلومات واستخدام الاستنتاج للوصول إلى الإجابة المناسبة.",
+    "الحساب والاستدلال":"يقيس التعامل مع الأرقام والعمليات الحسابية البسيطة وفهم المسائل التي تحتاج إلى استنتاج عددي.",
+    "الذاكرة والانتباه":"يقيس الانتباه للتفاصيل ومتابعة التسلسل ومقارنة المعلومات ومعالجتها بدقة.",
+    "اللغة والفهم":"يقيس فهم الكلمات والمعاني والعلاقات اللغوية واختيار الإجابة المناسبة بناءً على المعنى والسياق.",
+    "الاستدلال المنطقي":"يقيس القدرة على تحليل العلاقات بين المعلومات واستخلاص النتائج المنطقية والتمييز بين البدائل.",
+    "الاستدلال العددي":"يقيس التعامل مع الأرقام والعمليات والنسب واستخدام المعلومات العددية لحل المسائل.",
+    "الأنماط":"يقيس القدرة على اكتشاف القواعد والتسلسلات والعلاقات المتكررة واستنتاج العنصر التالي.",
+    "الذاكرة العاملة":"تقيس القدرة على الاحتفاظ بالمعلومات لفترة قصيرة ومعالجتها أو ترتيبها أثناء تنفيذ مهمة ذهنية.",
+    "الانتباه والاندفاع":"يوضح مقدار الصعوبة التي تظهر لدى الطفل في التركيز والاستمرار في المهام والتفكير قبل التصرف.",
+    "تنظيم الانفعالات":"يوضح مقدار الصعوبة التي تظهر لدى الطفل في التحكم في شدة انفعاله والعودة إلى الهدوء بعد الغضب أو الانزعاج.",
+    "القلق والمخاوف":"يوضح مقدار الصعوبة المرتبطة بالخوف أو القلق وتجنب بعض المواقف والحاجة المتكررة إلى الطمأنة.",
+    "التفاعل الاجتماعي":"يوضح مقدار الصعوبة التي تظهر أثناء تفاعل الطفل مع الآخرين، مثل بدء التواصل وتكوين الصداقات والمشاركة واللعب.",
+    "الوعي بالمشاعر":"القدرة على ملاحظة المشاعر وتسميتها وفهم أسبابها وتأثيرها على التفكير والقرارات.",
+    "تنظيم المشاعر":"القدرة على إدارة الاستجابات الانفعالية والعودة إلى الهدوء والتفكير قبل التصرف.",
+    "فهم مشاعر الآخرين":"القدرة على ملاحظة مشاعر الآخرين وفهم وجهات نظرهم والإشارات مثل نبرة الصوت ولغة الجسد.",
+    "إدارة العلاقات":"القدرة على التعبير باحترام وإدارة الخلاف ووضع الحدود والسعي إلى حلول مناسبة للطرفين.",
+    "آمن":"يعكس مدى الراحة في العلاقات القريبة والقدرة على التعبير عن الاحتياجات والمشاعر والتعامل مع الخلاف مع استقلالية وثقة مناسبة.",
+    "قلق":"يعكس الميل للقلق بشأن استقرار العلاقة أو فقدان الطرف الآخر والحاجة إلى الطمأنة والانشغال باحتمال ابتعاده.",
+    "تجنبي":"يعكس الميل إلى الحفاظ على مسافة عاطفية أو الاعتماد على النفس بدل طلب الدعم والشعور بعدم الارتياح مع القرب الشديد."
+    };
+    function domainCard(name,pct){return report(name, (domainDefinitions[name]||"")+"<br><br><b>النسبة: "+pct+"%</b>");}
+    function cognitiveLevel(p){if(p===100)return "أداء متميز في هذا الاختبار";if(p>=80)return "أداء قوي";if(p>=55)return "أداء جيد";if(p>=30)return "أداء في طور التطور";return "أداء يحتاج إلى دعم";}
+    function personalityLevel(p){if(p<=25)return "ميل محدود";if(p<=50)return "ميل متوسط";if(p<=75)return "ميل واضح";return "ميل بارز";}
+
+    if(test.type==="cognitiveChild" || test.type==="cognitiveAdult"){
+     const ds={},dt={}; let correct=0;
+     test.questions.forEach(function(item,i){ds[item.category]??=0;dt[item.category]??=0;dt[item.category]++;if(userAnswers[i]===item.correct){ds[item.category]++;correct++;}});
+     const overall=percentage(correct,test.questions.length); title.innerText="الأداء العام: "+overall+"%";
+     Object.keys(ds).forEach(function(c){const p=percentage(ds[c],dt[c]);details.innerHTML+=domainCard(c,p);});
+     fullReport.innerHTML+=report("قراءة النتيجة","أجبت إجابة صحيحة عن <b>"+correct+" من "+test.questions.length+"</b> سؤالًا. القراءة: <b>"+cognitiveLevel(overall)+"</b>.");
+     let advice="";
+     if(overall<=25) advice="ابدأ بمهام قصيرة ومناسبة للمستوى، ودرّب الجوانب الأقل نتيجة تدريجيًا دون مقارنة الأداء بالآخرين.";
+     else if(overall<=50) advice="ركز على المجالات الأقل نتيجة باستخدام تدريبات قصيرة ومتنوعة، مع زيادة الصعوبة تدريجيًا.";
+     else if(overall<=75) advice="استمر في تنويع المهام، وأعطِ اهتمامًا إضافيًا للمجالات الأقل نتيجة مع تشجيع حل المشكلات بصورة مستقلة.";
+     else if(overall<100) advice="حافظ على التنوع وجرّب مهامًا أعلى تحديًا تدريجيًا في المجالات المختلفة.";
+     else advice="تمت الإجابة الصحيحة عن جميع أسئلة الاختبار. يمكن الانتقال إلى أنشطة أكثر تحديًا وتنوعًا دون اعتبار النتيجة درجة IQ.";
+     fullReport.innerHTML+=report("خطوات عملية",advice);
+     text.innerText=test.type==="cognitiveChild"?"هذا اختبار تثقيفي مبسط للأطفال وليس اختبار ذكاء مقننًا ولا يعطي درجة IQ.":"هذا اختبار تثقيفي مبسط للكبار وليس اختبار ذكاء مقننًا ولا يعطي درجة IQ.";
+    }
+    else if(test.type==="attractiveness"){
+     const rawScores={};
+     test.questions.forEach(function(item,i){
+       const category=item[1];
+       rawScores[category]=(rawScores[category]||0)+(userAnswers[i]+1);
+     });
+     const domains=[
+       "الثقة والارتياح مع النفس",
+       "التواصل والاهتمام",
+       "الدفء وخفة الروح",
+       "العناية بالنفس والحضور",
+       "النضج واحترام الحدود"
+     ];
+     const domainTips={
+       "الثقة والارتياح مع النفس":"درّب نفسك على التعبير عن رأيك بهدوء، والتصرف بطبيعتك، وعدم جعل قبول الآخرين المقياس الوحيد لقيمتك.",
+       "التواصل والاهتمام":"ركّز على الاستماع حتى النهاية، وطرح أسئلة حقيقية، وإظهار الاهتمام بوضوح دون إلحاح أو ضغط.",
+       "الدفء وخفة الروح":"حافظ على الود والمشاركة في الحوار، واستخدم المزاح بطريقة مريحة تراعي مشاعر الطرف الآخر.",
+       "العناية بالنفس والحضور":"اهتم بالنظافة والمظهر المناسب للموقف، وراقب نبرة صوتك ولغة جسدك لأنها جزء مهم من الانطباع والتواصل.",
+       "النضج واحترام الحدود":"احترم الرفض والمساحة الشخصية، وتعامل مع الخلاف باحترام، والتزم بوعودك واعتذر بوضوح عند الخطأ."
+     };
+     const domainResults=domains.map(function(name){
+       const raw=rawScores[name]||3;
+       const p=Math.max(0,Math.min(100,Math.round(((raw-3)/12)*100)));
+       return [name,p,raw];
+     });
+     const totalRaw=domainResults.reduce(function(sum,item){return sum+item[2];},0);
+     const overall=Math.max(0,Math.min(100,Math.round(((totalRaw-15)/60)*100)));
+     title.innerText="مؤشر الجاذبية في التعامل والعلاقات: "+overall+"%";
+     domainResults.forEach(function(item){
+       details.innerHTML+=report(
+         item[0],
+         domainDefinitions[item[0]]+
+         "<br><br><b>نتيجتك: "+item[2]+" من 15 — "+item[1]+"%</b>"
+       );
+     });
+     let reading="";
+     if(overall<=25) reading="تظهر ضمن إجاباتك مؤشرات محدودة حاليًا في مجموعة السلوكيات والصفات التي يستكشفها هذا الاختبار، مع وجود جوانب متعددة يمكن تطويرها.";
+     else if(overall<=50) reading="تظهر بعض عناصر الجاذبية في التعامل بدرجة متوسطة، مع وجود مساحة واضحة لتطوير عدد من الجوانب.";
+     else if(overall<=75) reading="تظهر في إجاباتك عدة سلوكيات تساعد على تكوين حضور وتفاعل إيجابي في التعامل والعلاقات.";
+     else reading="تعكس إجاباتك حضورًا إيجابيًا في عدد كبير من الجوانب التي يستكشفها هذا الاختبار.";
+     const ranked=domainResults.slice().sort(function(a,b){return b[1]-a[1];});
+     fullReport.innerHTML+=report(
+       "قراءة النتيجة",
+       reading+
+       "<br><br>برز <b>"+ranked[0][0]+"</b> كأعلى مجال لديك، يليه <b>"+ranked[1][0]+"</b>. انخفاض أي مجال لا يعني أنك شخص غير جذاب؛ بل يشير إلى جانب يمكن تطويره."
+     );
+     const lower=ranked.slice().sort(function(a,b){return a[1]-b[1];}).slice(0,2);
+     fullReport.innerHTML+=report(
+       "خطوات عملية",
+       "<b>"+lower[0][0]+":</b> "+domainTips[lower[0][0]]+
+       "<br><br><b>"+lower[1][0]+":</b> "+domainTips[lower[1][0]]
+     );
+     text.innerText="هذا اختبار تأملي غير مقنّن علميًا. النتيجة تصف بعض جوانب أسلوبك وفق إجاباتك، ولا تقيس جمالك أو جاذبيتك الجسدية، ولا تثبت أن الآخرين يفضّلونك.";
+    }
+    else if(test.type==="spiritual"){
+     const total=userAnswers.reduce(function(sum,value){return sum+(value??0);},0);
+     const result=percentage(total,45);
+     title.innerText="مؤشر الأعراض والتجارب المذكورة: "+result+"%";
+     details.innerHTML=scoreBox("المؤشر العام",result);
+     let reading="",advice="";
+     if(total<=10){
+       reading="ظهرت في إجاباتك مؤشرات قليلة ضمن الأعراض والتجارب التي يسأل عنها هذا الاختبار. هذه النتيجة لا تثبت وجود سحر أو مس.";
+       advice="حافظ على الأذكار والعبادات المعتادة، ولا تجعل الأعراض العابرة سببًا للجزم بوجود سحر أو مس. إذا وُجد عرض صحي أو نفسي مستمر فابحث عن سببه المناسب.";
+     }else if(total<=25){
+       reading="ظهرت لديك عدة أعراض أو تجارب قد تدفعك للاهتمام بالرقية الشرعية، لكنها لا تُعد دليلًا شرعيًا أو طبيًا على أنك مسحور أو ممسوس.";
+       advice="يمكنك المحافظة على الرقية الشرعية المأثورة والأذكار، مع عدم إهمال الأسباب الصحية أو النفسية أو ظروف النوم والضغط إذا كانت الأعراض مستمرة.";
+     }else{
+       reading="ظهرت لديك أعراض وتجارب متعددة ومتكررة ضمن إجابات هذا الاختبار. ارتفاع المؤشر يعني كثرة الأعراض التي أبلغت عنها، ولا يعني ثبوت السحر أو المس.";
+       advice="يمكنك الالتزام بالرقية الشرعية من القرآن والأدعية الصحيحة، وفي الوقت نفسه يُنصح بتقييم الأعراض المستمرة أو الشديدة لدى مختص مناسب، خصوصًا إذا أثرت في النوم أو العمل أو الحياة اليومية.";
+     }
+     fullReport.innerHTML+=report("قراءة النتيجة",reading);
+     fullReport.innerHTML+=report("التوجيه",advice);
+     fullReport.innerHTML+=report("تنبيه مهم","هذا الاختبار توعوي للاستئناس فقط. لا توجد درجة في هذا الاختبار تثبت أن الشخص مسحور أو ممسوس، وبعض الأعراض المذكورة قد تكون لها أسباب صحية أو نفسية أو مرتبطة بالنوم والضغط.");
+     text.innerText="اختبار توعوي للاستئناس فقط، وليس تشخيصًا للسحر أو المس ولا بديلًا عن التقييم الطبي أو النفسي عند الحاجة.";
+    }
+    else if(test.type==="general"){
+     const total=userAnswers.reduce(function(sum,value){return sum+(value??0);},0); const result=percentage(total,30); title.innerText="مؤشر القلق والتوتر: "+result+"%"; details.innerHTML=scoreBox("المؤشر العام",result);
+     let reading,advice;
+     if(result===0){reading="لا تظهر مؤشرات للقلق والتوتر ضمن إجابات هذا الاختبار.";advice="حافظ على نمطك الحالي في النوم والنشاط والتوازن اليومي، وراقب أي تغيرات مستقبلية دون حاجة لإجراءات خاصة حاليًا.";}
+     else if(result<=25){reading="ظهرت مؤشرات محدودة للقلق والتوتر ضمن إجابات هذا الاختبار.";advice="حافظ على العادات التي تساعد على الاستقرار، ولاحظ الضغوط المؤقتة التي قد ترفع التوتر.";}
+     else if(result<=50){reading="ظهرت مؤشرات متوسطة للقلق والتوتر ضمن إجابات هذا الاختبار.";advice="حدد مصادر الضغط المتكررة، واهتم بالنوم والنشاط، وجرّب أساليب مناسبة للاسترخاء وإدارة الضغط.";}
+     else if(result<=75){reading="ظهرت مؤشرات مرتفعة نسبيًا للقلق والتوتر ضمن إجابات هذا الاختبار.";advice="راقب أثر التوتر على النوم والعمل والعلاقات، وخفف مصادر الضغط قدر الإمكان. إذا استمر أو أثر بوضوح على حياتك فقد يكون من المناسب مناقشته مع مختص مرخص.";}
+     else {reading="ظهرت مؤشرات مرتفعة للقلق والتوتر ضمن إجابات هذا الاختبار.";advice="انتبه لتأثير هذه المؤشرات على حياتك اليومية، وقد يكون من المفيد مناقشتها مع مختص مرخص للحصول على تقييم مناسب.";}
+     fullReport.innerHTML+=report("قراءة النتيجة",reading);fullReport.innerHTML+=report("خطوات عملية",advice);text.innerText="هذه النسبة ليست درجة تشخيصية ولا تحدد وجود اضطراب قلق.";
+    }
+    else{
+     const scores=calculateCategories(test); const sorted=Object.entries(scores).sort(function(a,b){return b[1]-a[1];});
+     if(test.type==="personality"){
+      title.innerText="ملامح شخصيتك";
+      sorted.forEach(function(item){const p=percentage(item[1],15);details.innerHTML+=report(item[0],descriptions[item[0]][1]+"<br><br><b>نسبتك: "+p+"% — "+personalityLevel(p)+"</b>");});
+      fullReport.innerHTML+=report("أبرز الأبعاد","برز <b>"+sorted[0][0]+"</b> ثم <b>"+sorted[1][0]+"</b> بدرجة أكبر ضمن إجاباتك. تُقرأ الأبعاد معًا ولا يمثل أي بُعد بمفرده حكمًا ثابتًا على الشخصية.");
+      fullReport.innerHTML+=report("نصيحة عملية",descriptions[sorted[0][0]][2]+" "+descriptions[sorted[1][0]][2]);
+      text.innerText="النتيجة تصف أبعادًا وميولًا ظهرت في إجاباتك ضمن اختبار تثقيفي، ولا تعني وجود اضطراب في الشخصية.";
+     }
+     if(test.type==="attachment"){
+      title.innerText="مؤشرات أسلوب التعلق";
+      sorted.forEach(function(item){details.innerHTML+=domainCard(item[0],percentage(item[1],15));});
+      const pSafe=percentage(scores["آمن"]||0,15),pAnx=percentage(scores["قلق"]||0,15),pAvoid=percentage(scores["تجنبي"]||0,15);
+      let reading="";
+      if(Math.abs(pAnx-pAvoid)<=10 && pAnx>=51 && pAvoid>=51) reading="تظهر إجاباتك مزيجًا من الميل إلى طلب القرب والطمأنة في بعض المواقف، والميل إلى الابتعاد أو حماية المسافة العاطفية في مواقف أخرى.";
+      else if(Math.max(pSafe,pAnx,pAvoid)-Math.min(pSafe,pAnx,pAvoid)<=10) reading="النتيجة لا تُظهر مؤشرًا واحدًا مهيمنًا بوضوح، وقد تختلف استجابات التعلق لديك باختلاف العلاقة والسياق.";
+      else reading="ظهر <b>"+sorted[0][0]+"</b> بدرجة أكبر ضمن إجاباتك، يليه <b>"+sorted[1][0]+"</b>.";
+      fullReport.innerHTML+=report("قراءة النتيجة",reading);
+      let tips=[]; if(pSafe>=51)tips.push("حافظ على التواصل الواضح والحدود الصحية والتوازن بين القرب والاستقلالية."); if(pAnx>=51)tips.push("لاحظ المواقف التي تثير الخوف من الفقد، وميّز بين الشعور والأدلة، وعبّر عن احتياجاتك مباشرة بدل الاعتماد المتكرر على الطمأنة."); if(pAvoid>=51)tips.push("جرّب التعبير التدريجي عن احتياجاتك ومشاعرك وطلب الدعم عند الحاجة بدل جعل الانسحاب الوسيلة الوحيدة للتعامل مع القرب أو الخلاف."); if(!tips.length)tips.push("استمر في ملاحظة طريقة تعاملك مع القرب والخلاف والطمأنة والمساحة الشخصية دون الحاجة إلى تصنيف نفسك بنمط ثابت.");
+      fullReport.innerHTML+=report("خطوات عملية",tips.join("<br><br>")); text.innerText="ارتفاع أحد المؤشرات لا يعني وجود اضطراب؛ النتيجة تثقيفية وليست تصنيفًا ثابتًا أو تشخيصًا نفسيًا.";
+     }
+     if(test.type==="child"){
+      title.innerText="نتيجة سلوك الطفل وانفعالاته";
+      const childLevel=function(score){
+        if(score===0)return "لا تظهر صعوبة";
+        if(score<=3)return "صعوبة محدودة";
+        if(score<=6)return "صعوبة متوسطة";
+        return "صعوبة مرتفعة";
+      };
+      sorted.forEach(function(item){
+        const p=percentage(item[1],9);
+        details.innerHTML+=report(item[0],(domainDefinitions[item[0]]||"")+"<br><br><b>مستوى الصعوبة في هذا الجانب: "+p+"% — "+childLevel(item[1])+"</b>");
+      });
+      fullReport.innerHTML+=report("مهم","النسبة هنا تقيس مقدار الصعوبات التي ظهرت في إجاباتك عن طفلك.<br><br><b>كلما كانت النسبة أقل كان أفضل، وكلما ارتفعت كانت هناك جوانب تحتاج إلى اهتمام أكثر.</b><br><br>النتيجة للتوعية فقط وليست تشخيصًا.");
+      const tips={"الانتباه والاندفاع":"استخدم تعليمات قصيرة وواضحة، وقسّم المهام إلى خطوات صغيرة، وقلّل المشتتات، وعزّز الطفل عند إكمال المهمة أو التوقف للتفكير قبل التصرف.","تنظيم الانفعالات":"ساعد الطفل على تسمية شعوره، ودرّبه على التوقف والهدوء قبل الاستجابة، وناقش الموقف بعد أن يهدأ بدل مناقشته أثناء الغضب.","القلق والمخاوف":"استمع لمخاوف الطفل دون سخرية أو تهويل، وطمئنه بصورة متوازنة، وساعده على مواجهة المواقف التي يخاف منها تدريجيًا بما يناسب عمره دون إجباره.","التفاعل الاجتماعي":"وفّر فرصًا تدريجية للعب والتفاعل، ودرّبه على بدء الحديث وتبادل الأدوار وحل الخلافات البسيطة مع تعزيز التفاعل الإيجابي."};
+      let advice=[]; sorted.forEach(function(item){const p=percentage(item[1],9);if(item[1]===0)advice.push("<b>"+item[0]+":</b> لا تظهر صعوبة في إجابات هذا المجال؛ استمر في دعم العادات الإيجابية الحالية.");else advice.push("<b>"+item[0]+" — "+childLevel(item[1])+" ("+p+"%):</b> "+tips[item[0]]);});
+      fullReport.innerHTML+=report("نصائح عملية",advice.join("<br><br>"));
+      text.innerText="أجب بناءً على سلوك الطفل المعتاد خلال الفترة الأخيرة، وليس بناءً على موقف واحد فقط. هذه النتيجة للتوعية وليست تشخيصًا نفسيًا أو سلوكيًا. إذا كانت الصعوبات مرتفعة ومتكررة وتؤثر بوضوح في الدراسة أو المنزل أو العلاقات، فقد يكون من المناسب مناقشتها مع مختص مؤهل.";
+     }
+     if(test.type==="eq"){
+      const total=Object.values(scores).reduce(function(sum,value){return sum+value;},0); const overall=percentage(total,60); title.innerText="مؤشر الذكاء العاطفي: "+overall+"%";
+      sorted.forEach(function(item){details.innerHTML+=domainCard(item[0],percentage(item[1],15));});
+      let level=overall<=25?"مؤشرات محدودة":overall<=50?"في طور التطور":overall<=75?"مؤشرات جيدة":"مؤشرات قوية";
+      fullReport.innerHTML+=report("قراءة النتيجة","ظهرت <b>"+level+"</b> ضمن أسئلة هذا الاختبار. أقوى جانب هو <b>"+sorted[0][0]+"</b>، والجانب الأقل بروزًا هو <b>"+sorted[sorted.length-1][0]+"</b>.");
+      const eqTips={"الوعي بالمشاعر":"توقف عدة مرات خلال اليوم وسمِّ شعورك وحدد ما الذي أثّر فيه.","تنظيم المشاعر":"امنح نفسك وقتًا قصيرًا للهدوء قبل الرد في المواقف المشحونة، ثم اختر استجابة مقصودة.","فهم مشاعر الآخرين":"انتبه لنبرة الصوت ولغة الجسد واسأل للتأكد بدل افتراض ما يشعر به الآخر.","إدارة العلاقات":"تدرّب على التعبير الواضح والاحترام المتبادل ووضع الحدود ومناقشة الخلاف بهدف الوصول إلى حل."};
+      fullReport.innerHTML+=report("خطوة للتطوير",eqTips[sorted[sorted.length-1][0]]); text.innerText="هذا مؤشر تثقيفي مبسط وليس مقياسًا نفسيًا مقننًا للذكاء العاطفي.";
+     }
+    }
+
+    lastResultText="نتيجتي في "+test.title+"\n"+title.innerText+"\n\nجرّب اختبارات وَعْي:\nhttps://nthagafi1403-gif.github.io/waei/";
+    }
+
+
+    /* =================================
+    العودة من ميسر - تحقق آمن عبر Cloudflare
+    ================================= */
+
+
+    async function handleMoyasarTestReturn(){
+
+
+    const params=
+
+    new URLSearchParams(
+
+    window.location.search
+
+    );
+
+
+    const paymentId=
+
+    params.get(
+    "id"
+    );
+
+
+    if(
+    !paymentId
+    ){
+
+
+    return;
+
+
+    }
+
+
+    let pending=null;
+
+
+    function readPendingPayment(){
+
+
+    const sources=[
+
+    localStorage.getItem(
+    "waei_pending_payment"
+    ),
+
+    sessionStorage.getItem(
+    "waei_pending_payment"
+    )
+
+    ];
+
+
+    for(
+    const raw of sources
+    ){
+
+
+    if(
+    !raw
+    ){
+
+
+    continue;
+
+
+    }
+
+
+    try{
+
+
+    const parsed=
+
+    JSON.parse(
+    raw
+    );
+
+
+    if(
+
+    parsed &&
+
+    Number.isInteger(
+    parsed.testIndex
+    ) &&
+
+    Array.isArray(
+    parsed.answers
+    )
+
+    ){
+
+
+    return parsed;
+
+
+    }
+
+
+    }
+    catch(error){}
+
+
+    }
+
+
+    return null;
+
+
+    }
+
+
+    pending=
+    readPendingPayment();
+
+
+    if(
+    pending
+    ){
+
+
+    currentTest=
+    pending.testIndex;
+
+
+    userAnswers=
+    pending.answers;
+
+
+    }
+
+
+    showPage(
+    "checkout"
+    );
+
+
+    const message=
+
+    document.getElementById(
+    "paymentReturnMessage"
+    );
+
+
+    message.classList.add(
+    "show"
+    );
+
+
+    message.innerHTML=
+
+    "<strong>جاري التحقق من الدفع...</strong><br>"+
+
+    "لحظات وسيتم فتح تقريرك بعد التأكد من نجاح العملية.";
+
+
+    try{
+
+
+    const verifyResponse=
+
+    await fetch(
+
+    PAYMENT_VERIFY_URL+
+
+    "?id="+
+
+    encodeURIComponent(
+    paymentId
+    ),
+
+    {
+
+    method:
+    "GET",
+
+    headers:{
+
+    "Accept":
+    "application/json"
+
+    },
+
+    cache:
+    "no-store"
+
+    }
+
+    );
+
+
+    let verification=null;
+
+
+    try{
+
+
+    verification=
+
+    await verifyResponse.json();
+
+
+    }
+    catch(error){}
+
+
+    const paymentIsValid=
+
+    verifyResponse.ok &&
+
+    verification &&
+
+    verification.verified===true &&
+
+    verification.status==="paid" &&
+
+    Number(
+    verification.amount
+    )===500 &&
+
+    String(
+    verification.currency
+    ).toUpperCase()==="SAR";
+
+
+    if(
+    paymentIsValid
+    ){
+
+
+    if(
+    !pending
+    ){
+
+
+    message.innerHTML=
+
+    "<strong>تم الدفع بنجاح ✅</strong><br>"+
+
+    "تعذر استعادة إجابات الاختبار من هذا المتصفح. ارجع للاختبار وأكمله من نفس الجهاز والمتصفح ثم حاول فتح التقرير مرة أخرى.";
+
+
+    history.replaceState(
+
+    {},
+
+    document.title,
+
+    window.location.pathname
+
+    );
+
+
+    return;
+
+
+    }
+
+
+    prepareResult();
+
+
+    showPage(
+    "result"
+    );
+
+
+    const reportBox=
+
+    document.getElementById(
+    "fullReport"
+    );
+
+
+    if(
+    reportBox
+    ){
+      /* تم فتح التقرير بعد التحقق من الدفع بنجاح. */
+    }
+
+
+    try{
+
+
+    localStorage.removeItem(
+    "waei_pending_payment"
+    );
+
+
+    sessionStorage.removeItem(
+    "waei_pending_payment"
+    );
+
+
+    }
+    catch(error){}
+
+
+    history.replaceState(
+
+    {},
+
+    document.title,
+
+    window.location.pathname
+
+    );
+
+
+    return;
+
+
+    }
+
+
+    message.innerHTML=
+
+    "<strong>لم تكتمل عملية الدفع.</strong><br>"+
+    "لم يتم فتح التقرير. حاول مرة أخرى باستخدام وسيلة دفع تجريبية صالحة.";
+
+
+    }
+    catch(error){
+
+
+    message.innerHTML=
+
+    "<strong>تعذر التحقق من الدفع الآن.</strong><br>"+
+
+    "حاول مرة أخرى بعد قليل.";
+
+
+    }
+
+
+    history.replaceState(
+
+    {},
+
+    document.title,
+
+    window.location.pathname
+
+    );
+
+
+    }
+
+
+
+    /* =================================
+    تشغيل فحص العودة بعد تحميل الصفحة
+    ================================= */
+
+
+    window.addEventListener(
+
+    "DOMContentLoaded",
+
+    function(){
+
+
+    handleMoyasarTestReturn();
+
+
+    }
+
+    );
+
+
+    /* =================================
+    المشاركة
+    ================================= */
+
+
+    async function shareResult(){
+
+
+    if(
+    navigator.share
+    ){
+
+
+    try{
+
+
+    await navigator.share({
+
+    title:
+    "وَعْي",
+
+    text:
+    lastResultText
+
+    });
+
+
+    }
+    catch(error){}
+
+
+    }
+
+    else{
+
+
+    copyResult();
+
+
+    }
+
+
+    }
+
+
+
+    /* =================================
+    نسخ النتيجة
+    ================================= */
+
+
+    async function copyResult(){
+
+
+    try{
+
+
+    await navigator.clipboard.writeText(
+    lastResultText
+    );
+
+
+    alert(
+
+    "تم نسخ النتيجة."
+
+    );
+
+
+    }
+
+    catch(error){
+
+
+    alert(
+    lastResultText
+    );
+
+
+    }
+
+
+    }
+
+
+    </script>
+
+</body>
