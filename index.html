@@ -1481,6 +1481,87 @@
       #result .scoreLine strong{right:18px;}
     }
 
+
+    /* =================================
+    اختبار تحليل التوقيع
+    ================================= */
+    .signaturePage{
+      text-align:center;
+    }
+
+    .signatureIntro{
+      max-width:680px;
+      margin:0 auto 18px;
+      line-height:1.9;
+    }
+
+    .signaturePadWrap{
+      position:relative;
+      width:100%;
+      max-width:760px;
+      height:300px;
+      margin:20px auto 14px;
+      background:#fff;
+      border:2px dashed #9bc9d6;
+      border-radius:22px;
+      overflow:hidden;
+      box-shadow:inset 0 0 0 1px rgba(11,134,179,.04);
+      touch-action:none;
+    }
+
+    #signatureCanvas{
+      display:block;
+      width:100%;
+      height:100%;
+      cursor:crosshair;
+      touch-action:none;
+    }
+
+    .signatureHint{
+      position:absolute;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#9aa9aa;
+      font-size:18px;
+      font-weight:700;
+      pointer-events:none;
+      transition:.2s;
+    }
+
+    .signatureHint.hiddenHint{
+      opacity:0;
+    }
+
+    .signatureActions{
+      display:flex;
+      gap:10px;
+      max-width:760px;
+      margin:0 auto;
+    }
+
+    .signatureActions button{
+      flex:1;
+    }
+
+    .signatureNote{
+      max-width:760px;
+      margin:16px auto 0;
+      padding:13px 15px;
+      border-radius:15px;
+      background:#f7faf9;
+      border:1px solid var(--border);
+      color:#687a7d;
+      font-size:13px;
+      line-height:1.8;
+    }
+
+    @media(max-width:700px){
+      .signaturePadWrap{height:260px;}
+      .signatureActions{flex-direction:column;}
+    }
+
     </style>
 
 
@@ -1789,6 +1870,42 @@
     <!-- =================================
     الدفع
     ================================= -->
+
+
+
+    <!-- =================================
+    اختبار تحليل التوقيع
+    ================================= -->
+    <section id="signature" class="card signaturePage hidden">
+
+      <div class="quizTop">
+        <div class="quizNumber">اختبار التوقيع</div>
+        <h2>✍️ تحليل التوقيع</h2>
+      </div>
+
+      <p class="muted signatureIntro">
+        وقّع داخل المربع بالطريقة التي تستخدمها عادةً، ثم اضغط «بدء التحليل».
+      </p>
+
+      <div class="signaturePadWrap" id="signaturePadWrap">
+        <canvas id="signatureCanvas"></canvas>
+        <div class="signatureHint" id="signatureHint">وقّع هنا</div>
+      </div>
+
+      <div class="signatureActions">
+        <button class="secondary" type="button" onclick="clearSignature()">مسح التوقيع</button>
+        <button class="start" type="button" onclick="beginSignatureAnalysis()">بدء التحليل</button>
+      </div>
+
+      <div class="signatureNote">
+        تحليل التوقيع هنا محتوى تثقيفي/ترفيهي وفق أسلوب الجرافولوجي، وليس تقييمًا نفسيًا أو تشخيصًا علميًا للشخصية.
+      </div>
+
+      <div class="actions">
+        <button class="secondary" type="button" onclick="goHome()">العودة للاختبارات</button>
+      </div>
+
+    </section>
 
 
     <section
@@ -3471,6 +3588,8 @@
 
     "quiz",
 
+    "signature",
+
     "checkout",
 
     "result",
@@ -3553,6 +3672,34 @@
 
     );
 
+
+
+
+    /* بطاقة الاختبار العاشر ـ تحليل التوقيع */
+    const signatureCard=document.createElement("div");
+
+    signatureCard.className="card testCard";
+
+    signatureCard.innerHTML=`
+      <div class="testIcon">✍️</div>
+
+      <h2>اختبار تحليل التوقيع</h2>
+
+      <p class="muted">
+      وقّع داخل المربع واستكشف خصائص توقيعك بأسلوب جرافولوجي تثقيفي/ترفيهي.
+      </p>
+
+      <button class="start" onclick="openSignatureTest()">
+      ابدأ الاختبار مجانًا
+      </button>
+
+      <div class="priceLine">
+        <span>التوقيع مجاني</span>
+        <span class="priceBadge">التحليل الكامل 5 ر.س</span>
+      </div>
+    `;
+
+    container.appendChild(signatureCard);
 
 
     /* =================================
@@ -4125,6 +4272,149 @@
 
     }
 
+
+
+
+    /* =================================
+    اختبار تحليل التوقيع
+    ================================= */
+
+    let signatureCanvas=null;
+    let signatureCtx=null;
+    let signatureDrawing=false;
+    let signatureHasInk=false;
+
+    function openSignatureTest(){
+      showPage("signature");
+
+      requestAnimationFrame(function(){
+        setupSignaturePad();
+      });
+    }
+
+    function setupSignaturePad(){
+      signatureCanvas=document.getElementById("signatureCanvas");
+
+      if(!signatureCanvas){
+        return;
+      }
+
+      const wrap=document.getElementById("signaturePadWrap");
+      const ratio=Math.max(window.devicePixelRatio || 1,1);
+      const rect=wrap.getBoundingClientRect();
+
+      signatureCanvas.width=Math.max(1,Math.round(rect.width*ratio));
+      signatureCanvas.height=Math.max(1,Math.round(rect.height*ratio));
+
+      signatureCtx=signatureCanvas.getContext("2d");
+      signatureCtx.setTransform(ratio,0,0,ratio,0,0);
+      signatureCtx.lineWidth=2.4;
+      signatureCtx.lineCap="round";
+      signatureCtx.lineJoin="round";
+      signatureCtx.strokeStyle="#173e34";
+
+      clearSignature(false);
+
+      if(signatureCanvas.dataset.bound==="1"){
+        return;
+      }
+
+      signatureCanvas.dataset.bound="1";
+
+      signatureCanvas.addEventListener("pointerdown",function(event){
+        event.preventDefault();
+        signatureDrawing=true;
+        signatureHasInk=true;
+
+        const p=signaturePoint(event);
+        signatureCtx.beginPath();
+        signatureCtx.moveTo(p.x,p.y);
+
+        const hint=document.getElementById("signatureHint");
+        if(hint){
+          hint.classList.add("hiddenHint");
+        }
+
+        try{
+          signatureCanvas.setPointerCapture(event.pointerId);
+        }
+        catch(error){}
+      });
+
+      signatureCanvas.addEventListener("pointermove",function(event){
+        if(!signatureDrawing){
+          return;
+        }
+
+        event.preventDefault();
+
+        const p=signaturePoint(event);
+        signatureCtx.lineTo(p.x,p.y);
+        signatureCtx.stroke();
+      });
+
+      function stopDrawing(event){
+        if(!signatureDrawing){
+          return;
+        }
+
+        signatureDrawing=false;
+
+        try{
+          signatureCanvas.releasePointerCapture(event.pointerId);
+        }
+        catch(error){}
+      }
+
+      signatureCanvas.addEventListener("pointerup",stopDrawing);
+      signatureCanvas.addEventListener("pointercancel",stopDrawing);
+      signatureCanvas.addEventListener("pointerleave",function(event){
+        if(event.pointerType==="mouse"){
+          stopDrawing(event);
+        }
+      });
+    }
+
+    function signaturePoint(event){
+      const rect=signatureCanvas.getBoundingClientRect();
+
+      return{
+        x:event.clientX-rect.left,
+        y:event.clientY-rect.top
+      };
+    }
+
+    function clearSignature(resetInk=true){
+      if(!signatureCanvas || !signatureCtx){
+        return;
+      }
+
+      signatureCtx.clearRect(
+        0,
+        0,
+        signatureCanvas.width,
+        signatureCanvas.height
+      );
+
+      if(resetInk){
+        signatureHasInk=false;
+      }
+
+      const hint=document.getElementById("signatureHint");
+
+      if(hint){
+        hint.classList.toggle("hiddenHint",signatureHasInk);
+      }
+    }
+
+    function beginSignatureAnalysis(){
+      if(!signatureHasInk){
+        alert("وقّع داخل المربع أولًا.");
+        return;
+      }
+
+      alert("تم التقاط التوقيع بنجاح. في الخطوة التالية سنربط زر «بدء التحليل» بصفحة التحليل ثم الدفع.");
+    }
 
 
     function startPayment(){
