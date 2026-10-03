@@ -4407,24 +4407,245 @@
       }
     }
 
+    function getSignatureAnalysisData(){
+      const w=signatureCanvas.width;
+      const h=signatureCanvas.height;
+      const pixels=signatureCtx.getImageData(0,0,w,h).data;
+
+      let minX=w, minY=h, maxX=-1, maxY=-1, ink=0;
+      let sumX=0, sumY=0;
+
+      for(let y=0;y<h;y+=2){
+        for(let x=0;x<w;x+=2){
+          const alpha=pixels[((y*w+x)*4)+3];
+
+          if(alpha>20){
+            ink++;
+            minX=Math.min(minX,x);
+            minY=Math.min(minY,y);
+            maxX=Math.max(maxX,x);
+            maxY=Math.max(maxY,y);
+            sumX+=x;
+            sumY+=y;
+          }
+        }
+      }
+
+      if(ink<15 || maxX<0){
+        return null;
+      }
+
+      const boxW=maxX-minX+1;
+      const boxH=maxY-minY+1;
+      const widthRatio=boxW/w;
+      const heightRatio=boxH/h;
+      const areaRatio=(boxW*boxH)/(w*h);
+      const centerX=(sumX/ink)/w;
+
+      /* تقدير الاتجاه العام من متوسط موضع الحبر في النصفين */
+      const middle=minX+(boxW/2);
+      let leftY=0, leftN=0, rightY=0, rightN=0;
+
+      for(let y=minY;y<=maxY;y+=2){
+        for(let x=minX;x<=maxX;x+=2){
+          const alpha=pixels[((y*w+x)*4)+3];
+
+          if(alpha>20){
+            if(x<middle){
+              leftY+=y;
+              leftN++;
+            }
+            else{
+              rightY+=y;
+              rightN++;
+            }
+          }
+        }
+      }
+
+      const leftAvg=leftN ? leftY/leftN : 0;
+      const rightAvg=rightN ? rightY/rightN : 0;
+      const slope=(leftN && rightN) ? (leftAvg-rightAvg)/boxH : 0;
+      const density=(ink*4)/(boxW*boxH);
+
+      return{
+        areaRatio,
+        widthRatio,
+        heightRatio,
+        centerX,
+        slope,
+        density
+      };
+    }
+
     function beginSignatureAnalysis(){
       if(!signatureHasInk){
         alert("وقّع داخل المربع أولًا.");
         return;
       }
 
-      /*
-        لا نعرض أي نتيجة قبل الدفع.
-        نحفظ أن التقرير المطلوب هو تقرير تحليل التوقيع،
-        ثم نستخدم صفحة الدفع الموجودة أصلًا في الموقع.
-      */
+      const signatureMetrics=getSignatureAnalysisData();
+
+      if(!signatureMetrics){
+        alert("التوقيع قصير جدًا. أعد التوقيع بشكل أوضح.");
+        return;
+      }
+
+      const pendingPaymentData={
+        type:"signature",
+        signatureMetrics:signatureMetrics,
+        savedAt:Date.now()
+      };
+
       try{
-        sessionStorage.setItem("waei_signature_report_pending","1");
-        localStorage.setItem("waei_signature_report_pending","1");
+        const serialized=JSON.stringify(pendingPaymentData);
+
+        localStorage.setItem(
+          "waei_pending_payment",
+          serialized
+        );
+
+        sessionStorage.setItem(
+          "waei_pending_payment",
+          serialized
+        );
       }
       catch(error){}
 
       showPage("checkout");
+    }
+
+    function prepareSignatureResult(metrics){
+      const title=document.getElementById("resultTitle");
+      const details=document.getElementById("details");
+      const fullReport=document.getElementById("fullReport");
+      const resultText=document.getElementById("resultText");
+
+      details.innerHTML="";
+      fullReport.innerHTML="";
+      resultText.innerText="";
+
+      title.innerText="تحليل توقيعك ✍️";
+
+      const size=
+        metrics.areaRatio<0.10 ? "صغير ومختصر" :
+        metrics.areaRatio>0.30 ? "كبير وبارز" :
+        "متوسط ومتوازن بصريًا";
+
+      const spread=
+        metrics.widthRatio>0.70 ? "واسع وممتد أفقيًا" :
+        metrics.widthRatio<0.38 ? "مضغوط ومحدود أفقيًا" :
+        "متوسط الامتداد";
+
+      const height=
+        metrics.heightRatio>0.65 ? "مرتفع نسبيًا" :
+        metrics.heightRatio<0.30 ? "منخفض الارتفاع" :
+        "متوسط الارتفاع";
+
+      const position=
+        metrics.centerX<0.42 ? "يميل إلى يمين مساحة التوقيع" :
+        metrics.centerX>0.58 ? "يميل إلى يسار مساحة التوقيع" :
+        "قريب من المنتصف";
+
+      const direction=
+        metrics.slope>0.10 ? "صاعد" :
+        metrics.slope<-0.10 ? "هابط" :
+        "شبه أفقي";
+
+      const structure=
+        metrics.density>0.18 ? "معقد وكثيف نسبيًا" :
+        metrics.density<0.07 ? "بسيط ومختصر نسبيًا" :
+        "متوسط التعقيد";
+
+      const sizeReading=
+        metrics.areaRatio<0.10
+        ? "في القراءة الجرافولوجية، يُربط التوقيع الأصغر عادةً بالتحفظ في إبراز الذات والميل إلى حضور أكثر هدوءًا."
+        : metrics.areaRatio>0.30
+        ? "في القراءة الجرافولوجية، يُربط التوقيع الكبير عادةً بالرغبة في إظهار الحضور والثقة بالنفس وترك انطباع واضح لدى الآخرين."
+        : "في القراءة الجرافولوجية، يُفسَّر الحجم المتوسط عادةً بوصفه حضورًا متوازنًا دون مبالغة واضحة في إبراز الذات.";
+
+      const spreadReading=
+        metrics.widthRatio>0.70
+        ? "يُفسَّر الامتداد الأفقي الواسع جرافولوجيًا بأنه قد يعكس الميل إلى الانفتاح والمبادرة وأخذ مساحة أكبر في التعبير عن الذات."
+        : metrics.widthRatio<0.38
+        ? "يُفسَّر الامتداد المحدود جرافولوجيًا بأنه قد يرتبط بالاختصار والتحفظ وتقليل المساحة المستخدمة في التعبير عن الذات."
+        : "يُفسَّر الامتداد المتوسط جرافولوجيًا بأنه يقع بين الاختصار الشديد والتوسع الواضح في طريقة تقديم الذات.";
+
+      const directionReading=
+        metrics.slope>0.10
+        ? "يُربط الاتجاه الصاعد تقليديًا بالطموح والتطلع للمستقبل والنزعة الإيجابية نحو تحقيق الأهداف."
+        : metrics.slope<-0.10
+        ? "يُفسَّر الاتجاه الهابط في بعض قراءات الجرافولوجي بأنه قد يعكس قدرًا أكبر من التحفظ أو انخفاض الاندفاع لحظة التوقيع."
+        : "يُفسَّر الاتجاه شبه الأفقي جرافولوجيًا بأنه قد يعكس الميل إلى الثبات والاتزان في طريقة تقديم الذات.";
+
+      const positionReading=
+        metrics.centerX<0.42
+        ? "وجود التوقيع أكثر في يمين المساحة يُقرأ جرافولوجيًا بوصفه اختيارًا لموضع محدد وواضح داخل مساحة الكتابة."
+        : metrics.centerX>0.58
+        ? "وجود التوقيع أكثر في يسار المساحة يُقرأ جرافولوجيًا بوصفه اختيارًا لموضع مختلف عن المركز في طريقة عرض التوقيع."
+        : "قرب التوقيع من المنتصف يُفسَّر عادةً على أنه ميل إلى التوازن في طريقة تقديم الذات، دون انسحاب واضح أو مبالغة في إبرازها.";
+
+      const structureReading=
+        metrics.density>0.18
+        ? "كثرة الخطوط والتداخلات تُربط في بعض مدارس الجرافولوجي بالاهتمام بالتفاصيل وبناء صورة شخصية أكثر خصوصية أو تعقيدًا."
+        : metrics.density<0.07
+        ? "بساطة الخطوط تُربط في بعض مدارس الجرافولوجي بالاختصار والمباشرة وتقليل العناصر الزائدة في التوقيع."
+        : "البنية المتوسطة لا تُظهر تطرفًا واضحًا بين البساطة الشديدة وكثرة التفاصيل، وتُقرأ جرافولوجيًا كمنطقة وسط بينهما.";
+
+      let summaryParts=[];
+
+      if(metrics.areaRatio>0.30){
+        summaryParts.push("الحضور الواضح");
+      }
+      else if(metrics.areaRatio<0.10){
+        summaryParts.push("الحضور الهادئ والمختصر");
+      }
+      else{
+        summaryParts.push("الحضور المتوازن");
+      }
+
+      if(metrics.slope>0.10){
+        summaryParts.push("والتطلع والطموح");
+      }
+      else if(metrics.slope<-0.10){
+        summaryParts.push("والتحفظ في الاندفاع");
+      }
+      else{
+        summaryParts.push("والثبات في العرض");
+      }
+
+      if(metrics.density>0.18){
+        summaryParts.push("مع اهتمام بالتفاصيل والتعقيد");
+      }
+      else if(metrics.density<0.07){
+        summaryParts.push("مع ميل إلى البساطة والمباشرة");
+      }
+      else{
+        summaryParts.push("مع مستوى متوسط من التفاصيل");
+      }
+
+      details.innerHTML=
+        report(
+          "الخصائص المرصودة",
+          "<b>الحجم:</b> "+size+"<br>"+
+          "<b>الامتداد:</b> "+spread+"<br>"+
+          "<b>الارتفاع:</b> "+height+"<br>"+
+          "<b>الاتجاه:</b> "+direction+"<br>"+
+          "<b>الموضع:</b> "+position+"<br>"+
+          "<b>بنية التوقيع:</b> "+structure
+        );
+
+      fullReport.innerHTML=
+        report("حجم التوقيع",sizeReading)+
+        report("امتداد التوقيع",spreadReading)+
+        report("اتجاه التوقيع",directionReading)+
+        report("موضع التوقيع",positionReading)+
+        report("بنية التوقيع",structureReading)+
+        report(
+          "الخلاصة",
+          "قراءتك الجرافولوجية تعطي انطباعًا بـ "+summaryParts.join(" ")+"."+
+          "<br><br><b>تنبيه:</b> هذه قراءة جرافولوجية تثقيفية/ترفيهية مبنية على شكل التوقيع، وليست تقييمًا نفسيًا أو اختبارًا علميًا للشخصية."
+        );
     }
 
 
@@ -5121,23 +5342,19 @@
 
 
     if(
-
-    parsed &&
-
-    Number.isInteger(
-    parsed.testIndex
-    ) &&
-
-    Array.isArray(
-    parsed.answers
-    )
-
+      parsed &&
+      (
+        (
+          Number.isInteger(parsed.testIndex) &&
+          Array.isArray(parsed.answers)
+        ) ||
+        (
+          parsed.type==="signature" &&
+          parsed.signatureMetrics
+        )
+      )
     ){
-
-
-    return parsed;
-
-
+      return parsed;
     }
 
 
@@ -5159,18 +5376,11 @@
 
 
     if(
-    pending
+      pending &&
+      pending.type!=="signature"
     ){
-
-
-    currentTest=
-    pending.testIndex;
-
-
-    userAnswers=
-    pending.answers;
-
-
+      currentTest=pending.testIndex;
+      userAnswers=pending.answers;
     }
 
 
@@ -5301,7 +5511,16 @@
     }
 
 
-    prepareResult();
+    if(
+      pending.type==="signature"
+    ){
+      prepareSignatureResult(
+        pending.signatureMetrics
+      );
+    }
+    else{
+      prepareResult();
+    }
 
 
     showPage(
