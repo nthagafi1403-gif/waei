@@ -4413,92 +4413,18 @@
         return;
       }
 
-      const w=signatureCanvas.width;
-      const h=signatureCanvas.height;
-      const pixels=signatureCtx.getImageData(0,0,w,h).data;
-
-      let minX=w, minY=h, maxX=-1, maxY=-1, ink=0;
-      let sumX=0, sumY=0;
-
-      for(let y=0;y<h;y+=2){
-        for(let x=0;x<w;x+=2){
-          const alpha=pixels[((y*w+x)*4)+3];
-
-          if(alpha>20){
-            ink++;
-            minX=Math.min(minX,x);
-            minY=Math.min(minY,y);
-            maxX=Math.max(maxX,x);
-            maxY=Math.max(maxY,y);
-            sumX+=x;
-            sumY+=y;
-          }
-        }
+      /*
+        لا نعرض أي نتيجة قبل الدفع.
+        نحفظ أن التقرير المطلوب هو تقرير تحليل التوقيع،
+        ثم نستخدم صفحة الدفع الموجودة أصلًا في الموقع.
+      */
+      try{
+        sessionStorage.setItem("waei_signature_report_pending","1");
+        localStorage.setItem("waei_signature_report_pending","1");
       }
+      catch(error){}
 
-      if(ink<15 || maxX<0){
-        alert("التوقيع قصير جدًا. أعد التوقيع بشكل أوضح.");
-        return;
-      }
-
-      const boxW=maxX-minX+1;
-      const boxH=maxY-minY+1;
-      const widthRatio=boxW/w;
-      const heightRatio=boxH/h;
-      const areaRatio=(boxW*boxH)/(w*h);
-      const centerX=(sumX/ink)/w;
-
-      const size=
-        areaRatio<0.10 ? "صغير ومختصر" :
-        areaRatio>0.30 ? "كبير وبارز" :
-        "متوسط ومتوازن بصريًا";
-
-      const spread=
-        widthRatio>0.70 ? "ممتد أفقيًا" :
-        widthRatio<0.38 ? "مضغوط أفقيًا" :
-        "متوسط الامتداد";
-
-      const height=
-        heightRatio>0.65 ? "مرتفع نسبيًا" :
-        heightRatio<0.30 ? "منخفض الارتفاع" :
-        "متوسط الارتفاع";
-
-      const position=
-        centerX<0.42 ? "متركز أكثر في يمين مساحة التوقيع" :
-        centerX>0.58 ? "متركز أكثر في يسار مساحة التوقيع" :
-        "قريب من منتصف مساحة التوقيع";
-
-      const oldResult=document.getElementById("signatureAnalysisResult");
-      if(oldResult) oldResult.remove();
-
-      const result=document.createElement("div");
-      result.id="signatureAnalysisResult";
-      result.className="report";
-      result.style.maxWidth="760px";
-      result.style.margin="18px auto 0";
-      result.style.textAlign="right";
-
-      result.innerHTML=`
-        <h3 style="margin-top:0">معاينة تحليل التوقيع</h3>
-
-        <p><b>الحجم:</b> ${size}</p>
-        <p><b>الامتداد:</b> ${spread}</p>
-        <p><b>الارتفاع:</b> ${height}</p>
-        <p><b>الموضع:</b> ${position}</p>
-
-        <p class="muted" style="margin-top:14px">
-          هذه خصائص شكلية مرصودة من التوقيع. التفسير الجرافولوجي للشخصية
-          محتوى تثقيفي/ترفيهي وليس تقييمًا نفسيًا أو علميًا.
-        </p>
-      `;
-
-      const actions=document.querySelector("#signature .signatureActions");
-      actions.insertAdjacentElement("afterend",result);
-
-      result.scrollIntoView({
-        behavior:"smooth",
-        block:"center"
-      });
+      showPage("checkout");
     }
 
 
