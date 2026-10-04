@@ -2429,7 +2429,7 @@
 
 
     <h2>
-    الخصوصية والشروط
+    الخصوصية
     </h2>
 
 
@@ -2497,6 +2497,30 @@
     </div>
 
 
+    <button
+    class="start"
+    onclick="goHome()">
+
+    العودة
+
+    </button>
+
+
+    </section>
+
+
+    <!-- =================================
+    شروط الاستخدام
+    ================================= -->
+
+    <section
+    id="terms"
+    class="page hidden">
+
+    <h2>
+    شروط الاستخدام
+    </h2>
+
     <div class="policyBox">
 
     <strong>
@@ -2562,6 +2586,7 @@
     </div>
 
 
+
     <button
     class="start"
     onclick="goHome()">
@@ -2569,7 +2594,6 @@
     العودة
 
     </button>
-
 
     </section>
 
@@ -2583,6 +2607,7 @@
         <strong>وَعْي</strong>
         <span>افهم نفسك أكثر</span>
         <span>محتوى تثقيفي غير مخصص للتشخيص.</span>
+        <button type="button" onclick="showPage('terms')" style="margin-top:10px;border:0;background:transparent;color:inherit;text-decoration:underline;font:inherit;cursor:pointer;">شروط الاستخدام</button>
       </div>
     </footer>
 
@@ -3798,7 +3823,9 @@
 
     "faq",
 
-    "privacy"
+    "privacy",
+
+    "terms"
 
     ];
 
